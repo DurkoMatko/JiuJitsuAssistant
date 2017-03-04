@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jiu_Jitsu_Assistant"
         mc:Ignorable="d"
-        Title="MyTechniques" Height="341" Width="605">
+        Title="MyTechniques" Height="341" Width="605" >
    <Grid>
       <Grid.ColumnDefinitions>
          <ColumnDefinition Width="223*"/>
@@ -14,9 +14,19 @@
       <Grid.Background>
          <ImageBrush ImageSource="C:\Users\T420\Documents\Visual Studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\images/gracie.jpeg" Stretch="UniformToFill"/>
       </Grid.Background>
-      <DataGrid x:Name="techniquesGrid" HorizontalAlignment="Left" Margin="228,61,0,0" VerticalAlignment="Top" />
+      <DataGrid x:Name="techniquesGrid" HorizontalAlignment="Left" Margin="228,61,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" ItemsSource="{Binding}">
+         <DataGrid.Columns>
+            <DataGridTextColumn Header="Name" Binding="{Binding name}" />
+            <DataGridTextColumn Header="Learned" Binding="{Binding date_learned, StringFormat=\{0:dd.MM.yyyy\}}" />
+            <DataGridTextColumn Header="Belt" Binding="{Binding belt_level}" />
+         </DataGrid.Columns>
+      </DataGrid>
 
-      <DataGrid x:Name="techniqueGroupsGrid" HorizontalAlignment="Left" Margin="108,61,0,0" VerticalAlignment="Top" SelectedCellsChanged="techniqueGroupsGrid_SelectedCellsChanged" />
+      <DataGrid x:Name="techniqueGroupsGrid" HorizontalAlignment="Left" Margin="108,61,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" SelectedCellsChanged="techniqueGroupsGrid_SelectedCellsChanged" ItemsSource="{Binding}">
+         <DataGrid.Columns>
+            <DataGridTextColumn Header="Name" Binding="{Binding name}" />
+         </DataGrid.Columns>
+      </DataGrid>
 
    </Grid>
 </Window>

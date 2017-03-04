@@ -22,7 +22,11 @@ namespace Jiu_Jitsu_Assistant
    /// </summary>
    public partial class MyTechniques : Window
    {
+
       MySqlConnection conn;
+      public DataTable myTechniquesTable { get; set; }
+      public DataTable techniqueGroupsTable { get; set; }
+
       public MyTechniques()
       {
          InitializeComponent();
@@ -31,6 +35,9 @@ namespace Jiu_Jitsu_Assistant
             LoadTechniques();
             LoadedTechniqueGroups();
          }
+
+         this.myTechniquesTable = new DataTable();
+         this.techniqueGroupsTable = new DataTable();
       }
 
       public MyTechniques(double left,double top, double height, double width):this() {
@@ -72,7 +79,8 @@ namespace Jiu_Jitsu_Assistant
             DataSet ds = new DataSet();
             da.Fill(ds);
 
-            techniquesGrid.ItemsSource = ds.Tables[0].DefaultView;
+            this.myTechniquesTable = ds.Tables[0];
+            techniquesGrid.ItemsSource = this.myTechniquesTable.DefaultView;
          }
          catch (MySql.Data.MySqlClient.MySqlException e)
          {
@@ -94,7 +102,9 @@ namespace Jiu_Jitsu_Assistant
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
-            techniquesGrid.ItemsSource = ds.Tables[0].DefaultView;
+
+            this.myTechniquesTable = ds.Tables[0];
+            techniquesGrid.ItemsSource = this.myTechniquesTable.DefaultView;
          }
          catch (MySql.Data.MySqlClient.MySqlException e)
          {
@@ -111,7 +121,8 @@ namespace Jiu_Jitsu_Assistant
             DataSet ds = new DataSet();
             da.Fill(ds);
 
-            techniqueGroupsGrid.ItemsSource = ds.Tables[0].DefaultView;
+            this.techniqueGroupsTable = ds.Tables[0];
+            techniqueGroupsGrid.ItemsSource = this.techniqueGroupsTable.DefaultView;
          }
          catch (MySql.Data.MySqlClient.MySqlException e)
          {
