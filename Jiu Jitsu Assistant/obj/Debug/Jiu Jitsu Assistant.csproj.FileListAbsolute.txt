@@ -1,0 +1,18 @@
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\Jiu Jitsu Assistant.exe.config
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.csprojResolveAssemblyReference.cache
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\MyTechniques.g.cs
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\App.g.cs
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant_MarkupCompile.cache
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant_MarkupCompile.lref
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\Jiu Jitsu Assistant.exe
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\Jiu Jitsu Assistant.pdb
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\MainWindow.g.cs
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\MainWindow.baml
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\MyTechniques.baml
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.g.resources
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu_Jitsu_Assistant.Properties.Resources.resources
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.csproj.GenerateResource.Cache
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.exe
+c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.pdb
+C:\Users\T420\Documents\Visual Studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\MySql.Data.dll
+C:\Users\T420\Documents\Visual Studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\MySql.Web.v20.dll
