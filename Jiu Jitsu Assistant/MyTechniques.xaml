@@ -4,29 +4,80 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jiu_Jitsu_Assistant"
+        xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
+        xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MyTechniques" Height="341" Width="605" >
-   <Grid>
+        Title="MyTechniques"
+        Height="800px" Width="1300px" 
+        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  
+        ResizeMode="NoResize" 
+        Name="window1">
+   
+   <Grid x:Name="mainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsHitTestVisible="True" Margin="-5,0,5,0" PreviewMouseDown="mainGrid_PreviewMouseDown">
       <Grid.ColumnDefinitions>
-         <ColumnDefinition Width="223*"/>
-         <ColumnDefinition Width="69*"/>
+         <ColumnDefinition Width="*"/>
+         <ColumnDefinition Width="Auto"/>
+         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <Grid.Background>
-         <ImageBrush ImageSource="C:\Users\T420\Documents\Visual Studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\images/gracie.jpeg" Stretch="UniformToFill"/>
-      </Grid.Background>
-      <DataGrid x:Name="techniquesGrid" HorizontalAlignment="Left" Margin="228,61,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" ItemsSource="{Binding}">
+      <DataGrid x:Name="techniquesGrid" HorizontalAlignment="Left" Margin="88,273,0,0" VerticalAlignment="Top" AutoGenerateColumns="False"
+                ItemsSource="{Binding}" Height="200px" VerticalScrollBarVisibility="Visible" Grid.Column="0" CanUserAddRows="False" Width="471" CellEditEnding="updateTechniqueFromDataGrid">
+         <DataGrid.Columns>
+            <DataGridTextColumn Header="Name" Binding="{Binding name}" Width="270" />
+            <DataGridTextColumn Header="Learned" Binding="{Binding date_learned, StringFormat=\{0:dd.MM.yyyy\}}" Width="100"/>
+            <DataGridTextColumn Header="Belt" Binding="{Binding belt_level}" Width="*"/>
+            <DataGridTextColumn MaxWidth="0" Header="Id" Binding="{Binding technique_id}" Width="*"/>
+         </DataGrid.Columns>
+      </DataGrid>
+      <DataGrid x:Name="techniqueGroupsGrid" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" 
+                SelectedCellsChanged="techniqueGroupsGrid_SelectedCellsChanged" ItemsSource="{Binding}" 
+                RenderTransformOrigin="2.386,4.962" Margin="88,105,0,0" CanUserAddRows="False">
          <DataGrid.Columns>
             <DataGridTextColumn Header="Name" Binding="{Binding name}" />
-            <DataGridTextColumn Header="Learned" Binding="{Binding date_learned, StringFormat=\{0:dd.MM.yyyy\}}" />
-            <DataGridTextColumn Header="Belt" Binding="{Binding belt_level}" />
          </DataGrid.Columns>
       </DataGrid>
 
-      <DataGrid x:Name="techniqueGroupsGrid" HorizontalAlignment="Left" Margin="108,61,0,0" VerticalAlignment="Top" AutoGenerateColumns="False" SelectedCellsChanged="techniqueGroupsGrid_SelectedCellsChanged" ItemsSource="{Binding}">
-         <DataGrid.Columns>
-            <DataGridTextColumn Header="Name" Binding="{Binding name}" />
-         </DataGrid.Columns>
-      </DataGrid>
+
+
+      <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="8">
+         <GridSplitter.Template>
+            <ControlTemplate TargetType="{x:Type GridSplitter}">
+               <Grid>
+                  <Button Content="⁞" />
+                  <Rectangle Fill="#000000" />
+               </Grid>
+            </ControlTemplate>
+         </GridSplitter.Template>
+      </GridSplitter>
+
+
+      <Label x:Name="label" Content="Add new technique" Grid.Column="2" HorizontalAlignment="Left" Margin="216,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
+      <Label Grid.Column="0" x:Name="label_Copy" Content="My techniques" HorizontalAlignment="Left" Margin="238,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
+      <Canvas HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="492" Grid.Column="2" Margin="109,57,0,0">
+         <Label x:Name="lbl" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="30" FontSize="14"/>
+         <extToolkit:WatermarkTextBox Name="techniqueName_textbox" Height="25" Canvas.Left="171" TextWrapping="Wrap" Canvas.Top="34" Width="235" Watermark="Technique name" TextChanged="emptyTechniqueNameCheck" />
+         <Label x:Name="lbl_Copy" Content="Date learned:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="80" FontSize="14"/>
+         <DatePicker Name="dateLearned_datepicker" Canvas.Left="171" Canvas.Top="83" Width="235" SelectedDate="{x:Static sys:DateTime.Now}"/>
+         <Label x:Name="lbl_Copy1" Content="Belt:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="130" FontSize="14"/>
+         <ComboBox x:Name="belt_comboBox" VerticalContentAlignment="Center" Canvas.Left="171" Canvas.Top="130" Width="235" Height="29">
+            <ComboBoxItem Name="cb_white" Background="White" IsSelected="True">white</ComboBoxItem>
+            <ComboBoxItem Name="cbi_blue" Background="#FF25A1F7">blue</ComboBoxItem>
+            <ComboBoxItem Name="cbi_purple" Background="Purple">purple</ComboBoxItem>
+            <ComboBoxItem Name="cbi_brown" Selected="cbi_brown_Selected" Background="#FFB2590F">brown</ComboBoxItem>
+            <ComboBoxItem Name="cbi_black" Background="Black" Foreground="White">black</ComboBoxItem>
+         </ComboBox>
+         <Label x:Name="label1" Content="Technique group" Canvas.Left="48" Canvas.Top="180"/>
+         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="171" Canvas.Top="180" Width="235" Height="26" ItemsSource="{Binding belt_level}"/>
+         <Button x:Name="addTechnique_button" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,0.773" Canvas.Left="331" Canvas.Top="232"
+                 IsEnabled="False" Click="AddNewTechnique" PreviewMouseDown="addTechnique_button_MouseDown"/>
+      </Canvas>
+      <Label x:Name="label2" Content="From:" HorizontalAlignment="Left" Margin="256,131,0,0" VerticalAlignment="Top"/>
+      <Slider x:Name="slider_from" HorizontalAlignment="Left" Margin="316,135,0,0" VerticalAlignment="Top"/>
+      <Label x:Name="label3" Content="To:" HorizontalAlignment="Left" Margin="256,175,0,0" VerticalAlignment="Top"/>
+      <Slider x:Name="slider_to" HorizontalAlignment="Left" Margin="316,179,0,0" VerticalAlignment="Top"/>
+
+
+
+
 
    </Grid>
 </Window>

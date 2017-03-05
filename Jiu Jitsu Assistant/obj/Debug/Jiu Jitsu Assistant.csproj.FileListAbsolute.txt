@@ -16,3 +16,16 @@ c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jits
 c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.pdb
 C:\Users\T420\Documents\Visual Studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\MySql.Data.dll
 C:\Users\T420\Documents\Visual Studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\MySql.Web.v20.dll
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\WPFToolkit.Extended.dll
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\AddTechniqueDialog.g.cs
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\AddTechniqueDialog.baml
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.dll
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\System.Windows.Controls.DataVisualization.Toolkit.xml
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Statistics.g.cs
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Statistics.baml
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\LiveCharts.dll
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\LiveCharts.pdb
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\LiveCharts.xml
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\LiveCharts.Wpf.xml

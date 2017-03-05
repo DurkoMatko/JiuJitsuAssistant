@@ -5,12 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jiu_Jitsu_Assistant"
         mc:Ignorable="d"
-        Title="Jiu Jitsu Assistant" TextBlock.TextAlignment="Center" ResizeMode="NoResize">
+        Title="Jiu Jitsu Assistant" 
+        TextBlock.TextAlignment="Center" 
+        ResizeMode="NoResize" 
+        Height="800px" Width="1300px" 
+        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}">
 
    <Grid Margin="2,0,-2,0">
-      <Grid.Background>
-         <ImageBrush ImageSource="C:\Users\T420\Documents\Visual Studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\images/gracie.jpeg" Stretch="UniformToFill"/>
-      </Grid.Background>
       <Grid.ColumnDefinitions>
          <ColumnDefinition/>
          <ColumnDefinition Width="0*"/>
@@ -35,7 +36,7 @@
             </LinearGradientBrush>
          </Button.Background>
       </Button>
-      <Button x:Name="Settings" Content="Settings" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Center"  RenderTransformOrigin="0.811,0.976" Height="45" Width="240" FontSize="20">
+      <Button x:Name="Settings" Content="Statistics" HorizontalAlignment="Center" Margin="0,300,0,0" VerticalAlignment="Center"  RenderTransformOrigin="0.811,0.976" Height="45" Width="240" FontSize="20" Click="Settings_Click">
          <Button.Background>
             <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
                <GradientStop Color="#FFF3F3F3" Offset="0"/>

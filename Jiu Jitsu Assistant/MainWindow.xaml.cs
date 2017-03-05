@@ -24,8 +24,8 @@ namespace Jiu_Jitsu_Assistant
       {
          InitializeComponent();
          WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
-         this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight);
-         this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth);
+         //this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight);
+         //this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth);
       }
 
       private void button_Copy_Click(object sender, RoutedEventArgs e)
@@ -33,6 +33,12 @@ namespace Jiu_Jitsu_Assistant
          MyTechniques win2 = new MyTechniques(this.Left, this.Top, this.Height, this.Width);
          win2.ShowDialog();
          //this.Close();
+      }
+
+      private void Settings_Click(object sender, RoutedEventArgs e)
+      {
+         Statistics win2 = new Statistics(this.Left, this.Top, this.Height, this.Width);
+         win2.ShowDialog();
       }
    }
 }
