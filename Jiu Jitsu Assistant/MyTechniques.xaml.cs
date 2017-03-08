@@ -124,7 +124,7 @@ namespace Jiu_Jitsu_Assistant
             techniqueGroup_comboBox.ItemsSource = this.techniqueGroupsTable.DefaultView;
             techniqueGroup_comboBox.DisplayMemberPath = "name";
             techniqueGroup_comboBox.SelectedValuePath = "group_id";
-            techniqueGroup_comboBox.SelectedIndex = 0;
+            //techniqueGroup_comboBox.SelectedIndex = 0;
          }
          catch (MySql.Data.MySqlClient.MySqlException e)
          {
@@ -164,7 +164,7 @@ namespace Jiu_Jitsu_Assistant
       {
          try{
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level) VALUES ({0},'{1}','{2}','{3}')", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, DateTime.Parse(dateLearned_datepicker.SelectedDate.Value.Date.ToShortDateString()).ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Content.ToString());
+            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level) VALUES ({0},'{1}','{2}','{3}')", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Content.ToString());
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();
             cmd.CommandText = sb.ToString();
@@ -247,7 +247,7 @@ namespace Jiu_Jitsu_Assistant
             }
 
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("update techniques set name='{0}',date_learned='{1}',belt_level='{2}' where technique_id = {3}",gridValues[0], gridValues[1], gridValues[2], gridValues[3]);
+            sb.AppendFormat("update techniques set name='{0}',date_learned='{1}',belt_level='{2}' where technique_id = {3}",gridValues[0], DateTime.Parse(gridValues[1]).ToString("yyyy-MM-dd"), gridValues[2], gridValues[3]);
 
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();

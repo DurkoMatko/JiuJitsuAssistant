@@ -13,7 +13,7 @@
         ResizeMode="NoResize" 
         Name="window1">
    
-   <Grid x:Name="mainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsHitTestVisible="True" Margin="-5,0,5,0" PreviewMouseDown="mainGrid_PreviewMouseDown">
+   <Grid x:Name="mainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsHitTestVisible="True" Margin="-5,0,5,0">
       <Grid.ColumnDefinitions>
          <ColumnDefinition Width="*"/>
          <ColumnDefinition Width="Auto"/>
@@ -66,7 +66,7 @@
             <ComboBoxItem Name="cbi_black" Background="Black" Foreground="White">black</ComboBoxItem>
          </ComboBox>
          <Label x:Name="label1" Content="Technique group" Canvas.Left="48" Canvas.Top="180"/>
-         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="171" Canvas.Top="180" Width="235" Height="26" ItemsSource="{Binding belt_level}"/>
+         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="171" Canvas.Top="180" Width="235" Height="26"/>
          <Button x:Name="addTechnique_button" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,0.773" Canvas.Left="331" Canvas.Top="232"
                  IsEnabled="False" Click="AddNewTechnique" PreviewMouseDown="addTechnique_button_MouseDown"/>
       </Canvas>
