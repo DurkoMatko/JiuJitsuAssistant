@@ -1,17 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using MySql.Data.MySqlClient;
 
 namespace Jiu_Jitsu_Assistant
 {
@@ -24,8 +13,33 @@ namespace Jiu_Jitsu_Assistant
       {
          InitializeComponent();
          WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
+         if (!ConnectToDatabase())
+         {
+            MessageBox.Show("Database connection error!");
+         }
+
          //this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight);
          //this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth);
+      }
+
+      private Boolean ConnectToDatabase()
+      {
+         try
+         {
+            string MyConString =
+            "Server=localhost;" +
+            "Database=jiujitsuassistant;" +
+            "Uid=root;" +
+            "Pwd=root;";
+
+            MySqlConnection conn = new MySqlConnection(MyConString);
+            conn.Open();
+            return true;
+         }
+         catch (MySql.Data.MySqlClient.MySqlException e)
+         {
+            return false;
+         }
       }
 
       private void button_Copy_Click(object sender, RoutedEventArgs e)

@@ -22,19 +22,19 @@ namespace Jiu_Jitsu_Assistant
       public DataTable myTechniquesTable { get; set; }
       public DataTable techniqueGroupsTable { get; set; }
 
-      public SeriesCollection techniquesChronological { get; set; }
-      public Func<double, string> techniquesChronological_XFormatter { get; set; }
-      public Func<double, string> techniquesChronological_YFormatter { get; set; }
+      public SeriesCollection BarChart { get; set; }
+      public string[] Labels_BarChart { get; set; }
+
+      Dictionary<string, List<int>> groupsPerMonthCounts = new Dictionary<string, List<int>>();
 
       public SeriesCollection myChronological { get; set; }
       public Func<double, string> myChronological_XFormatter { get; set; }
-      public Func<double, string> myChronological_YFormatter { get; set; }
 
-      ChartValues<DateTimePoint> chokesChartValues = new ChartValues<DateTimePoint>();
-      ChartValues<DateTimePoint> guardsChartValues = new ChartValues<DateTimePoint>();
-      ChartValues<DateTimePoint> jointLocksChartValues = new ChartValues<DateTimePoint>();
-      ChartValues<DateTimePoint> escapesChartValues = new ChartValues<DateTimePoint>();
-      ChartValues<DateTimePoint> sweepsChartValues = new ChartValues<DateTimePoint>();
+      ChartValues<DateTimePoint> chokesChartValues_Stacked = new ChartValues<DateTimePoint>();
+      ChartValues<DateTimePoint> guardsChartValues_Stacked = new ChartValues<DateTimePoint>();
+      ChartValues<DateTimePoint> jointLocksChartValues_Stacked = new ChartValues<DateTimePoint>();
+      ChartValues<DateTimePoint> escapesChartValues_Stacked = new ChartValues<DateTimePoint>();
+      ChartValues<DateTimePoint> sweepsChartValues_Stacked = new ChartValues<DateTimePoint>();
 
       public Statistics()
       {
@@ -56,119 +56,89 @@ namespace Jiu_Jitsu_Assistant
          InitializeComponent();
 
 
-         List<DateTimePoint> parts = new List<DateTimePoint>();
+         Dictionary<int, string> monthsNamesDict = new Dictionary<int, string>()
+         {
+            {1,"January" },
+            {2,"February" },
+            {3,"March" },
+            {4,"April" },
+            {5,"Mai" },
+            {6,"June" },
+            {7,"July" },
+            {8,"August" },
+            {9,"September" },
+            {10,"October" },
+            {11,"November" },
+            {12,"December" },
+         };
 
-         techniquesChronological = new SeriesCollection
+
+         int maxMonth = this.setBarChartValuesAndReturnMaxMonth();
+         BarChart = new SeriesCollection { };
+         List<string> monthsUsed = new List<string>();
+         //loop dictionary of months and technique counts
+         foreach (KeyValuePair<string, List<int>> groupCountsPair in groupsPerMonthCounts)
+         {
+            //for each month create new chartValue of counts per each month
+            ChartValues<int> tempChartValues = new ChartValues<int>();
+            int i = 0;
+            while (i != maxMonth)
             {
-                new StackedAreaSeries
-                {
-                    Title = "Africa",
-                    Values = new ChartValues<DateTimePoint>
-                    {
-                        new DateTimePoint(new DateTime(1950, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1960, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1970, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1980, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1990, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2000, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2010, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2013, 1, 1), 1)
-                    },
-                    LineSmoothness = 0
-                },
-                new StackedAreaSeries
-                {
-                    Title = "N & S America",
-                    Values = new ChartValues<DateTimePoint>
-                    {
-                        new DateTimePoint(new DateTime(1950, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1960, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1970, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1980, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1990, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2000, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2010, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2013, 1, 1), 1)
-                    },
-                    LineSmoothness = 0
-                },
-                new StackedAreaSeries
-                {
-                    Title = "Asia",
-                    Values = new ChartValues<DateTimePoint>
-                    {
-                        new DateTimePoint(new DateTime(1950, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1960, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1970, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1980, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1990, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2000, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2010, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2013, 1, 1), 1)
-                    },
-                    LineSmoothness = 0
-                },
-                new StackedAreaSeries
-                {
-                    Title = "Europe",
-                    Values = new ChartValues<DateTimePoint>
-                    {
-                        new DateTimePoint(new DateTime(1950, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1960, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1970, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1980, 1, 1), 1),
-                        new DateTimePoint(new DateTime(1990, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2000, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2010, 1, 1), 1),
-                        new DateTimePoint(new DateTime(2013, 1, 1), 3)
-                    },
-                    LineSmoothness = 0
-                }
-            };
+               tempChartValues.Add(groupCountsPair.Value[i]);
+               monthsUsed.Add(monthsNamesDict[i + 1]);
+               i++;
+            }
 
-         techniquesChronological_XFormatter = val => new DateTime((long)val).ToString("yyyy");
-         techniquesChronological_YFormatter = val => val.ToString("N") + " M";
-
+            //add month name and chartValues to actuall seriesCollection
+            BarChart.Add(new ColumnSeries
+            {
+               Title = groupCountsPair.Key,
+               Values = tempChartValues
+            });
+         }
+         Labels_BarChart = monthsUsed.ToArray();
          DataContext = this;
+         //adding empty values technique type so it will show itself as empty bar -> causing an illusion of separated months
+         BarChart.Add(new ColumnSeries{Title ="", Values = new ChartValues<int> { }});
 
-         this.setChartValues();
 
+         //************       Stacked Graph part       *********//
+         this.setStackedChartValues();
          myChronological = new SeriesCollection
             {
                 new StackedAreaSeries
                 {
                     Title = "Chokes",
-                    Values = chokesChartValues,
+                    Values = chokesChartValues_Stacked,
                     LineSmoothness = 0
                 },
                 new StackedAreaSeries
                 {
                     Title = "Guards",
-                    Values = guardsChartValues,
+                    Values = guardsChartValues_Stacked,
                     LineSmoothness = 0
                 },
                 new StackedAreaSeries
                 {
                     Title = "Joint locks",
-                    Values = jointLocksChartValues,
-                    LineSmoothness = 0
-                },
-                new StackedAreaSeries
-                {
-                    Title = "Escapes",
-                    Values = escapesChartValues,
+                    Values = jointLocksChartValues_Stacked,
                     LineSmoothness = 0
                 },
                 new StackedAreaSeries
                 {
                     Title = "Sweeps",
-                    Values = sweepsChartValues,
+                    Values = sweepsChartValues_Stacked,
+                    LineSmoothness = 0
+                },
+                new StackedAreaSeries
+                {
+                    Title = "Escapes",
+                    Values = escapesChartValues_Stacked,
                     LineSmoothness = 0
                 }
             };
 
          myChronological_XFormatter = val => new DateTime((long)val).ToString("dd/MM/yyyy");
-
          DataContext = this;
 
       }
@@ -230,7 +200,7 @@ namespace Jiu_Jitsu_Assistant
          }
       }
 
-      private void setChartValues()
+      private void setStackedChartValues()
       {
          //count of values must be cumulative (can't just say "add one" but have to keep count of how many I already have)
          int chokeCumulative = 0;
@@ -286,12 +256,48 @@ namespace Jiu_Jitsu_Assistant
          //here fill the chartvalues for each date
          foreach (KeyValuePair<DateTime, List<int>> pair in dateCounts)
          {
-            chokesChartValues.Add(new DateTimePoint(pair.Key, pair.Value[0]));
-            guardsChartValues.Add(new DateTimePoint(pair.Key, pair.Value[1]));
-            jointLocksChartValues.Add(new DateTimePoint(pair.Key, pair.Value[2]));
-            escapesChartValues.Add(new DateTimePoint(pair.Key, pair.Value[3]));
-            sweepsChartValues.Add(new DateTimePoint(pair.Key, pair.Value[4]));
+            chokesChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[0]));
+            guardsChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[1]));
+            jointLocksChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[2]));
+            escapesChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[3]));
+            sweepsChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[4]));
          }
+      }
+
+      private int setBarChartValuesAndReturnMaxMonth()
+      {
+         Dictionary<int, string> groupsNamesDict = this.techniqueGroupsToDictionary();
+         int maxMonth = 0;
+
+         foreach (DataRow techniqueRow in myTechniquesTable.Rows)
+         {
+            //if directory does not have key of techniqueGroup of current techniqueRow, create new entry with groupName and list of 12 zeros as count of the group for each month
+            if (!this.groupsPerMonthCounts.ContainsKey(groupsNamesDict[techniqueRow.Field<int>("group_id")]))
+            {
+               this.groupsPerMonthCounts.Add(groupsNamesDict[techniqueRow.Field<int>("group_id")], new List<int>(new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }));
+            }
+
+            //get list of 12 values (each month one value)
+            List<int> countsInMonth = this.groupsPerMonthCounts[groupsNamesDict[techniqueRow.Field<int>("group_id")]];
+            //update value of current month (indexed from zero, that's why -1 is needed)
+            countsInMonth[techniqueRow.Field<DateTime>("date_learned").Month - 1] = countsInMonth[techniqueRow.Field<DateTime>("date_learned").Month - 1] + 1;
+            this.groupsPerMonthCounts[groupsNamesDict[techniqueRow.Field<int>("group_id")]] = countsInMonth;
+            
+            //maxmonth part
+            if (maxMonth < techniqueRow.Field<DateTime>("date_learned").Month)
+               maxMonth = techniqueRow.Field<DateTime>("date_learned").Month;
+         }
+         return maxMonth;
+      }
+
+
+      private Dictionary<int, string> techniqueGroupsToDictionary() {
+         Dictionary<int, string> dict = new Dictionary<int, string>();
+         foreach (DataRow techniqueRow in techniqueGroupsTable.Rows)
+         {
+            dict.Add(techniqueRow.Field<int>("group_id"), techniqueRow.Field<string>("name"));
+         }
+         return dict;
       }
    }
 }
