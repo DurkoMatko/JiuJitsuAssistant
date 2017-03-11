@@ -47,6 +47,7 @@
     <Reference Include="MySql.Web.v20, Version=6.9.8.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Controls.DataVisualization.Toolkit, Version=3.5.40128.1, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\System.Windows.Controls.DataVisualization.Toolkit.4.0.0.0\lib\net40-Client\System.Windows.Controls.DataVisualization.Toolkit.dll</HintPath>
@@ -136,7 +137,22 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="images\" />
+    <Resource Include="images\bjj-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\black-belt.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\blue-belt.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\brown-belt.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\purple-belt.JPG" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="images\white-belt.JPG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

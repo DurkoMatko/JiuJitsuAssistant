@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.Windows;
+using System.Windows.Navigation;
 using System.Windows.Controls;
 using LiveCharts;
 using LiveCharts.Defaults;
@@ -10,6 +11,7 @@ using System.Linq;
 using MySql.Data.MySqlClient;
 using System.Data;
 using System.Collections.Generic;
+using System.Text;
 
 namespace Jiu_Jitsu_Assistant
 {
@@ -22,19 +24,19 @@ namespace Jiu_Jitsu_Assistant
       public DataTable myTechniquesTable { get; set; }
       public DataTable techniqueGroupsTable { get; set; }
 
+      Dictionary<string, List<int>> groupsPerMonthCounts = new Dictionary<string, List<int>>();
+      Dictionary<string, List<int>> groupsPerMonthCounts_ordered = new Dictionary<string, List<int>>();
       public SeriesCollection BarChart { get; set; }
       public string[] Labels_BarChart { get; set; }
 
-      Dictionary<string, List<int>> groupsPerMonthCounts = new Dictionary<string, List<int>>();
-
+      Dictionary<string, ChartValues<DateTimePoint>> stackedChartDictionary = new Dictionary<string, ChartValues<DateTimePoint>>();
+      Dictionary<string, ChartValues<DateTimePoint>> stackedChartDictionary_ordered = new Dictionary<string, ChartValues<DateTimePoint>>();
       public SeriesCollection myChronological { get; set; }
       public Func<double, string> myChronological_XFormatter { get; set; }
 
-      ChartValues<DateTimePoint> chokesChartValues_Stacked = new ChartValues<DateTimePoint>();
-      ChartValues<DateTimePoint> guardsChartValues_Stacked = new ChartValues<DateTimePoint>();
-      ChartValues<DateTimePoint> jointLocksChartValues_Stacked = new ChartValues<DateTimePoint>();
-      ChartValues<DateTimePoint> escapesChartValues_Stacked = new ChartValues<DateTimePoint>();
-      ChartValues<DateTimePoint> sweepsChartValues_Stacked = new ChartValues<DateTimePoint>();
+      //workaround to show alert message on proper place
+      double mouse_x { get; set; }
+      double mouse_y { get; set; }
 
       public Statistics()
       {
@@ -55,92 +57,9 @@ namespace Jiu_Jitsu_Assistant
 
          InitializeComponent();
 
-
-         Dictionary<int, string> monthsNamesDict = new Dictionary<int, string>()
-         {
-            {1,"January" },
-            {2,"February" },
-            {3,"March" },
-            {4,"April" },
-            {5,"Mai" },
-            {6,"June" },
-            {7,"July" },
-            {8,"August" },
-            {9,"September" },
-            {10,"October" },
-            {11,"November" },
-            {12,"December" },
-         };
-
-
-         int maxMonth = this.setBarChartValuesAndReturnMaxMonth();
-         BarChart = new SeriesCollection { };
-         List<string> monthsUsed = new List<string>();
-         //loop dictionary of months and technique counts
-         foreach (KeyValuePair<string, List<int>> groupCountsPair in groupsPerMonthCounts)
-         {
-            //for each month create new chartValue of counts per each month
-            ChartValues<int> tempChartValues = new ChartValues<int>();
-            int i = 0;
-            while (i != maxMonth)
-            {
-               tempChartValues.Add(groupCountsPair.Value[i]);
-               monthsUsed.Add(monthsNamesDict[i + 1]);
-               i++;
-            }
-
-            //add month name and chartValues to actuall seriesCollection
-            BarChart.Add(new ColumnSeries
-            {
-               Title = groupCountsPair.Key,
-               Values = tempChartValues
-            });
-         }
-         Labels_BarChart = monthsUsed.ToArray();
+         populateBarChart();
+         populateStackedChart();
          DataContext = this;
-         //adding empty values technique type so it will show itself as empty bar -> causing an illusion of separated months
-         BarChart.Add(new ColumnSeries{Title ="", Values = new ChartValues<int> { }});
-
-
-         //************       Stacked Graph part       *********//
-         this.setStackedChartValues();
-         myChronological = new SeriesCollection
-            {
-                new StackedAreaSeries
-                {
-                    Title = "Chokes",
-                    Values = chokesChartValues_Stacked,
-                    LineSmoothness = 0
-                },
-                new StackedAreaSeries
-                {
-                    Title = "Guards",
-                    Values = guardsChartValues_Stacked,
-                    LineSmoothness = 0
-                },
-                new StackedAreaSeries
-                {
-                    Title = "Joint locks",
-                    Values = jointLocksChartValues_Stacked,
-                    LineSmoothness = 0
-                },
-                new StackedAreaSeries
-                {
-                    Title = "Sweeps",
-                    Values = sweepsChartValues_Stacked,
-                    LineSmoothness = 0
-                },
-                new StackedAreaSeries
-                {
-                    Title = "Escapes",
-                    Values = escapesChartValues_Stacked,
-                    LineSmoothness = 0
-                }
-            };
-
-         myChronological_XFormatter = val => new DateTime((long)val).ToString("dd/MM/yyyy");
-         DataContext = this;
-
       }
 
       private Boolean ConnectToDatabase()
@@ -194,73 +113,12 @@ namespace Jiu_Jitsu_Assistant
             da.Fill(ds);
 
             this.techniqueGroupsTable = ds.Tables[0];
+            techniqueGroup_comboBox.ItemsSource = this.techniqueGroupsTable.DefaultView;
+            techniqueGroup_comboBox.DisplayMemberPath = "name";
+            techniqueGroup_comboBox.SelectedValuePath = "group_id";
          }
          catch (MySql.Data.MySqlClient.MySqlException e)
          {
-         }
-      }
-
-      private void setStackedChartValues()
-      {
-         //count of values must be cumulative (can't just say "add one" but have to keep count of how many I already have)
-         int chokeCumulative = 0;
-         int guardeCumulative = 0;
-         int lockCumulative = 0;
-         int escapeCumulative = 0;
-         int sweepCumulative = 0;
-
-         Dictionary<DateTime, List<int>> dateCounts = new Dictionary<DateTime, List<int>>();
-         int sameDate_indexToChange = 0;
-         foreach (DataRow techniqueRow in myTechniquesTable.Rows)
-         {
-            switch (techniqueRow.Field<int>("group_id"))
-            {
-               case 1:
-                  ++chokeCumulative;
-                  sameDate_indexToChange = 1;
-                  goto default;
-               case 2:
-                  ++guardeCumulative;
-                  sameDate_indexToChange = 2;
-                  goto default;
-               case 3:
-                  ++lockCumulative;
-                  sameDate_indexToChange = 3;
-                  goto default;
-               case 4:
-                  ++escapeCumulative;
-                  sameDate_indexToChange = 4;
-                  goto default;
-               case 5:
-                  ++sweepCumulative;
-                  sameDate_indexToChange = 5;
-                  goto default;
-               //not adding to charts here because if same date in two dataRows, data duplicate themselves
-               //I just create dictionary with dates as keys
-               default:
-                  //if date already there, I just increase count for particular technique group
-                  if (dateCounts.ContainsKey(techniqueRow.Field<DateTime>("date_learned")))
-                  {
-                     List<int> temp = dateCounts[techniqueRow.Field<DateTime>("date_learned")];
-                     temp[sameDate_indexToChange - 1] = temp[sameDate_indexToChange - 1] + 1;
-                     dateCounts[techniqueRow.Field<DateTime>("date_learned")] = temp;
-                  }
-                  else
-                  {
-                     dateCounts.Add(techniqueRow.Field<DateTime>("date_learned"), new List<int>(new int[] { chokeCumulative, guardeCumulative, lockCumulative, escapeCumulative, sweepCumulative }));
-                  }
-                  break;
-            }
-         }
-
-         //here fill the chartvalues for each date
-         foreach (KeyValuePair<DateTime, List<int>> pair in dateCounts)
-         {
-            chokesChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[0]));
-            guardsChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[1]));
-            jointLocksChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[2]));
-            escapesChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[3]));
-            sweepsChartValues_Stacked.Add(new DateTimePoint(pair.Key, pair.Value[4]));
          }
       }
 
@@ -269,14 +127,14 @@ namespace Jiu_Jitsu_Assistant
          Dictionary<int, string> groupsNamesDict = this.techniqueGroupsToDictionary();
          int maxMonth = 0;
 
+         //insert all groups to dictionary (even if user can't do any of that group)...like this, colors are the same for both charts
+         foreach (KeyValuePair<int, string> groupIdNamePair in groupsNamesDict)
+         {
+            this.groupsPerMonthCounts.Add(groupIdNamePair.Value, new List<int>(new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }));
+         }
+
          foreach (DataRow techniqueRow in myTechniquesTable.Rows)
          {
-            //if directory does not have key of techniqueGroup of current techniqueRow, create new entry with groupName and list of 12 zeros as count of the group for each month
-            if (!this.groupsPerMonthCounts.ContainsKey(groupsNamesDict[techniqueRow.Field<int>("group_id")]))
-            {
-               this.groupsPerMonthCounts.Add(groupsNamesDict[techniqueRow.Field<int>("group_id")], new List<int>(new int[] { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 }));
-            }
-
             //get list of 12 values (each month one value)
             List<int> countsInMonth = this.groupsPerMonthCounts[groupsNamesDict[techniqueRow.Field<int>("group_id")]];
             //update value of current month (indexed from zero, that's why -1 is needed)
@@ -298,6 +156,201 @@ namespace Jiu_Jitsu_Assistant
             dict.Add(techniqueRow.Field<int>("group_id"), techniqueRow.Field<string>("name"));
          }
          return dict;
+      }
+
+
+      //enables/disables Add button always when technique name textbox changes value
+      private void emptyTechniqueNameCheck(object sender, TextChangedEventArgs e)
+      {
+         if (string.IsNullOrWhiteSpace(techniqueName_textbox.Text))
+         {
+            addTechnique_button.IsEnabled = false;
+            return;
+         }
+         addTechnique_button.IsEnabled = true;
+      }
+
+      //used to set mouse_x,mouse_y to proper position AddTechniqueDialog
+      private void addTechnique_button_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+      {
+         var relativePosition = e.GetPosition(this);
+         var point = PointToScreen(relativePosition);
+         this.mouse_x = point.X;
+         this.mouse_y = point.Y;
+      }
+
+
+      private void AddNewTechnique(object sender, RoutedEventArgs e)
+      {
+         try
+         {
+            StringBuilder sb = new StringBuilder();
+            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level) VALUES ({0},'{1}','{2}','{3}')", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Content.ToString());
+            MySqlCommand cmd;
+            cmd = this.conn.CreateCommand();
+            cmd.CommandText = sb.ToString();
+            int effectedRows = cmd.ExecuteNonQuery();
+
+            resetAddTechniqueValues();
+            bool success = false;
+            if (effectedRows != 0)
+            {
+               LoadTechniques();
+               success = true;
+            }
+            /*  UPDATE CHARTS TRY
+            this.BarChart.Clear();
+            this.myChronological.Clear();
+            populateBarChart();
+            BarChart[1].Values.Add(0);
+            DataContext = this;
+            populateStackedChart(); */
+
+            //javascript like alert dialog to let user know if adding technique was successful
+            AddTechniqueDialog atd = new AddTechniqueDialog(success, mouse_x, mouse_y);
+            atd.ShowDialog();
+
+            Statistics win2 = new Statistics(this.Left, this.Top, this.Height, this.Width);
+            win2.Show();
+            this.Close();
+         }
+         catch (Exception ex)
+         {
+            resetAddTechniqueValues();
+            AddTechniqueDialog atd = new AddTechniqueDialog(false, mouse_x, mouse_y);
+            atd.Show();
+         }
+      }
+
+      //reset new technique form
+      private void resetAddTechniqueValues()
+      {
+         techniqueName_textbox.Text = "";
+         dateLearned_datepicker.SelectedDate = DateTime.Today;
+         belt_comboBox.SelectedIndex = 0;
+         techniqueGroup_comboBox.SelectedIndex = 0;
+      }
+
+      private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+      {
+         if (this.conn.State == ConnectionState.Open)
+            this.conn.Close();
+      }
+
+      private void populateBarChart() {
+         Dictionary<int, string> monthsNamesDict = new Dictionary<int, string>()
+         {
+            {1,"January" },
+            {2,"February" },
+            {3,"March" },
+            {4,"April" },
+            {5,"Mai" },
+            {6,"June" },
+            {7,"July" },
+            {8,"August" },
+            {9,"September" },
+            {10,"October" },
+            {11,"November" },
+            {12,"December" },
+         };
+
+         int maxMonth = this.setBarChartValuesAndReturnMaxMonth();
+         this.BarChart = new SeriesCollection { };
+         List<string> monthsUsed = new List<string>();
+
+         //just reordering the dictionary so the colors match colors in second graph
+         var groupsPerMonthCounts_ordered = from pair in this.groupsPerMonthCounts orderby pair.Key ascending select pair;
+
+         //loop dictionary of months and technique counts
+         foreach (KeyValuePair<string, List<int>> groupCountsPair in groupsPerMonthCounts_ordered)
+         {
+            //for each month create new chartValue of counts per each month
+            ChartValues<int> tempChartValues = new ChartValues<int>();
+            int i = 0;
+            while (i != maxMonth)
+            {
+               tempChartValues.Add(groupCountsPair.Value[i]);
+               monthsUsed.Add(monthsNamesDict[i + 1]);
+               i++;
+            }
+
+            //add month name and chartValues to actuall seriesCollection
+            this.BarChart.Add(new ColumnSeries
+            {
+               Title = groupCountsPair.Key,
+               Values = tempChartValues
+            });
+         }
+         this.Labels_BarChart = monthsUsed.ToArray();
+         
+         //adding empty values technique type so it will show itself as empty bar -> causing an illusion of separated months
+         this.BarChart.Add(new ColumnSeries { Title = "", Values = new ChartValues<int> { } });
+      }
+
+
+      private void setStackedChartValues()
+      {
+         Dictionary<int, string> groupsNamesDict = this.techniqueGroupsToDictionary();
+
+         //count of values must be cumulative (can't just say "add one" but have to keep count of how many I already have) - that's how lcharts work
+         //so I create an array of -1
+         List<int> zeros = Enumerable.Repeat(0, groupsNamesDict.Count+1).ToList();  //list of so many zeros as there are groups
+         int[] cumulatives = zeros.ToArray();
+
+         Dictionary<DateTime, List<int>> dateCounts = new Dictionary<DateTime, List<int>>();
+         
+         foreach (DataRow techniqueRow in myTechniquesTable.Rows)
+         {
+            //not adding to charts here because if same date in two dataRows, data duplicate themselves
+            //I just create dictionary with dates as keys
+
+            //if date is not there just add it with current cumulative values
+            if (!dateCounts.ContainsKey(techniqueRow.Field<DateTime>("date_learned")))
+               dateCounts.Add(techniqueRow.Field<DateTime>("date_learned"), new List<int>(cumulatives));
+
+            //increase count using group_id as index
+            List<int> temp = dateCounts[techniqueRow.Field<DateTime>("date_learned")];
+            temp[techniqueRow.Field<int>("group_id")]++;
+            cumulatives[techniqueRow.Field<int>("group_id")]++;
+            dateCounts[techniqueRow.Field<DateTime>("date_learned")] = temp;
+         }
+
+
+         //here loop all technique groups...keyvaluepair<groupTechnique id, groupTechnique name>
+         foreach (KeyValuePair<int, string> group in groupsNamesDict)
+         {
+            if (!this.stackedChartDictionary.ContainsKey(group.Value))
+            {
+               this.stackedChartDictionary.Add(group.Value,new ChartValues<DateTimePoint>());
+            }
+            //here fill the chartvalue for each date....keyvaluepair<date, cumulatives for all techniqueGroups>
+            foreach (KeyValuePair<DateTime, List<int>> pair in dateCounts)
+            {
+               //add to one grouptechnique only
+               this.stackedChartDictionary[group.Value].Add(new DateTimePoint(pair.Key, pair.Value[group.Key]));
+            }
+         }
+      }
+
+      private void populateStackedChart()
+      {
+         this.setStackedChartValues();
+         this.myChronological = new SeriesCollection { };
+
+         //just reordering the dictionary so the colors match colors in second graph
+         var stackedChartDictionary_ordered = from pair in this.stackedChartDictionary orderby pair.Key ascending select pair;
+
+         //keyvaluepair<groupTechnique name, values>
+         foreach (KeyValuePair<string, ChartValues<DateTimePoint>> groupCounts in stackedChartDictionary_ordered)
+         {
+            myChronological.Add(new StackedAreaSeries
+            {
+               Title = groupCounts.Key,
+               Values = groupCounts.Value,
+               LineSmoothness = 0
+            });
+         }
+         this.myChronological_XFormatter = val => new DateTime((long)val).ToString("dd/MM/yyyy");
       }
    }
 }

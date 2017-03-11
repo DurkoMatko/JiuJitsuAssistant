@@ -1,6 +1,12 @@
 CREATE SCHEMA `jiujitsuassistant` ;
 
 
+CREATE TABLE `jiujitsuassistant`.`positions` (
+  `position_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  PRIMARY KEY (`position_id`));
+
+
 CREATE TABLE `jiujitsuassistant`.`techniquegroups` (
   `group_id` INT NOT NULL AUTO_INCREMENT,
   `name` VARCHAR(45) NULL,
@@ -14,25 +20,23 @@ CREATE TABLE `jiujitsuassistant`.`techniques` (
   `name` VARCHAR(45) NULL,
   `date_learned` DATE NULL,
   `belt_level` VARCHAR(45) NULL,
-  PRIMARY KEY (`technique_id`));
-
-
-CREATE TABLE `jiujitsuassistant`.`transitions` (
-  `technique_from_id` INT NULL,
-  `technique_to_id` INT NULL,
-  `conditions` VARCHAR(450) NULL);
-
-ALTER TABLE `jiujitsuassistant`.`transitions` 
-ADD INDEX `fk_technique_from_idx` (`technique_from_id` ASC),
-ADD INDEX `fk_technique_to_idx` (`technique_to_id` ASC);
-ALTER TABLE `jiujitsuassistant`.`transitions` 
-ADD CONSTRAINT `fk_technique_from`
-  FOREIGN KEY (`technique_from_id`)
-  REFERENCES `jiujitsuassistant`.`techniques` (`technique_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION,
-ADD CONSTRAINT `fk_technique_to`
-  FOREIGN KEY (`technique_to_id`)
-  REFERENCES `jiujitsuassistant`.`techniques` (`technique_id`)
-  ON DELETE NO ACTION
-  ON UPDATE NO ACTION;
+  `position_from` INT NULL,
+  `position_to` INT NULL,
+  PRIMARY KEY (`technique_id`),
+  INDEX `fk_position_from_idx` (`position_from` ASC),
+  INDEX `fk_position_to_idx` (`position_to` ASC),
+  CONSTRAINT `fk_group_id`
+    FOREIGN KEY (`technique_id`)
+    REFERENCES `jiujitsuassistant`.`techniquegroups` (`group_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_position_from`
+    FOREIGN KEY (`position_from`)
+    REFERENCES `jiujitsuassistant`.`positions` (`position_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_position_to`
+    FOREIGN KEY (`position_to`)
+    REFERENCES `jiujitsuassistant`.`positions` (`position_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

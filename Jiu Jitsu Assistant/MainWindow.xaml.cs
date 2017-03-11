@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Windows;
 using MySql.Data.MySqlClient;
+using System.Windows.Media;
 
 namespace Jiu_Jitsu_Assistant
 {
@@ -17,7 +18,8 @@ namespace Jiu_Jitsu_Assistant
          {
             MessageBox.Show("Database connection error!");
          }
-
+         
+         window.Background = new SolidColorBrush(Colors.Black);
          //this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight);
          //this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth);
       }

@@ -19,6 +19,7 @@ namespace Jiu_Jitsu_Assistant
       MySqlConnection conn;
       public DataTable myTechniquesTable { get; set; }
       public DataTable techniqueGroupsTable { get; set; }
+      public DataTable positionsTable { get; set; }
       double mouse_x { get; set; }
       double mouse_y { get; set; }
 
@@ -29,10 +30,8 @@ namespace Jiu_Jitsu_Assistant
          {
             LoadTechniques();
             LoadedTechniqueGroups();
+            LoadPositions();
          }
-
-         this.myTechniquesTable = new DataTable();
-         this.techniqueGroupsTable = new DataTable();
       }
 
       public MyTechniques(double left,double top, double height, double width):this() {
@@ -131,6 +130,31 @@ namespace Jiu_Jitsu_Assistant
          }
       }
 
+      private void LoadPositions() {
+         try
+         {
+            MySqlCommand cmd;
+            cmd = this.conn.CreateCommand();
+            cmd.CommandText = "SELECT * FROM positions";
+            MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+            DataSet ds = new DataSet();
+            da.Fill(ds);
+
+            this.positionsTable = ds.Tables[0];
+            //comboboxes
+            from_Position_comboBox.ItemsSource = this.positionsTable.DefaultView;
+            from_Position_comboBox.DisplayMemberPath = "name";
+            from_Position_comboBox.SelectedValuePath = "position_id";
+
+            to_Position_comboBox.ItemsSource = this.positionsTable.DefaultView;
+            to_Position_comboBox.DisplayMemberPath = "name";
+            to_Position_comboBox.SelectedValuePath = "position_id";
+         }
+         catch (MySql.Data.MySqlClient.MySqlException e)
+         {
+         }
+      }
+
       private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
       {
          if (this.conn.State == ConnectionState.Open)
@@ -155,16 +179,11 @@ namespace Jiu_Jitsu_Assistant
          catch (Exception){ }
       }
 
-      private void cbi_brown_Selected(object sender, RoutedEventArgs e)
-      {
-
-      }
-
       private void AddNewTechnique(object sender, RoutedEventArgs e)
       {
          try{
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level) VALUES ({0},'{1}','{2}','{3}')", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Content.ToString());
+            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES ({0},'{1}','{2}','{3}', {4} , {5} )", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Content.ToString(), from_Position_comboBox.SelectedValue.ToString(), to_Position_comboBox.SelectedValue.ToString());
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();
             cmd.CommandText = sb.ToString();
@@ -195,6 +214,8 @@ namespace Jiu_Jitsu_Assistant
          dateLearned_datepicker.SelectedDate = DateTime.Today;
          belt_comboBox.SelectedIndex = 0;
          techniqueGroup_comboBox.SelectedIndex = 0;
+         from_Position_comboBox.SelectedIndex = 0;
+         to_Position_comboBox.SelectedIndex = to_Position_comboBox.Items.Count - 1;
       }
 
 
@@ -216,6 +237,7 @@ namespace Jiu_Jitsu_Assistant
          }
          addTechnique_button.IsEnabled = true;
       }
+
       private void mainGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
       {
          Keyboard.ClearFocus();
