@@ -11,7 +11,8 @@
         Height="800px" Width="1300px" 
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  
         ResizeMode="NoResize" 
-        Name="window1">
+        Name="window1"        
+        Icon="/images/bjj-logo.png">
 
    <Grid x:Name="mainGrid" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" IsHitTestVisible="True" Margin="-5,0,5,0">
       <Grid.ColumnDefinitions>
@@ -20,7 +21,8 @@
          <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
       <DataGrid x:Name="techniquesGrid" HorizontalAlignment="Left" Margin="64,235,0,0" VerticalAlignment="Top" AutoGenerateColumns="False"
-                ItemsSource="{Binding}" Height="256" VerticalScrollBarVisibility="Visible" Grid.Column="0" CanUserAddRows="False" Width="527" CellEditEnding="updateTechniqueFromDataGrid">
+                ItemsSource="{Binding}" Height="256" VerticalScrollBarVisibility="Visible" Grid.Column="0" CanUserAddRows="False" Width="527" CellEditEnding="updateTechniqueFromDataGrid"
+                PreviewKeyDown="deletingRowFromDatagrid" SelectionMode="Single">
          <DataGrid.Columns>
             <DataGridTextColumn Header="Name" Binding="{Binding name}" Width="200" />
             <DataGridTextColumn Header="Learned" Binding="{Binding date_learned, StringFormat=\{0:dd.MM.yyyy\}}" Width="100"/>
@@ -54,27 +56,47 @@
 
       <Label x:Name="label" Content="Add new technique" Grid.Column="2" HorizontalAlignment="Left" Margin="216,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
       <Label Grid.Column="0" x:Name="label_Copy" Content="My techniques" HorizontalAlignment="Left" Margin="238,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
-      <Canvas HorizontalAlignment="Left" Height="370" VerticalAlignment="Top" Width="492" Grid.Column="2" Margin="109,57,0,0">
+      <Canvas HorizontalAlignment="Left" Height="370" VerticalAlignment="Top" Width="492" Grid.Column="2" Margin="107,57,0,0">
          <Label x:Name="lbl" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="30" FontSize="14"/>
          <extToolkit:WatermarkTextBox Name="techniqueName_textbox" Height="25" Canvas.Left="171" TextWrapping="Wrap" Canvas.Top="34" Width="235" Watermark="Technique name" TextChanged="emptyTechniqueNameCheck" />
          <Label x:Name="lbl_Copy" Content="Date learned:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="80" FontSize="14"/>
          <DatePicker Name="dateLearned_datepicker" Canvas.Left="171" Canvas.Top="83" Width="235" SelectedDate="{x:Static sys:DateTime.Now}"/>
          <Label x:Name="lbl_Copy1" Content="Belt:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="130" FontSize="14"/>
          <ComboBox x:Name="belt_comboBox" VerticalContentAlignment="Center" Canvas.Left="171" Canvas.Top="130" Width="235" Height="29">
-            <ComboBoxItem Name="cb_white" Background="White" IsSelected="True">white</ComboBoxItem>
-            <ComboBoxItem Name="cbi_blue" Background="#FF25A1F7">blue</ComboBoxItem>
-            <ComboBoxItem Name="cbi_purple" Background="Purple">purple</ComboBoxItem>
-            <ComboBoxItem Name="cbi_brown" Background="#FFB2590F">brown</ComboBoxItem>
-            <ComboBoxItem Name="cbi_black" Background="Black" Foreground="White">black</ComboBoxItem>
+            <ComboBoxItem Name="white" Background="White" IsSelected="True">
+               <StackPanel Orientation="Horizontal">
+                  <Image Source="/images/white-belt.jpg" Width="225" Height="15" />
+               </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem Name="blue" >
+               <StackPanel Orientation="Horizontal">
+                  <Image Source="/images/blue-belt.jpg" Width="225" Height="15" />
+               </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem Name="purple">
+               <StackPanel Orientation="Horizontal">
+                  <Image Source="/images/purple-belt.jpg" Width="225" Height="15" />
+               </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem Name="brown">
+               <StackPanel Orientation="Horizontal">
+                  <Image Source="/images/brown-belt.jpg" Width="225" Height="15" />
+               </StackPanel>
+            </ComboBoxItem>
+            <ComboBoxItem Name="black">
+               <StackPanel Orientation="Horizontal">
+                  <Image Source="/images/black-belt.jpg" Width="225" Height="15" />
+               </StackPanel>
+            </ComboBoxItem>
          </ComboBox>
          <Label x:Name="label1" Content="Technique group:" Canvas.Left="48" Canvas.Top="180" FontSize="14"/>
-         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="171" Canvas.Top="180" Width="235" Height="29"/>
+         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="171" Canvas.Top="180" Width="235" Height="29" VerticalContentAlignment="Center" />
          <Button x:Name="addTechnique_button" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,0.773" Canvas.Left="331" Canvas.Top="331"
                  IsEnabled="False" Click="AddNewTechnique" PreviewMouseDown="addTechnique_button_MouseDown"/>
          <Label x:Name="Label_From" Content="From position:" Canvas.Left="48" Canvas.Top="230" RenderTransformOrigin="-0.079,-0.385" FontSize="14"/>
-         <ComboBox x:Name="from_Position_comboBox" Canvas.Left="171" Canvas.Top="230" Width="235" Height="29"/>
+         <ComboBox x:Name="from_Position_comboBox" Canvas.Left="171" Canvas.Top="230" Width="235" Height="29" VerticalContentAlignment="Center"/>
          <Label x:Name="Label_To" Content="To position:" Canvas.Left="48" Canvas.Top="280" FontSize="14"/>
-         <ComboBox x:Name="to_Position_comboBox" Canvas.Left="171" Canvas.Top="280" Width="235" Height="26"/>
+         <ComboBox x:Name="to_Position_comboBox" Canvas.Left="171" Canvas.Top="280" Width="235" Height="29" VerticalContentAlignment="Center"/>
       </Canvas>
 
 

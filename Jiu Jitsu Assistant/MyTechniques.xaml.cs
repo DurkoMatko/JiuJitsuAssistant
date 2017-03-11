@@ -17,11 +17,13 @@ namespace Jiu_Jitsu_Assistant
    {
 
       MySqlConnection conn;
-      public DataTable myTechniquesTable { get; set; }
-      public DataTable techniqueGroupsTable { get; set; }
-      public DataTable positionsTable { get; set; }
-      double mouse_x { get; set; }
-      double mouse_y { get; set; }
+      private DataTable myTechniquesTable { get; set; }
+      private DataTable techniqueGroupsTable { get; set; }
+      private DataTable positionsTable { get; set; }
+      private Dictionary<string,int> positionsDict = new Dictionary<string, int>();
+
+      private double mouse_x { get; set; }
+      private double mouse_y { get; set; }
 
       public MyTechniques()
       {
@@ -65,9 +67,16 @@ namespace Jiu_Jitsu_Assistant
       {
          try
          {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT t.technique_id, t.name, t.date_learned, t.belt_level, pFrom.name as position_from, pTo.name as position_to FROM techniques as t ");
+            sb.Append("LEFT JOIN positions as pFrom ");
+            sb.Append("ON pFrom.position_id = t.position_from ");
+            sb.Append("LEFT JOIN positions as pTo ");
+            sb.Append("ON pTo.position_id = t.position_to ");
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM techniques";
+            cmd.CommandText = sb.ToString();
+                        
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
@@ -89,9 +98,15 @@ namespace Jiu_Jitsu_Assistant
             cmd = this.conn.CreateCommand();
             //list to comma separated string
             string inValues = string.Format("'{0}'", string.Join("','", groups.Select(i => i.Replace("'", "''")).ToArray()));
-            cmd.CommandText = "SELECT * FROM techniques WHERE group_id IN " +
-                              "(SELECT group_id " +
-                              "FROM techniquegroups WHERE name IN (" + inValues + "))";
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT t.technique_id, t.name, t.date_learned, t.belt_level, pFrom.name as position_from, pTo.name as position_to FROM techniques as t ");
+            sb.Append("LEFT JOIN positions as pFrom ");
+            sb.Append("ON pFrom.position_id = t.position_from ");
+            sb.Append("LEFT JOIN positions as pTo ");
+            sb.Append("ON pTo.position_id = t.position_to ");
+            sb.AppendFormat("WHERE t.group_id IN (SELECT group_id FROM techniquegroups WHERE name IN  ({0}))", inValues);
+            cmd.CommandText = sb.ToString();
+               
             //cmd.Parameters.AddWithValue("@Name","inValues" );  //doesnt work...
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             DataSet ds = new DataSet();
@@ -149,6 +164,10 @@ namespace Jiu_Jitsu_Assistant
             to_Position_comboBox.ItemsSource = this.positionsTable.DefaultView;
             to_Position_comboBox.DisplayMemberPath = "name";
             to_Position_comboBox.SelectedValuePath = "position_id";
+
+            foreach (DataRow positionRow in positionsTable.Rows) {
+               positionsDict.Add(positionRow.Field<string>("name"), positionRow.Field<int>("position_id"));
+            }
          }
          catch (MySql.Data.MySqlClient.MySqlException e)
          {
@@ -183,7 +202,7 @@ namespace Jiu_Jitsu_Assistant
       {
          try{
             StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES ({0},'{1}','{2}','{3}', {4} , {5} )", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Content.ToString(), from_Position_comboBox.SelectedValue.ToString(), to_Position_comboBox.SelectedValue.ToString());
+            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES ({0},'{1}','{2}','{3}', {4} , {5} )", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Name, from_Position_comboBox.SelectedValue.ToString(), to_Position_comboBox.SelectedValue.ToString());
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();
             cmd.CommandText = sb.ToString();
@@ -244,6 +263,40 @@ namespace Jiu_Jitsu_Assistant
          mainGrid.Focus();
       }
 
+      private void deletingRowFromDatagrid(object sender, KeyEventArgs e)
+      {
+         //if it's really delete event and have something selected
+         if (e.Key == Key.Delete && techniquesGrid.SelectedItems.Count > 0)
+         {
+            StringBuilder sb = new StringBuilder();
+            List<string> columnValues = new List<string>();
+            int rowIndex = techniquesGrid.SelectedIndex;
+            DataGridRow row = (DataGridRow)techniquesGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex);
+
+            foreach (DataGridColumn column in techniquesGrid.Columns)
+               {
+                  if (column.GetCellContent(row) is TextBlock)
+                  {
+                     TextBlock cellContent = column.GetCellContent(row) as TextBlock;
+                     columnValues.Add(cellContent.Text);
+                  }
+                  else if (column.GetCellContent(row) is TextBox)
+                  {
+                     return;   //if there's a textbox within a row, it means user is editing something...therefore terminate the function
+                  }
+               }
+            sb.Clear();
+            sb.AppendFormat("delete from techniques where technique_id = {0}", columnValues[5]);  //last column with index 5 is hidden technique_id column
+
+            MySqlCommand cmd;
+            cmd = this.conn.CreateCommand();
+            cmd.CommandText = sb.ToString();
+            int effectedRows = cmd.ExecuteNonQuery();
+
+            LoadTechniques();
+         }
+      }
+
       //propagates changes done in datagrid to the database
       private void updateTechniqueFromDataGrid(object sender, DataGridCellEditEndingEventArgs e)
       {
@@ -268,14 +321,19 @@ namespace Jiu_Jitsu_Assistant
                }
             }
 
-            StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("update techniques set name='{0}',date_learned='{1}',belt_level='{2}' where technique_id = {3}",gridValues[0], DateTime.Parse(gridValues[1]).ToString("yyyy-MM-dd"), gridValues[2], gridValues[3]);
-
-            MySqlCommand cmd;
-            cmd = this.conn.CreateCommand();
-            cmd.CommandText = sb.ToString();
-            int effectedRows = cmd.ExecuteNonQuery();
-
+            //if names for positions exist
+            if (positionsDict.ContainsKey(gridValues[2]) && positionsDict.ContainsKey(gridValues[3]))
+            {
+               StringBuilder sb = new StringBuilder();
+               sb.AppendFormat("update techniques set name='{0}',date_learned='{1}', ", gridValues[0], DateTime.Parse(gridValues[1]).ToString("yyyy-MM-dd"));
+               sb.AppendFormat(" position_from={0}, ", positionsDict[gridValues[2]]);
+               sb.AppendFormat(" position_to={0}, ", positionsDict[gridValues[3]]);
+               sb.AppendFormat(" belt_level='{0}' where technique_id = {1}", gridValues[4], gridValues[5]);
+               MySqlCommand cmd;
+               cmd = this.conn.CreateCommand();
+               cmd.CommandText = sb.ToString();
+               int effectedRows = cmd.ExecuteNonQuery();
+            }
             LoadTechniques();
          }
       }

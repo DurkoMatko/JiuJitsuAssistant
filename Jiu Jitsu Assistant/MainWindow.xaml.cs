@@ -54,7 +54,13 @@ namespace Jiu_Jitsu_Assistant
       private void Settings_Click(object sender, RoutedEventArgs e)
       {
          Statistics win2 = new Statistics(this.Left, this.Top, this.Height, this.Width);
-         win2.ShowDialog();
+         try
+         {
+            win2.ShowDialog();
+         }
+         catch (LiveCharts.Helpers.LiveChartsException ex) {
+            MessageBox.Show("Statistics available once several techniques are added! Keep training and you'll get there soon");
+         }
       }
    }
 }

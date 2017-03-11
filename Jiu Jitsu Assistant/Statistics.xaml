@@ -12,7 +12,9 @@
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" 
         Title="Statistics" 
         Height="800px" Width="1300px" 
-        ResizeMode="NoResize" >
+        ResizeMode="NoResize"         
+        Icon="/images/bjj-logo.png"
+        Name="window">
 
    <Grid>
       <Grid.ColumnDefinitions>

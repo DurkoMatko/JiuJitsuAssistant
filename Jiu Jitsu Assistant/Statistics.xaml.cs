@@ -46,6 +46,10 @@ namespace Jiu_Jitsu_Assistant
             LoadTechniques();
             LoadedTechniqueGroups();
          }
+
+         populateBarChart();
+         populateStackedChart();
+         DataContext = this;
       }
 
       public Statistics(double left, double top, double height, double width) : this()
@@ -54,12 +58,6 @@ namespace Jiu_Jitsu_Assistant
          this.Top = top;
          this.Height = height;
          this.Width = width;
-
-         InitializeComponent();
-
-         populateBarChart();
-         populateStackedChart();
-         DataContext = this;
       }
 
       private Boolean ConnectToDatabase()
