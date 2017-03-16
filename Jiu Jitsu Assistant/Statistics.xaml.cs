@@ -205,7 +205,7 @@ namespace Jiu_Jitsu_Assistant
             populateStackedChart(); */
 
             //javascript like alert dialog to let user know if adding technique was successful
-            AddTechniqueDialog atd = new AddTechniqueDialog(success, mouse_x, mouse_y);
+            AddTechniqueDialog atd = new AddTechniqueDialog(success, mouse_x, mouse_y,"Technique");
             atd.ShowDialog();
 
             Statistics win2 = new Statistics(this.Left, this.Top, this.Height, this.Width);
@@ -215,7 +215,7 @@ namespace Jiu_Jitsu_Assistant
          catch (Exception ex)
          {
             resetAddTechniqueValues();
-            AddTechniqueDialog atd = new AddTechniqueDialog(false, mouse_x, mouse_y);
+            AddTechniqueDialog atd = new AddTechniqueDialog(false, mouse_x, mouse_y,"technique");
             atd.Show();
          }
       }

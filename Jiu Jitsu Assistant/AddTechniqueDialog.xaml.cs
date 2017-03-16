@@ -26,17 +26,17 @@ namespace Jiu_Jitsu_Assistant
 
       }
 
-      public AddTechniqueDialog(bool success,double X, double Y) : this()
+      public AddTechniqueDialog(bool success,double X, double Y, string element) : this()
       {
          this.Left = X - 300 ;
          this.Top = Y - 150;
          if (success)
          {
-            textBlock.Text = "Technique successfully added!";
+            textBlock.Text = element + " successfully added!";
             textBlock.Foreground = new SolidColorBrush(Colors.Green);
          }
          else {
-            textBlock.Text = string.Format("There was an error while {0} adding technique!", Environment.NewLine);
+            textBlock.Text = string.Format("There was an error while {0} adding " + element + "!", Environment.NewLine);
             textBlock.Foreground = new SolidColorBrush(Colors.Red);
          }
       }

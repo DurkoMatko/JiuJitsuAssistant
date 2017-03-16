@@ -1,0 +1,68 @@
+insert into techniquegroups (name) values ('Chokes'),('Guards'),('Escapes'),('Joint Locks'),('Takedowns'),('Sweeps');
+
+insert into positions (name) values ('Mount'),('Side control'),('Knee on belly'),('Grounded'),('Standing'),('Submission'),('Back-mounted')
+,('On oppontent''s back'),('In opponent''s closed guard'),('Closed guard'),('In submission') ;
+
+SET foreign_key_checks = 0;
+insert into techniques (group_id, name, date_learned, belt_level, position_from, position_to) values
+ 
+	    (1,'Rear naked choke', '2017-01-14','white', 8,6),
+
+        (1,'Triangle', '2017-01-12','white', 10,6),
+
+        (1,'Darce choke', '2017-03-07','white', 3,6),
+
+        (1,'Collar choke', '2017-01-14','white', 1,6),
+
+        (1,'Side control choke', '2017-03-01','white', 1,6),
+
+        (1,'Side control choke', '2017-02-27','white', 2,6),
+
+        (2,'X-guard', '2017-02-14','white', 4,4),
+
+        (2,'Closed guard', '2017-01-12','white', 4,4),
+
+        (2,'Half guard', '2017-01-29','white', 4,4),
+
+        (3,'Triangle rotation escape', '2017-02-09','white', 11,2),
+
+        (3,'Triangle armpit escape', '2017-02-09','white', 11,6),
+
+        (5,'Double leg takedown', '2017-01-16','white', 5,2),
+
+        (4,'Americana', '2017-03-06','white', 1,6),
+
+        (4,'Americana', '2017-03-06','white', 9,6),
+
+        (4,'Heel hook', '2017-03-09','white', 2,6),
+	(5,'Closed guard pull', '2017-02-19', 'white',5,10);   
+
+
+
+
+insert into setups (technique_id,description) values 
+	
+    (1,'trap one arm with leg, slide arm under his chin, grab biceps, second arm behind his head and push it, sqeeze'),
+
+    (2,'hold head/lapel all the time, opposite shin accros his neck, open legs and create angle while holding the shin, lock it, sqeeze'),
+
+    (3,'as he pushes my knee away, slide arm under his top arm and neck, lie on his shoulder, second arm from behind his head,grab biceps, expand chest and shrug shoulder'),
+
+    (4,'grab one lapel side with undergrab, try to get second with overgrab, fake going under first arm, as he defends, pin his arm with knee, bring hands to chest and elbows wide'),
+
+    (7,'get under opponent, grab one foot next to your head, inner foot pushing to his hip, outer foot wrapped to his knee '),
+
+    (8,'pull oponents towards you, spread legs and wrap them around his torso, lock feet behind his back'),
+
+    (10,'trapped arm across his body, put weight on it and rotate'),
+
+    (11,'grab his hand with trapped arm, step to his armpit on the same side and fall backwards'),
+
+    (12, 'change levels, hold head high, shoot and bring knee in between his feet, my second leg behind/next to him, wrap arms around his thigs and lift him + turn my torso to the side'),
+
+    (13,'grab his hand with opposite hand, put weight on it and slide second arm under his arm to gram my wrist. Bring my opposite arm down while rotating my second arm upwards'),
+
+    (14,'grab his hand with opposite hand, put weight on it and slide second arm under his arm to gram my wrist. Bring my opposite arm down while rotating my second arm upwards'),
+
+    (15,'grab his shin and put it under my armpit, lie backwards and put my outer foot on his hip, bring forarm on his achilles tendon and lean forward with head and arm'),
+    (16,'grab his lapel, step on his feet and fall down/backwards');

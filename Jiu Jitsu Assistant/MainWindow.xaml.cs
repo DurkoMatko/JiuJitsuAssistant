@@ -17,11 +17,10 @@ namespace Jiu_Jitsu_Assistant
          if (!ConnectToDatabase())
          {
             MessageBox.Show("Database connection error!");
+            this.Close();
          }
          
          window.Background = new SolidColorBrush(Colors.Black);
-         //this.Height = (System.Windows.SystemParameters.PrimaryScreenHeight);
-         //this.Width = (System.Windows.SystemParameters.PrimaryScreenWidth);
       }
 
       private Boolean ConnectToDatabase()
@@ -61,6 +60,12 @@ namespace Jiu_Jitsu_Assistant
          catch (LiveCharts.Helpers.LiveChartsException ex) {
             MessageBox.Show("Statistics available once several techniques are added! Keep training and you'll get there soon");
          }
+      }
+
+      private void mindMaps_Click(object sender, RoutedEventArgs e)
+      {
+         MindMaps win2 = new MindMaps(this.Left, this.Top, this.Height, this.Width);
+         win2.ShowDialog();
       }
    }
 }

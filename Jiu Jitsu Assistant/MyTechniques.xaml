@@ -22,7 +22,7 @@
       </Grid.ColumnDefinitions>
       <DataGrid x:Name="techniquesGrid" HorizontalAlignment="Left" Margin="64,235,0,0" VerticalAlignment="Top" AutoGenerateColumns="False"
                 ItemsSource="{Binding}" Height="256" VerticalScrollBarVisibility="Visible" Grid.Column="0" CanUserAddRows="False" Width="527" CellEditEnding="updateTechniqueFromDataGrid"
-                PreviewKeyDown="deletingRowFromDatagrid" SelectionMode="Single">
+                PreviewKeyDown="deletingRowFromDatagrid" SelectionMode="Single" SelectionChanged="lookupSetupsForTechnique">
          <DataGrid.Columns>
             <DataGridTextColumn Header="Name" Binding="{Binding name}" Width="200" />
             <DataGridTextColumn Header="Learned" Binding="{Binding date_learned, StringFormat=\{0:dd.MM.yyyy\}}" Width="100"/>
@@ -90,14 +90,24 @@
             </ComboBoxItem>
          </ComboBox>
          <Label x:Name="label1" Content="Technique group:" Canvas.Left="48" Canvas.Top="180" FontSize="14"/>
-         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="171" Canvas.Top="180" Width="235" Height="29" VerticalContentAlignment="Center" />
-         <Button x:Name="addTechnique_button" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,0.773" Canvas.Left="331" Canvas.Top="331"
+         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="174" Canvas.Top="180" Width="235" Height="29" VerticalContentAlignment="Center" />
+         <Button x:Name="addTechnique_button" Content="Add technique" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.507,0.773" Canvas.Left="306" Canvas.Top="331"
                  IsEnabled="False" Click="AddNewTechnique" PreviewMouseDown="addTechnique_button_MouseDown"/>
          <Label x:Name="Label_From" Content="From position:" Canvas.Left="48" Canvas.Top="230" RenderTransformOrigin="-0.079,-0.385" FontSize="14"/>
          <ComboBox x:Name="from_Position_comboBox" Canvas.Left="171" Canvas.Top="230" Width="235" Height="29" VerticalContentAlignment="Center"/>
          <Label x:Name="Label_To" Content="To position:" Canvas.Left="48" Canvas.Top="280" FontSize="14"/>
          <ComboBox x:Name="to_Position_comboBox" Canvas.Left="171" Canvas.Top="280" Width="235" Height="29" VerticalContentAlignment="Center"/>
       </Canvas>
+      <TextBox x:Name="setup_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="71" Margin="279,521,0,0" TextWrapping="Wrap" 
+               VerticalAlignment="Top" Width="240" AcceptsReturn="True" IsEnabled="False"/>
+      <Label x:Name="description_label" Content="Description:" Grid.Column="2" HorizontalAlignment="Left" Margin="158,517,0,0" VerticalAlignment="Top" FontSize="14"/>
+      <Button x:Name="add_setup_button" Content="Add setup" Grid.Column="2" HorizontalAlignment="Left" Margin="419,609,0,0" VerticalAlignment="Top" Width="100" Click="addSetup" IsEnabled="False"/>
+      <Button x:Name="finish_technique_button" Content="Finish" Grid.Column="2" HorizontalAlignment="Left" Margin="158,688,0,0" VerticalAlignment="Top" Width="361" Click="finishAddingTechniqueAndSetups"/>
+      <Label x:Name="setup_label" Content="Setup" Grid.Column="2" HorizontalAlignment="Left" Margin="158,465,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.184,1.615" FontSize="18"/>
+
+
+      <TextBlock x:Name="setups_textblock" HorizontalAlignment="Left" Margin="129,552,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="138" Width="462"/>
+      <Label x:Name="setups_label" Content="Setups:" HorizontalAlignment="Left" Margin="64,547,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.684,-0.385"/>
 
 
 

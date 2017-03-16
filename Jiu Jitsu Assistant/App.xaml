@@ -4,6 +4,223 @@
              xmlns:local="clr-namespace:Jiu_Jitsu_Assistant"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
-    </Application.Resources>
+
+      <LinearGradientBrush x:Key="GrayBlueGradientBrush"  StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="DarkGray" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="DarkGray" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="techniqueGroupGrad_1" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#ffff00" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#ffff00" Offset="1" />
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="techniqueGroupGrad_1_disabled" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#ffffb3" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#ffffb3" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="techniqueGroupGrad_2" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="Blue" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="Blue" Offset="1" />
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="techniqueGroupGrad_2_disabled" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#cce0ff" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#cce0ff" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="techniqueGroupGrad_3" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="DarkGray" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="DarkGray" Offset="1" />
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="techniqueGroupGrad_3_disabled" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#ebebe0" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#ebebe0" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="techniqueGroupGrad_4" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="Purple" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="Purple" Offset="1" />
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="techniqueGroupGrad_4_disabled" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#ffcce6" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#ffcce6" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="techniqueGroupGrad_5" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="Red" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="Red" Offset="1" />
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="techniqueGroupGrad_5_disabled" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#ffcccc" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#ffcccc" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="techniqueGroupGrad_6" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="Green" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="Green" Offset="1" />
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="techniqueGroupGrad_6_disabled" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#ccffcc" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#ccffcc" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="techniqueGroupGrad_7" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#00ffff" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#00ffff" Offset="1" />
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="techniqueGroupGrad_7_disabled" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#e6ffff" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#e6ffff" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="techniqueGroupGrad_8" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#ff3300" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#ff3300" Offset="1" />
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="techniqueGroupGrad_8_disabled" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#ffebe6" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#ffebe6" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="techniqueGroupGrad_9" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#993333" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#993333" Offset="1" />
+      </LinearGradientBrush>
+      <LinearGradientBrush x:Key="techniqueGroupGrad_9_disabled" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="#f9ecec" Offset="0" />
+         <GradientStop Color="#CCCCFF" Offset="0.5" />
+         <GradientStop Color="#f9ecec" Offset="1" />
+      </LinearGradientBrush>
+
+      <!-- Gradient glass effect-->
+      <GradientStopCollection x:Key="MyGlassGradientStopsResource">
+         <GradientStop Color="WhiteSmoke" Offset="0.2" />
+         <GradientStop Color="Transparent" Offset="0.4" />
+         <GradientStop Color="WhiteSmoke" Offset="0.5" />
+         <GradientStop Color="Transparent" Offset="0.75" />
+         <GradientStop Color="WhiteSmoke" Offset="0.9" />
+         <GradientStop Color="Transparent" Offset="1" />
+      </GradientStopCollection>
+      <LinearGradientBrush x:Key="MyGlassBrushResource"     StartPoint="0,0" EndPoint="1,1" Opacity="0.75"     GradientStops="{StaticResource MyGlassGradientStopsResource}" />
+
+      <Style TargetType="{x:Type Button}" x:Key="MindMapsButton_enabled">
+         <Setter Property="Background" Value="{StaticResource GrayBlueGradientBrush}" />
+         <Setter Property="Width" Value="80" />
+         <Setter Property="VerticalContentAlignment" Value="Center" />
+         <Setter Property="Width" Value="80" />
+         <Setter Property="Margin" Value="10" />
+         <Setter Property="Template">
+            <Setter.Value>
+               <ControlTemplate TargetType="{x:Type Button}">
+                  <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
+
+                     <!-- Outer Rectangle with rounded corners. -->
+                     <Rectangle x:Name="outerRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="{TemplateBinding Background}"  
+                                RadiusX="20" RadiusY="20" StrokeThickness="5" Fill="Transparent" />
+
+                     <!-- Inner Rectangle with rounded corners. -->
+                     <Rectangle x:Name="innerRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Transparent" StrokeThickness="20"   
+                              Fill="{TemplateBinding Background}" RadiusX="20" RadiusY="20" />
+
+                     <!-- Glass Rectangle -->
+                     <Rectangle x:Name="glassCube" HorizontalAlignment="Stretch"       VerticalAlignment="Stretch"       StrokeThickness="2" RadiusX="10" RadiusY="10" Opacity="0"       Fill="{StaticResource MyGlassBrushResource}"       RenderTransformOrigin="0.5,0.5">
+                        <Rectangle.Stroke>
+                           <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                              <LinearGradientBrush.GradientStops>
+                                 <GradientStop Offset="0.0" Color="LightBlue" />
+                                 <GradientStop Offset="1.0" Color="Gray" />
+                              </LinearGradientBrush.GradientStops>
+                           </LinearGradientBrush>
+                        </Rectangle.Stroke>
+                        <!-- These transforms have no effect as they are declared here.             The reason the transforms are included is to be targets             for animation (see later). -->
+                        <Rectangle.RenderTransform>
+                           <TransformGroup>
+                              <ScaleTransform />
+                              <RotateTransform />
+                           </TransformGroup>
+                        </Rectangle.RenderTransform>
+                        <!-- A BevelBitmapEffect is applied to give the button a             "Beveled" look. -->
+                        <Rectangle.BitmapEffect>
+                           <BevelBitmapEffect />
+                        </Rectangle.BitmapEffect>
+                     </Rectangle>
+
+                     <!-- Present Text of the button. -->
+                     <DockPanel Name="myContentPresenterDockPanel">
+                        <ContentPresenter x:Name="myContentPresenter" Margin="20" Content="{TemplateBinding  Content}" TextBlock.Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                     </DockPanel>
+                  </Grid>
+               </ControlTemplate>
+            </Setter.Value>
+         </Setter>
+      </Style>
+
+      <Style TargetType="{x:Type Button}" x:Key="MindMapsButton_disabled">
+         <Setter Property="Background" Value="{StaticResource GrayBlueGradientBrush}" />
+         <Setter Property="Width" Value="80" />
+         <Setter Property="VerticalContentAlignment" Value="Center" />
+         <Setter Property="Width" Value="80" />
+         <Setter Property="Margin" Value="10" />
+         <Setter Property="Template">
+            <Setter.Value>
+               <ControlTemplate TargetType="{x:Type Button}">
+                  <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
+                     
+                     <!-- Inner Rectangle with rounded corners. -->
+                     <Rectangle x:Name="innerRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Transparent" StrokeThickness="20"   
+                              Fill="{TemplateBinding Background}" RadiusX="20" RadiusY="20" />
+
+                     <!-- Glass Rectangle -->
+                     <Rectangle x:Name="glassCube" HorizontalAlignment="Stretch"       VerticalAlignment="Stretch"       StrokeThickness="2" RadiusX="10" RadiusY="10" Opacity="0"       Fill="{StaticResource MyGlassBrushResource}"       RenderTransformOrigin="0.5,0.5">
+                        <Rectangle.Stroke>
+                           <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                              <LinearGradientBrush.GradientStops>
+                                 <GradientStop Offset="0.0" Color="LightBlue" />
+                                 <GradientStop Offset="1.0" Color="Gray" />
+                              </LinearGradientBrush.GradientStops>
+                           </LinearGradientBrush>
+                        </Rectangle.Stroke>
+                        <!-- These transforms have no effect as they are declared here.             The reason the transforms are included is to be targets             for animation (see later). -->
+                        <Rectangle.RenderTransform>
+                           <TransformGroup>
+                              <ScaleTransform />
+                              <RotateTransform />
+                           </TransformGroup>
+                        </Rectangle.RenderTransform>
+                        <!-- A BevelBitmapEffect is applied to give the button a             "Beveled" look. -->
+                        <Rectangle.BitmapEffect>
+                           <BevelBitmapEffect />
+                        </Rectangle.BitmapEffect>
+                     </Rectangle>
+
+                     <!-- Present Text of the button. -->
+                     <DockPanel Name="myContentPresenterDockPanel">
+                        <ContentPresenter x:Name="myContentPresenter" Margin="20" Content="{TemplateBinding  Content}" TextBlock.Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                     </DockPanel>
+                  </Grid>
+               </ControlTemplate>
+            </Setter.Value>
+         </Setter>
+      </Style>
+
+
+   </Application.Resources>
 </Application>

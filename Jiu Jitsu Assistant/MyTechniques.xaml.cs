@@ -202,28 +202,65 @@ namespace Jiu_Jitsu_Assistant
       {
          try{
             StringBuilder sb = new StringBuilder();
+            sb.Append("SET foreign_key_checks = 0;");
             sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES ({0},'{1}','{2}','{3}', {4} , {5} )", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Name, from_Position_comboBox.SelectedValue.ToString(), to_Position_comboBox.SelectedValue.ToString());
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();
             cmd.CommandText = sb.ToString();
             int effectedRows = cmd.ExecuteNonQuery();
 
-            resetAddTechniqueValues();
-            bool success = false;
             if (effectedRows != 0) {
                LoadTechniques();
-               success = true;
+               disableAddTechniqueControls();
             }
 
             //javascript like alert dialog to let user know if adding technique was successful
-            AddTechniqueDialog atd = new AddTechniqueDialog(success, mouse_x, mouse_y);
+            AddTechniqueDialog atd = new AddTechniqueDialog(true, mouse_x, mouse_y, "Technique");
             atd.Show();
          }
          catch (Exception ex){
             resetAddTechniqueValues();
-            AddTechniqueDialog atd = new AddTechniqueDialog(false, mouse_x, mouse_y);
+            AddTechniqueDialog atd = new AddTechniqueDialog(false, mouse_x, mouse_y, "technique");
             atd.Show();
          }
+      }
+
+      private void addSetup(object sender, RoutedEventArgs e)
+      {
+         try
+         {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SET foreign_key_checks = 0;");
+            sb.Append("INSERT INTO setups (technique_id, description) VALUES (");
+            sb.AppendFormat("(SELECT technique_id from techniques where name='{0}'), ", techniqueName_textbox.Text);
+            sb.AppendFormat("'{0}')", setup_textBox.Text);
+            MySqlCommand cmd;
+            cmd = this.conn.CreateCommand();
+            cmd.CommandText = sb.ToString();
+
+            if (cmd.ExecuteNonQuery() == 1)
+            {
+               setup_textBox.Clear();
+               AddTechniqueDialog atd = new AddTechniqueDialog(true, mouse_x, mouse_y,"Setup");
+               atd.Show();
+            }
+         }
+         catch (Exception ex)
+         {
+            AddTechniqueDialog atd = new AddTechniqueDialog(false, mouse_x, mouse_y, "setup");
+            atd.Show();
+         }
+      }
+
+      private void finishAddingTechniqueAndSetups(object sender, RoutedEventArgs e)
+      {
+         resetAddTechniqueValues();
+         enableAddtechniqueForm(true);
+         //disable setup part
+         setup_textBox.Clear();
+         setup_textBox.IsEnabled = false;
+         add_setup_button.IsEnabled = false;
+
       }
 
       //reset new technique form
@@ -237,6 +274,12 @@ namespace Jiu_Jitsu_Assistant
          to_Position_comboBox.SelectedIndex = to_Position_comboBox.Items.Count - 1;
       }
 
+      private void disableAddTechniqueControls() {
+         enableAddtechniqueForm(false);
+
+         setup_textBox.IsEnabled = true;
+         add_setup_button.IsEnabled = true;
+      }
 
       //used to set mouse_x,mouse_y to proper position AddTechniqueDialog
       private void addTechnique_button_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
@@ -250,11 +293,22 @@ namespace Jiu_Jitsu_Assistant
       //enables/disables Add button always when technique name textbox changes value
       private void emptyTechniqueNameCheck(object sender, TextChangedEventArgs e)
       {
+         finish_technique_button.Content = "Finish " + techniqueName_textbox.Text;
          if (string.IsNullOrWhiteSpace(techniqueName_textbox.Text)) {
             addTechnique_button.IsEnabled = false;
             return;
          }
          addTechnique_button.IsEnabled = true;
+      }
+
+      private void enableAddtechniqueForm(Boolean flag) {
+         techniqueName_textbox.IsEnabled = flag;
+         dateLearned_datepicker.IsEnabled = flag;
+         belt_comboBox.IsEnabled = flag;
+         techniqueGroup_comboBox.IsEnabled = flag;
+         from_Position_comboBox.IsEnabled = flag;
+         to_Position_comboBox.IsEnabled = flag;
+         addTechnique_button.IsEnabled = flag;
       }
 
       private void mainGrid_PreviewMouseDown(object sender, MouseButtonEventArgs e)
@@ -265,15 +319,17 @@ namespace Jiu_Jitsu_Assistant
 
       private void deletingRowFromDatagrid(object sender, KeyEventArgs e)
       {
-         //if it's really delete event and have something selected
-         if (e.Key == Key.Delete && techniquesGrid.SelectedItems.Count > 0)
+         try
          {
-            StringBuilder sb = new StringBuilder();
-            List<string> columnValues = new List<string>();
-            int rowIndex = techniquesGrid.SelectedIndex;
-            DataGridRow row = (DataGridRow)techniquesGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex);
+            //if it's really delete event and have something selected
+            if (e.Key == Key.Delete && techniquesGrid.SelectedItems.Count > 0)
+            {
+               StringBuilder sb = new StringBuilder();
+               List<string> columnValues = new List<string>();
+               int rowIndex = techniquesGrid.SelectedIndex;
+               DataGridRow row = (DataGridRow)techniquesGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex);
 
-            foreach (DataGridColumn column in techniquesGrid.Columns)
+               foreach (DataGridColumn column in techniquesGrid.Columns)
                {
                   if (column.GetCellContent(row) is TextBlock)
                   {
@@ -285,57 +341,99 @@ namespace Jiu_Jitsu_Assistant
                      return;   //if there's a textbox within a row, it means user is editing something...therefore terminate the function
                   }
                }
-            sb.Clear();
-            sb.AppendFormat("delete from techniques where technique_id = {0}", columnValues[5]);  //last column with index 5 is hidden technique_id column
+               sb.Clear();
+               sb.AppendFormat("delete from setups where technique_id = {0};", columnValues[5]);
+               sb.AppendFormat("delete from techniques where technique_id = {0}", columnValues[5]);  //last column with index 5 is hidden technique_id column
 
-            MySqlCommand cmd;
-            cmd = this.conn.CreateCommand();
-            cmd.CommandText = sb.ToString();
-            int effectedRows = cmd.ExecuteNonQuery();
+               MySqlCommand cmd;
+               cmd = this.conn.CreateCommand();
+               cmd.CommandText = sb.ToString();
+               int effectedRows = cmd.ExecuteNonQuery();
 
-            LoadTechniques();
+               LoadTechniques();
+            }
+         }
+         catch (Exception ex)
+         {
          }
       }
 
       //propagates changes done in datagrid to the database
       private void updateTechniqueFromDataGrid(object sender, DataGridCellEditEndingEventArgs e)
       {
-         if (e.EditAction == DataGridEditAction.Commit)
+         try
          {
-            int rowIndex = e.Row.GetIndex();
-            DataGridRow row = (DataGridRow)techniquesGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex);
-
-            //loop over cells of selected row and get their values
-            List<string> gridValues = new List<string>();
-            foreach (DataGridColumn column in techniquesGrid.Columns)
+            if (e.EditAction == DataGridEditAction.Commit)
             {
-               if (column.GetCellContent(row) is TextBlock)
-               {
-                  TextBlock cellContent = column.GetCellContent(row) as TextBlock;
-                  gridValues.Add(cellContent.Text);
-               }
-               else if (column.GetCellContent(row) is TextBox)
-               {
-                  TextBox cellContent = column.GetCellContent(row) as TextBox;
-                  gridValues.Add(cellContent.Text);
-               }
-            }
+               int rowIndex = e.Row.GetIndex();
+               DataGridRow row = (DataGridRow)techniquesGrid.ItemContainerGenerator.ContainerFromIndex(rowIndex);
 
-            //if names for positions exist
-            if (positionsDict.ContainsKey(gridValues[2]) && positionsDict.ContainsKey(gridValues[3]))
-            {
-               StringBuilder sb = new StringBuilder();
-               sb.AppendFormat("update techniques set name='{0}',date_learned='{1}', ", gridValues[0], DateTime.Parse(gridValues[1]).ToString("yyyy-MM-dd"));
-               sb.AppendFormat(" position_from={0}, ", positionsDict[gridValues[2]]);
-               sb.AppendFormat(" position_to={0}, ", positionsDict[gridValues[3]]);
-               sb.AppendFormat(" belt_level='{0}' where technique_id = {1}", gridValues[4], gridValues[5]);
-               MySqlCommand cmd;
-               cmd = this.conn.CreateCommand();
-               cmd.CommandText = sb.ToString();
-               int effectedRows = cmd.ExecuteNonQuery();
+               //loop over cells of selected row and get their values
+               List<string> gridValues = new List<string>();
+               foreach (DataGridColumn column in techniquesGrid.Columns)
+               {
+                  if (column.GetCellContent(row) is TextBlock)
+                  {
+                     TextBlock cellContent = column.GetCellContent(row) as TextBlock;
+                     gridValues.Add(cellContent.Text);
+                  }
+                  else if (column.GetCellContent(row) is TextBox)
+                  {
+                     TextBox cellContent = column.GetCellContent(row) as TextBox;
+                     gridValues.Add(cellContent.Text);
+                  }
+               }
+
+               //if names for positions exist
+               if (positionsDict.ContainsKey(gridValues[2]) && positionsDict.ContainsKey(gridValues[3]))
+               {
+                  StringBuilder sb = new StringBuilder();
+                  sb.AppendFormat("update techniques set name='{0}',date_learned='{1}', ", gridValues[0], DateTime.Parse(gridValues[1]).ToString("yyyy-MM-dd"));
+                  sb.AppendFormat(" position_from={0}, ", positionsDict[gridValues[2]]);
+                  sb.AppendFormat(" position_to={0}, ", positionsDict[gridValues[3]]);
+                  sb.AppendFormat(" belt_level='{0}' where technique_id = {1}", gridValues[4], gridValues[5]);
+                  MySqlCommand cmd;
+                  cmd = this.conn.CreateCommand();
+                  cmd.CommandText = sb.ToString();
+                  int effectedRows = cmd.ExecuteNonQuery();
+               }
+               LoadTechniques();
             }
-            LoadTechniques();
+         }
+         catch (Exception ex)
+         {
          }
       }
+
+      private void lookupSetupsForTechnique(object sender, SelectionChangedEventArgs e)
+      {
+         //clear setups from previous technique
+         setups_textblock.Text = String.Empty;
+
+         DataGridRow row = (DataGridRow)techniquesGrid.ItemContainerGenerator.ContainerFromIndex(techniquesGrid.SelectedIndex);
+         TextBlock idCell = null;
+         foreach (DataGridColumn column in techniquesGrid.Columns)
+         {
+            if (column.Header.ToString() == "Id")
+            {
+               idCell = column.GetCellContent(row) as TextBlock;
+               break;
+            }
+         }
+
+         StringBuilder sb = new StringBuilder();
+         sb.AppendFormat("Select description from setups where technique_id = {0};", idCell.Text);
+         MySqlCommand cmd;
+         cmd = this.conn.CreateCommand();
+         cmd.CommandText = sb.ToString();
+         MySqlDataReader dr = cmd.ExecuteReader();
+         int setupsCount = 1;
+         while (dr.Read())
+         {
+            setups_textblock.Text = setups_textblock.Text + "\n" + setupsCount++.ToString() + ". " + dr[0].ToString();
+         }
+         dr.Close();
+      }
    }
-}
+   }
+

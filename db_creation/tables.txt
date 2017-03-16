@@ -40,3 +40,17 @@ CREATE TABLE `jiujitsuassistant`.`techniques` (
     REFERENCES `jiujitsuassistant`.`positions` (`position_id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
+CREATE TABLE `jiujitsuassistant`.`setups` (
+  `setup_id` INT NOT NULL AUTO_INCREMENT,
+  `technique_id` INT NOT NULL,
+  `description` VARCHAR(450) NULL,
+  PRIMARY KEY (`setup_id`),
+  INDEX `fk_technique_id_idx` (`technique_id` ASC),
+  CONSTRAINT `fk_technique_id`
+    FOREIGN KEY (`technique_id`)
+    REFERENCES `jiujitsuassistant`.`techniques` (`technique_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+SET foreign_key_checks = 0;
