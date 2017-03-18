@@ -20,8 +20,18 @@
       <Grid.ColumnDefinitions>
          <ColumnDefinition Width="*"/>
          <ColumnDefinition Width="*"/>
+         <ColumnDefinition Width="*"/>
       </Grid.ColumnDefinitions>
-      <lvc:CartesianChart Name="barchart_container" Series="{Binding BarChart}" LegendLocation="Right" Margin="162,100,0,372">
+
+      <Grid.RowDefinitions>
+         <RowDefinition Height="*"/>
+         <RowDefinition Height="*"/>
+      </Grid.RowDefinitions>
+
+      <TextBlock Grid.Row="0" Grid.Column="1" Margin="86,30,60,96"><InlineUIContainer>
+            <Image Margin="0,0,5,5" Source="images/bjj-logo.png" Height="252" />
+         </InlineUIContainer></TextBlock>
+      <lvc:CartesianChart Grid.Row="0" Name="barchart_container" Series="{Binding BarChart}" LegendLocation="Right" Grid.ColumnSpan="3" Margin="43,83,84,0">
          <lvc:CartesianChart.AxisX>
             <lvc:Axis Labels="{Binding Labels_BarChart}"></lvc:Axis>
          </lvc:CartesianChart.AxisX>
@@ -30,26 +40,7 @@
          </lvc:CartesianChart.AxisY>
       </lvc:CartesianChart>
 
-      <Canvas HorizontalAlignment="Left" Height="264" VerticalAlignment="Top" Width="492" Grid.Column="1" Margin="89,117,0,0">
-         <Label x:Name="lbl" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="30" FontSize="14"/>
-         <extToolkit:WatermarkTextBox Name="techniqueName_textbox" Height="25" Canvas.Left="171" TextWrapping="Wrap" Canvas.Top="34" Width="235" Watermark="Technique name" TextChanged="emptyTechniqueNameCheck" />
-         <Label x:Name="lbl_Copy" Content="Date learned:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="80" FontSize="14"/>
-         <DatePicker Name="dateLearned_datepicker" Canvas.Left="171" Canvas.Top="83" Width="235" SelectedDate="{x:Static sys:DateTime.Now}"/>
-         <Label x:Name="lbl_Copy1" Content="Belt:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="130" FontSize="14"/>
-         <ComboBox x:Name="belt_comboBox" VerticalContentAlignment="Center" Canvas.Left="171" Canvas.Top="130" Width="235" Height="29">
-            <ComboBoxItem Name="cb_white" Background="White" IsSelected="True">white</ComboBoxItem>
-            <ComboBoxItem Name="cbi_blue" Background="#FF25A1F7">blue</ComboBoxItem>
-            <ComboBoxItem Name="cbi_purple" Background="Purple">purple</ComboBoxItem>
-            <ComboBoxItem Name="cbi_brown" Background="#FFB2590F">brown</ComboBoxItem>
-            <ComboBoxItem Name="cbi_black" Background="Black" Foreground="White">black</ComboBoxItem>
-         </ComboBox>
-         <Label x:Name="label1" Content="Technique group" Canvas.Left="48" Canvas.Top="180"/>
-         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="171" Canvas.Top="180" Width="235" Height="26"/>
-         <Button x:Name="addTechnique_button" Content="Add" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" RenderTransformOrigin="0.507,0.773" Canvas.Left="331" Canvas.Top="232"
-                 IsEnabled="False" Click="AddNewTechnique" PreviewMouseDown="addTechnique_button_MouseDown"/>
-      </Canvas>
-
-      <lvc:CartesianChart Series="{Binding myChronological}"  LegendLocation="Right" Margin="43,463,62,16" Grid.ColumnSpan="2">
+      <lvc:CartesianChart Grid.Row="1" Name="stacked_container" Series="{Binding myChronological}"  LegendLocation="Right" Grid.ColumnSpan="3" Margin="43,82,84,0">
          <lvc:CartesianChart.AxisX>
             <lvc:Axis Title="Year" LabelFormatter="{Binding myChronological_XFormatter}"></lvc:Axis>
          </lvc:CartesianChart.AxisX>
@@ -57,9 +48,8 @@
             <lvc:Axis Title="Count"></lvc:Axis>
          </lvc:CartesianChart.AxisY>
       </lvc:CartesianChart>
-      <Label x:Name="Cumulative_count_label" Content="Cumulative count of learned techniques" HorizontalAlignment="Left" Margin="43,429,0,0" VerticalAlignment="Top" Height="34" Width="380" FontSize="18"/>
-      <Label x:Name="Number_of_techniques_label" Content="Number of techniques learned per month" HorizontalAlignment="Left" Margin="43,40,0,0" VerticalAlignment="Top" Height="38" Width="380" RenderTransformOrigin="0.322,0.166" FontSize="18"/>
-      <Label x:Name="label" Content="Add new Technique" Grid.Column="1" HorizontalAlignment="Left" Margin="247,44,0,0" VerticalAlignment="Top" FontSize="18"/>
+      <Label x:Name="Cumulative_count_label" Grid.Row="1" Grid.Column="0" Content="Cumulative count of learned techniques" HorizontalAlignment="Left" Margin="43,40,0,0"  VerticalAlignment="Top" Height="34" Width="380" FontSize="18"/>
+      <Label x:Name="Number_of_techniques_label" Grid.Row="0" Grid.Column="0" Content="Number of techniques learned per month" HorizontalAlignment="Left" Margin="43,40,0,0" VerticalAlignment="Top" Height="38" Width="380" RenderTransformOrigin="0.322,0.166" FontSize="18"/>
 
    </Grid>
 </Window>

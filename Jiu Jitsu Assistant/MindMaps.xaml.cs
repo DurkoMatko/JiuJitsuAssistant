@@ -23,12 +23,13 @@ namespace Jiu_Jitsu_Assistant
       private DataTable myTechniquesTable { get; set; }
       Dictionary<int, string> techniquesDict = new Dictionary<int, string>();
       private DataTable setupsTable { get; set; }
-      Dictionary<int, string> setupsDict = new Dictionary<int, string>();
+      Dictionary<int, List<string>> setupsDict = new Dictionary<int, List<string>>();
 
       private string currentPosition { get; set; }
       private string lastTechnique { get; set; }
 
       double difficultyTreshold { get; set; }
+      int sequenceCounter { get; set; }
 
 
       public MindMaps()
@@ -45,30 +46,37 @@ namespace Jiu_Jitsu_Assistant
 
       private void CreateButtons()
       {
-            Console.WriteLine("test");
-            int availableTechniquesCount = 0;
-            foreach (DataRow techniqueRow in myTechniquesTable.Rows)
-            {
-               if (techniqueRow.Field<string>("position_from") == currentPosition &&
-                   techniqueRow.Field<string>("name") != lastTechnique){
+         int availableTechniquesCount = 0;
+         foreach (DataRow techniqueRow in myTechniquesTable.Rows)
+         {
+            if (techniqueRow.Field<string>("position_from") == currentPosition &&
+                  techniqueRow.Field<string>("name") != lastTechnique){
                   availableTechniquesCount++;
-               }
             }
+         }
+
+         //if there are some buttons to be created (if there are some techniques known from current position)
+         if (availableTechniquesCount != 0)
+         {
+            int arenaWidth = 900;
+            int arenaHeight = 800;
+            double oneButtonSpace = (arenaHeight * arenaWidth) / availableTechniquesCount;
 
             foreach (DataRow techniqueRow in myTechniquesTable.Rows)
             {
                if (techniqueRow.Field<string>("position_from") == currentPosition &&
-                   techniqueRow.Field<string>("name") != lastTechnique)
+                     techniqueRow.Field<string>("name") != lastTechnique)
                {
 
-               string resourceBrushKey = "techniqueGroupGrad_" + techniqueRow.Field<int>("group_id").ToString() + "_disabled";
-               Button button = new Button()
-               {
-                  //this is kind of "hackerei"...using unrelated button properties for my purpose...in the future define my own button class should be optimal
+                  string resourceBrushKey = "techniqueGroupGrad_" + techniqueRow.Field<int>("group_id").ToString() + "_disabled";
 
-                  //Content = techniqueRow.Field<string>("name").ToString(),
-                  Content = new TextBlock { Text = techniqueRow.Field<string>("name").ToString(), Foreground= new SolidColorBrush(Colors.Gray)  },
-                     ToolTip = "Leads to: " + techniqueRow.Field<string>("position_to").ToString(),
+                  Button button = new Button()
+                  {
+                     //this is kind of "hackerei"...using unrelated button properties for my purpose...in the future define my own button class should be optimal
+
+                     //Content = techniqueRow.Field<string>("name").ToString(),
+                     Content = new TextBlock { Text = techniqueRow.Field<string>("name").ToString(), Foreground = new SolidColorBrush(Colors.Gray), TextWrapping = TextWrapping.Wrap },
+                     ToolTip = techniqueRow.Field<string>("name").ToString() + " -> " + techniqueRow.Field<string>("position_to").ToString(),
                      Tag = techniqueRow.Field<int>("technique_id").ToString(),
                      Uid = techniqueRow.Field<string>("position_to").ToString(),
                      Name = "_" + techniqueRow.Field<int>("group_id").ToString(),
@@ -76,14 +84,16 @@ namespace Jiu_Jitsu_Assistant
                      Style = (Style)FindResource("MindMapsButton_disabled"),
                      IsEnabled = false,
                      Background = (System.Windows.Media.Brush)FindResource(resourceBrushKey),
-                     Width = (900 / availableTechniquesCount) * 0.8,
-                     Height = (800 / availableTechniquesCount) * 0.8
+                     Width = (int)Math.Sqrt(oneButtonSpace * 0.35),
+                     Height = (int)Math.Sqrt(oneButtonSpace * 0.35)
                   };
 
+                  ToolTipService.SetShowOnDisabled(button, true);
                   button.Click += new RoutedEventHandler(techniqueClicked);
                   this.buttonsGrid.Children.Add(button);
                }
             }
+         }
       }
 
 
@@ -99,6 +109,14 @@ namespace Jiu_Jitsu_Assistant
 
          this.buttonsGrid.Children.Clear();
          CreateButtons();
+
+         if (currentPosition == "Submission")
+            newRoundButton.IsEnabled = true;
+
+         if (string.IsNullOrEmpty(sequence_textblock.Text))
+            sequence_textblock.Text = sequence_textblock.Text + sequenceCounter++ + ". " + lastTechnique;
+         else
+            sequence_textblock.Text = sequence_textblock.Text + "\n" + sequenceCounter++ + ". " + lastTechnique;
       }
 
       public MindMaps(double left, double top, double height, double width):this() {
@@ -180,7 +198,13 @@ namespace Jiu_Jitsu_Assistant
 
          foreach (DataRow setupRow in setupsTable.Rows)
          {
-            setupsDict.Add(setupRow.Field<int>("technique_id"), setupRow.Field<string>("description"));
+            if (setupsDict.ContainsKey(setupRow.Field<int>("technique_id")))
+               setupsDict[setupRow.Field<int>("technique_id")].Add(setupRow.Field<string>("description"));
+            else { //if new technique, create new list and dict entry
+               List<string> newSetupList = new List<string>();
+               newSetupList.Add(setupRow.Field<string>("description"));
+               setupsDict.Add(setupRow.Field<int>("technique_id"), newSetupList);
+            }
          }
       } 
 
@@ -192,36 +216,52 @@ namespace Jiu_Jitsu_Assistant
 
       private void enableTechniques(object sender, TextChangedEventArgs e)
       {
-         // check each button if should be enabled
-         foreach (Button button in this.buttonsGrid.Children) {
-            string resourceBrushKey = "techniqueGroupGrad" + button.Name;
-            int toChange = LevenshteinDistance.Compute(setup_textBox.Text, setupsDict[int.Parse(button.Tag.ToString())]);
-            int matchedLetters = setupsDict[int.Parse(button.Tag.ToString())].Length - toChange;
-            //if matched letters more that required threshold, enable button
-            if (matchedLetters > setupsDict[int.Parse(button.Tag.ToString())].Length * difficultyTreshold)
+         try
+         {
+            // check each button if should be enabled
+            foreach (Button button in this.buttonsGrid.Children)
             {
-               button.IsEnabled = true;
-               button.Style = (Style)FindResource("MindMapsButton_enabled");
-               button.Background = (System.Windows.Media.Brush)FindResource(resourceBrushKey);
-               var textBlock = button.Content as TextBlock;
-               textBlock.Foreground = new SolidColorBrush(Colors.Black);
-            }
-            else
-            {
-               button.IsEnabled = false;
-               button.Style = (Style)FindResource("MindMapsButton_disabled");
-               button.Background = (System.Windows.Media.Brush)FindResource(resourceBrushKey + "_disabled");
-               var textBlock = button.Content as TextBlock;
-               textBlock.Foreground = new SolidColorBrush(Colors.Gray);
+               string resourceBrushKey = "techniqueGroupGrad" + button.Name;
+               //check all possible setups
+               foreach (string setup in setupsDict[int.Parse(button.Tag.ToString())])
+               {
+                  int toChange = LevenshteinDistance.Compute(setup_textBox.Text, setup);
+                  int matchedLetters = setup.Length - toChange;
+                  //if matched letters more that required threshold, enable button
+                  if (matchedLetters > setup.Length * difficultyTreshold)
+                  {
+                     button.IsEnabled = true;
+                     button.Style = (Style)FindResource("MindMapsButton_enabled");
+                     button.Background = (System.Windows.Media.Brush)FindResource(resourceBrushKey);
+                     var textBlock = button.Content as TextBlock;
+                     textBlock.Foreground = new SolidColorBrush(Colors.Black);
+                     //if matching one setup, immediately break - it's enough to allow technique
+                     break;
+                  }
+                  else
+                  {
+                     button.IsEnabled = false;
+                     button.Style = (Style)FindResource("MindMapsButton_disabled");
+                     button.Background = (System.Windows.Media.Brush)FindResource(resourceBrushKey + "_disabled");
+                     var textBlock = button.Content as TextBlock;
+                     textBlock.Foreground = new SolidColorBrush(Colors.Gray);
+                  }
+
+               }
             }
          }
+         catch (Exception ex) { }
       }
 
       private void newRoundClicked(object sender, RoutedEventArgs e)
       {
-         currentPosition = "Standing";
+         sequenceCounter = 1;
+         sequence_textblock.Text="";
+
+         currentPosition = "Both standing";
          currentPositionLabel.Content = currentPosition;
          lastTechniqueLabel.Content = "none";
+         lastTechnique = "none";
          var selectedDifficulty = difficultyCombobox.SelectedItem as ComboBoxItem;
          difficultyTreshold = Double.Parse(selectedDifficulty.Tag.ToString());
          difficultyCombobox.IsEnabled = false;
@@ -230,6 +270,8 @@ namespace Jiu_Jitsu_Assistant
       }
 
       private void resetClicked(object sender, RoutedEventArgs e) {
+         sequence_textblock.Text = "";
+
          buttonsGrid.Children.Clear();
          difficultyCombobox.IsEnabled = true;
          newRoundButton.IsEnabled = true;

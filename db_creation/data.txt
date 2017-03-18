@@ -1,68 +1,92 @@
-insert into techniquegroups (name) values ('Chokes'),('Guards'),('Escapes'),('Joint Locks'),('Takedowns'),('Sweeps');
+insert into techniquegroups (name) values ('Chokes'),('Guards'),('Escapes'),('Joint Locks'),('Takedowns'),('Sweeps'),('BJJ Moves'),('Natural Human Movements');
 
-insert into positions (name) values ('Mount'),('Side control'),('Knee on belly'),('Grounded'),('Standing'),('Submission'),('Back-mounted')
-,('On oppontent''s back'),('In opponent''s closed guard'),('Closed guard'),('In submission') ;
+insert into positions (name) values ('Mount'),('Side control'),('Knee on belly'),('Lying on back'),('Both standing'),('Submission'),('Back-mounted')
+,('My back taken'),
+               ('In opponent''s closed guard'),('Closed guard'),('Tapout'),('Mounted'),('Side controlled'),('Knee on bellied'),('Standing above opponent'),('Turtle'),
+	       ('Opponent in turtle'),('Triangle'),('In opponent''s triangle');
 
 SET foreign_key_checks = 0;
-insert into techniques (group_id, name, date_learned, belt_level, position_from, position_to) values
- 
-	    (1,'Rear naked choke', '2017-01-14','white', 8,6),
 
-        (1,'Triangle', '2017-01-12','white', 10,6),
+insert into techniques (group_id,name,date_learned,belt_level,position_from,position_to) values 
 
-        (1,'Darce choke', '2017-03-07','white', 3,6),
+(8,'Mount from side control','1992-07-31','white',2,1),
 
-        (1,'Collar choke', '2017-01-14','white', 1,6),
+(8,'Lie down','1992-07-31','white',5,4),
 
-        (1,'Side control choke', '2017-03-01','white', 1,6),
+(8,'Turtle','1992-07-31','white',4,16),
 
-        (1,'Side control choke', '2017-02-27','white', 2,6),
+(8,'Somersault','1992-07-31','white',16,4),
 
-        (2,'X-guard', '2017-02-14','white', 4,4),
+(8,'Side control from mount','1992-07-31','white',1,2),
 
-        (2,'Closed guard', '2017-01-12','white', 4,4),
+(8,'Knee on belly fro mount','1992-07-31','white',1,3),
 
-        (2,'Half guard', '2017-01-29','white', 4,4),
+(8,'Side control from knee on belly','1992-07-31','white',3,2),
 
-        (3,'Triangle rotation escape', '2017-02-09','white', 11,2),
+(8,'Mount from knee on belly','1992-07-31','white',3,1),
 
-        (3,'Triangle armpit escape', '2017-02-09','white', 11,6),
+(8,'Knee on belly from side control','1992-07-31','white',2,3);
 
-        (5,'Double leg takedown', '2017-01-16','white', 5,2),
-
-        (4,'Americana', '2017-03-06','white', 1,6),
-
-        (4,'Americana', '2017-03-06','white', 9,6),
-
-        (4,'Heel hook', '2017-03-09','white', 2,6),
-	(5,'Closed guard pull', '2017-02-19', 'white',5,10);   
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Mount from side control'), 'Mount');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Lie down'), 'Lie down');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Turtle'), 'Turtle');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Somersault'), 'Somersault');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Side control from mount'), 'Side control');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Knee on belly fro mount'), 'Knee on belly');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Side control from knee on belly'), 'Side control');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Mount from knee on belly'), 'Mount');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Knee on belly from side control'), 'Knee on belly');
 
 
-
-
-insert into setups (technique_id,description) values 
-	
-    (1,'trap one arm with leg, slide arm under his chin, grab biceps, second arm behind his head and push it, sqeeze'),
-
-    (2,'hold head/lapel all the time, opposite shin accros his neck, open legs and create angle while holding the shin, lock it, sqeeze'),
-
-    (3,'as he pushes my knee away, slide arm under his top arm and neck, lie on his shoulder, second arm from behind his head,grab biceps, expand chest and shrug shoulder'),
-
-    (4,'grab one lapel side with undergrab, try to get second with overgrab, fake going under first arm, as he defends, pin his arm with knee, bring hands to chest and elbows wide'),
-
-    (7,'get under opponent, grab one foot next to your head, inner foot pushing to his hip, outer foot wrapped to his knee '),
-
-    (8,'pull oponents towards you, spread legs and wrap them around his torso, lock feet behind his back'),
-
-    (10,'trapped arm across his body, put weight on it and rotate'),
-
-    (11,'grab his hand with trapped arm, step to his armpit on the same side and fall backwards'),
-
-    (12, 'change levels, hold head high, shoot and bring knee in between his feet, my second leg behind/next to him, wrap arms around his thigs and lift him + turn my torso to the side'),
-
-    (13,'grab his hand with opposite hand, put weight on it and slide second arm under his arm to gram my wrist. Bring my opposite arm down while rotating my second arm upwards'),
-
-    (14,'grab his hand with opposite hand, put weight on it and slide second arm under his arm to gram my wrist. Bring my opposite arm down while rotating my second arm upwards'),
-
-    (15,'grab his shin and put it under my armpit, lie backwards and put my outer foot on his hip, bring forarm on his achilles tendon and lean forward with head and arm'),
-    (16,'grab his lapel, step on his feet and fall down/backwards');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (1,'Triangle finish','2017-01-12','white', 18 , 6 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Triangle finish'), 'Hold head all the time, open legs, grab shin, create angle, close legs, sqeeze');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (7,'Triangle entry from closed guard','2017-03-17','white', 10 , 18 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Triangle entry from closed guard'), 'his arms tight (maybe holding belt), open legs and bring leg over his shoulder from outside of his arm ');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Triangle entry from closed guard'), 'hold him with underhook, shrimp, knee under his armpit, kick arm away');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (7,'Triangle or sweep: triangle entry','2017-02-21','white', 10 , 18 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Triangle or sweep: triangle entry'), 'grab his neck, open legs, hips close to him, one leg along his calve, second leg high behind his neck/shoulder, fall back and bring first leg from under his arm');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (6,'Triangle or sweep: sweep','2017-02-21','white', 10 , 1 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Triangle or sweep: sweep'), 'grab his neck, open legs, hips close to him, one leg along his calve, support my weight with one arm, rotate around my hips/leg');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (3,'Triangle escape','2017-03-17','white', 18 , 2 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Triangle escape'), 'trapped arm across his body next to his neck, rotate');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (3,'Rotation triangle escape','2017-01-25','white', 18 , 2 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Rotation triangle escape'), 'trapped arm across his body next to his head, rotate');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (3,'Armpit step triangle escape','2017-03-17','white', 18 , 5 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Armpit step triangle escape'), 'not trapped arm grabs his arm, leg on the same side steps to his armpit, fall back and push his armpit away');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (6,'Scissor sweep','2017-04-23','white', 10 , 1 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Scissor sweep'), 'grab arm and collar at the same side, shrimp and bring opposite knee under his armpit, bring his weight forwards, scissor move with legs');
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Scissor sweep'), 'grab arm and collar at the same side, shrimp and bring opposite knee under his armpit, bring his weight forwards, kick his knee away, spin');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (4,'Helicopter armbar','2017-03-26','white', 10 , 6 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Helicopter armbar'), 'he stands up, grab his elbows, open legs and lift him on hips, bring one of his arms across and same side leg kicks him to create angle');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (5,'Knee trap takedown','2017-03-17','white', 4 , 3 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Knee trap takedown'), 'legs in zip order, arm grabs his knee from outside, foot his achilles, pull towards me, foot from achilles wraps around his leg, hips high and second leg sqeezes his knee');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (4,'Armbar from mount','2017-03-17','white', 1 , 6 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Armbar from mount'), 'get high, push his arm across his chest, knee almost over his head, second leg turns palm up,slide under his arm, fall backwards, leg from over his head goes across his body, extend hips');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (4,'Armbar from standing position','2017-03-17','white', 5 , 6 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Armbar from standing position'), 'grab his sleeve and lapel, pull him towards me, leg across his thighs, fall down and bring leg over his head, grab leg, push him down');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (1,'Darce choke','2017-03-03','white', 3 , 6 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Darce choke'), 'he pushes my knee away,pull his upper shoulder above his neck, slide arm under his upper arm and neck, put weight on his shoulder, second arm behind his head, expand chest');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (3,'Turtle to side control sweep','2017-03-17','white', 16 , 2 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Turtle to side control'), 'sqeeze the arm he brought inside the armpit, collapse knees and roll over to the side');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (7,'Guard standup pass','2017-02-01','white', 9 , 2 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Guard standup pass'), 'put weight on his stomach, suma stance, straight up, push his knee to the ground,knee on his thigh, head low, another knee on his thigh, pass ');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (7,'Guard knee break','2017-02-23','white', 9 , 2 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Guard knee break'), 'grab his armpits/belt, push away, stand up, knee between his thighs, sit back, knee on thigh, second knee high under his shoulder, prevent underhook on opposite side');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (5,'Slide and Trip takedown','2017-03-17','white', 5 , 2 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Slide and Trip takedown'), 'grab sleeve and lapel, push his shoulder, arm to the opposite side, side step, brind second leg behind him, trip him over');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (5,'Guard pull bluff takedown','2017-03-17','white', 5 , 2 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Guard pull bluff takedown'), 'get the hold of him (lapel, sleeve, head), fake guard pull, grab his achilles and lift it up');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (5,'Arm drag single leg takedown','2017-03-01','white', 5 , 2 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Arm drag single leg takedown'), 'grab his arm on hand and elbow, push it to in front of his body, shoot, knee behind his foot in acute angle, turn bit to the side on which the leg is trapped');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (5,'Double leg takedown','2017-03-17','white', 5 , 2 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Double leg takedown'), 'tap his arms upwards, shoot, head high, knee between his feet, second foot in line with his feet, arms around both legs, lock arms behind him, lift and turn');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (5,'Ankle shoot takedown','2017-03-17','white', 5 , 3 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Ankle shoot takedown'), 'circle, change levels and shoot on his front leg with weight on it, head between feet, grab heel and pull it to the side, push with head and shoulder in opposite direction');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (6,'Leg underhook sweep','2017-03-28','white', 10 , 1 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Leg underhook sweep'), 'walk my hand under my backbone, then turn it to underhook his thigh, possibly trap his arm on sweep side, kick with one leg and use its max kinetical energy to roll over ');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (4,'Americana','2017-02-14','white', 1 , 6 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Americana'), 'Grab and put weight on his wrist with opposite arm, same side arm slides under his biceps, pull his wrist wo me while second arm rotates his arm upwards');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (1,'Read naked choke','2017-01-17','white', 7 , 6 );
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Read naked choke'), 'hooks in, trap one of his arms with my leg, slide forearm under his chin and grab my biceps, second arm behind his head, squeeze and extend hips');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (7,'Technical standup','2017-01-17','white', 4 , 5 )
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Technical standup'), 'defend with stretched arm, weight on opposite arm and leg, lift hips and bring second leg under my body')

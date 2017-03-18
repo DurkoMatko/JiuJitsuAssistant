@@ -19,12 +19,12 @@
          <ColumnDefinition Width="900" Name="gameplayColumn" />
       </Grid.ColumnDefinitions>
 
-      <Label x:Name="label1" Content="Settings" HorizontalAlignment="Left" Margin="42,41,0,0" VerticalAlignment="Top" Grid.Column="0" Width="69" FontSize="16"/>
-      <Border x:Name="CanvasBorder" BorderBrush="Black" BorderThickness="3" Margin="38,66,36,486">
+      <Label x:Name="label1" Content="Settings" HorizontalAlignment="Left" Margin="42,20,0,0" VerticalAlignment="Top" Grid.Column="0" Width="69" Foreground="Black" FontSize="16"/>
+      <Border x:Name="CanvasBorder" BorderBrush="Black" BorderThickness="3" Margin="38,45,36,507">
          <Canvas HorizontalAlignment="Left" Margin="24,5,0,0" Width="270" Grid.Column="0" Height="198" VerticalAlignment="Top">
             <Button x:Name="newRoundButton" Content="New round" Canvas.Left="158" Canvas.Top="130" Width="102" Height="40" FontSize="14" Click="newRoundClicked" />
             <Button x:Name="resetButton" Content="Reset settings" Canvas.Left="10" Canvas.Top="130" Width="102" Height="40" FontSize="14"  Click="resetClicked"/>
-            <ComboBox x:Name="difficultyCombobox" Canvas.Left="10" Canvas.Top="45"  VerticalContentAlignment="Center" Width="250" Height="36">
+            <ComboBox x:Name="difficultyCombobox" Canvas.Left="10" Canvas.Top="45"  VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Width="250" Height="36">
                <ComboBoxItem Content="Easy" IsSelected="true">
                   <ComboBoxItem.Tag>
                      <sys:Double>0.40</sys:Double>
@@ -44,11 +44,11 @@
          </Canvas>
       </Border>
 
-      <TextBox x:Name="setup_textBox" HorizontalAlignment="Left" Height="173" Margin="66,539,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="270" Grid.Column="0" Grid.ColumnSpan="2" TextChanged="enableTechniques"/>
-      <Label x:Name="label" Content="Current position:" HorizontalAlignment="Left" Margin="66,461,0,0" VerticalAlignment="Top" FontSize="14" Grid.Column="0" Grid.ColumnSpan="2"/>
-      <Label x:Name="currentPositionLabel" Content="none" HorizontalAlignment="Left" Margin="179,457,0,0" VerticalAlignment="Top" FontSize="18" Foreground="#FFD40E0E" RenderTransformOrigin="0.28,-0.235"/>
-      <Label x:Name="label_Copy" Content="Last technique:" HorizontalAlignment="Left" Margin="66,495,0,0" VerticalAlignment="Top" FontSize="14" Grid.Column="0" Grid.ColumnSpan="2"/>
-      <Label x:Name="lastTechniqueLabel" Content="none" HorizontalAlignment="Left" Margin="179,491,0,0" VerticalAlignment="Top" FontSize="18" Foreground="#FFD40E0E"/>
+      <TextBox x:Name="setup_textBox" HorizontalAlignment="Left" Height="133" Margin="42,580,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0" TextChanged="enableTechniques"/>
+      <Label x:Name="label" Content="Current position:" HorizontalAlignment="Left" Margin="42,498,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
+      <Label x:Name="currentPositionLabel" Content="none" HorizontalAlignment="Left" Margin="155,494,0,0" VerticalAlignment="Top" FontSize="18" Foreground="#FFD40E0E" RenderTransformOrigin="0.28,-0.235"/>
+      <Label x:Name="label_Copy" Content="Last technique:" HorizontalAlignment="Left" Margin="42,533,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
+      <Label x:Name="lastTechniqueLabel" Content="none" HorizontalAlignment="Left" Margin="150,529,0,0" VerticalAlignment="Top" FontSize="18" Foreground="#FFD40E0E"/>
 
 
       <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="8">
@@ -75,6 +75,8 @@
       <UniformGrid x:Name="buttonsGrid" Grid.Column="2">
 
       </UniformGrid>
+      <Label x:Name="label2" Foreground="Black" Content="Sequence:" FontSize="14" HorizontalAlignment="Left" Margin="42,335,0,0" VerticalAlignment="Top"/>
+      <TextBlock x:Name="sequence_textblock" HorizontalAlignment="Left" Margin="127,342,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="130" Width="237"/>
 
    </Grid>
 </Window>

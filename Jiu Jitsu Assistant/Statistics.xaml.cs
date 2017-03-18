@@ -49,6 +49,10 @@ namespace Jiu_Jitsu_Assistant
 
          populateBarChart();
          populateStackedChart();
+
+         barchart_container.ChartLegend.Foreground = new SolidColorBrush(Colors.White);
+         stacked_container.ChartLegend.Foreground = new SolidColorBrush(Colors.White);
+         window.Background = new SolidColorBrush(Colors.Black);
          DataContext = this;
       }
 
@@ -84,9 +88,13 @@ namespace Jiu_Jitsu_Assistant
       {
          try
          {
+            StringBuilder sb = new StringBuilder();
+            sb.Append("SELECT * FROM techniques ");
+            sb.Append("WHERE group_id != (Select group_id from techniquegroups where name='Natural Human Movements') ");
+            sb.Append("ORDER BY date_learned ASC ");
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM techniques ORDER BY date_learned ASC";
+            cmd.CommandText = sb.ToString();
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);
@@ -111,9 +119,6 @@ namespace Jiu_Jitsu_Assistant
             da.Fill(ds);
 
             this.techniqueGroupsTable = ds.Tables[0];
-            techniqueGroup_comboBox.ItemsSource = this.techniqueGroupsTable.DefaultView;
-            techniqueGroup_comboBox.DisplayMemberPath = "name";
-            techniqueGroup_comboBox.SelectedValuePath = "group_id";
          }
          catch (MySql.Data.MySqlClient.MySqlException e)
          {
@@ -156,18 +161,6 @@ namespace Jiu_Jitsu_Assistant
          return dict;
       }
 
-
-      //enables/disables Add button always when technique name textbox changes value
-      private void emptyTechniqueNameCheck(object sender, TextChangedEventArgs e)
-      {
-         if (string.IsNullOrWhiteSpace(techniqueName_textbox.Text))
-         {
-            addTechnique_button.IsEnabled = false;
-            return;
-         }
-         addTechnique_button.IsEnabled = true;
-      }
-
       //used to set mouse_x,mouse_y to proper position AddTechniqueDialog
       private void addTechnique_button_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
       {
@@ -175,58 +168,6 @@ namespace Jiu_Jitsu_Assistant
          var point = PointToScreen(relativePosition);
          this.mouse_x = point.X;
          this.mouse_y = point.Y;
-      }
-
-
-      private void AddNewTechnique(object sender, RoutedEventArgs e)
-      {
-         try
-         {
-            StringBuilder sb = new StringBuilder();
-            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level) VALUES ({0},'{1}','{2}','{3}')", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Content.ToString());
-            MySqlCommand cmd;
-            cmd = this.conn.CreateCommand();
-            cmd.CommandText = sb.ToString();
-            int effectedRows = cmd.ExecuteNonQuery();
-
-            resetAddTechniqueValues();
-            bool success = false;
-            if (effectedRows != 0)
-            {
-               LoadTechniques();
-               success = true;
-            }
-            /*  UPDATE CHARTS TRY
-            this.BarChart.Clear();
-            this.myChronological.Clear();
-            populateBarChart();
-            BarChart[1].Values.Add(0);
-            DataContext = this;
-            populateStackedChart(); */
-
-            //javascript like alert dialog to let user know if adding technique was successful
-            AddTechniqueDialog atd = new AddTechniqueDialog(success, mouse_x, mouse_y,"Technique");
-            atd.ShowDialog();
-
-            Statistics win2 = new Statistics(this.Left, this.Top, this.Height, this.Width);
-            win2.Show();
-            this.Close();
-         }
-         catch (Exception ex)
-         {
-            resetAddTechniqueValues();
-            AddTechniqueDialog atd = new AddTechniqueDialog(false, mouse_x, mouse_y,"technique");
-            atd.Show();
-         }
-      }
-
-      //reset new technique form
-      private void resetAddTechniqueValues()
-      {
-         techniqueName_textbox.Text = "";
-         dateLearned_datepicker.SelectedDate = DateTime.Today;
-         belt_comboBox.SelectedIndex = 0;
-         techniqueGroup_comboBox.SelectedIndex = 0;
       }
 
       private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

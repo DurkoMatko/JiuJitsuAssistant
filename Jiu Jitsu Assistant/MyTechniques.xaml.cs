@@ -7,6 +7,8 @@ using System.Windows.Controls;
 using System.Data;
 using MySql.Data.MySqlClient;
 using System.Windows.Input;
+using System.Windows.Media;
+using System.IO;
 
 namespace Jiu_Jitsu_Assistant
 {
@@ -33,6 +35,8 @@ namespace Jiu_Jitsu_Assistant
             LoadTechniques();
             LoadedTechniqueGroups();
             LoadPositions();
+
+            window1.Background = new SolidColorBrush(Colors.Black);
          }
       }
 
@@ -73,6 +77,7 @@ namespace Jiu_Jitsu_Assistant
             sb.Append("ON pFrom.position_id = t.position_from ");
             sb.Append("LEFT JOIN positions as pTo ");
             sb.Append("ON pTo.position_id = t.position_to ");
+            sb.Append("WHERE t.group_id != (Select group_id from techniquegroups where name='Natural Human Movements')");
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();
             cmd.CommandText = sb.ToString();
@@ -217,6 +222,9 @@ namespace Jiu_Jitsu_Assistant
             //javascript like alert dialog to let user know if adding technique was successful
             AddTechniqueDialog atd = new AddTechniqueDialog(true, mouse_x, mouse_y, "Technique");
             atd.Show();
+
+            string createText = sb.ToString() + Environment.NewLine;
+            File.AppendAllText("C:/Users/T420/Documents/Visual Studio 2015/Projects/Jiu Jitsu Assistant/db_creation/data2.txt", createText);
          }
          catch (Exception ex){
             resetAddTechniqueValues();
@@ -244,6 +252,9 @@ namespace Jiu_Jitsu_Assistant
                AddTechniqueDialog atd = new AddTechniqueDialog(true, mouse_x, mouse_y,"Setup");
                atd.Show();
             }
+
+            string createText = sb.ToString() + Environment.NewLine;
+            File.AppendAllText("C:/Users/T420/Documents/Visual Studio 2015/Projects/Jiu Jitsu Assistant/db_creation/data2.txt", createText);
          }
          catch (Exception ex)
          {
@@ -430,7 +441,10 @@ namespace Jiu_Jitsu_Assistant
          int setupsCount = 1;
          while (dr.Read())
          {
-            setups_textblock.Text = setups_textblock.Text + "\n" + setupsCount++.ToString() + ". " + dr[0].ToString();
+            if (string.IsNullOrEmpty(setups_textblock.Text))
+               setups_textblock.Text = setupsCount++.ToString() + ". " + dr[0].ToString();
+            else
+               setups_textblock.Text = setups_textblock.Text + "\n" + setupsCount++.ToString() + ". " + dr[0].ToString();
          }
          dr.Close();
       }

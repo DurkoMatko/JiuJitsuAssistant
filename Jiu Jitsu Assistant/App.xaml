@@ -5,7 +5,11 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
-      <LinearGradientBrush x:Key="GrayBlueGradientBrush"  StartPoint="0,0" EndPoint="1,1">
+      <Style TargetType="{x:Type Label}">
+         <Setter Property="Foreground" Value="White" />
+      </Style>
+
+         <LinearGradientBrush x:Key="GrayBlueGradientBrush"  StartPoint="0,0" EndPoint="1,1">
          <GradientStop Color="DarkGray" Offset="0" />
          <GradientStop Color="#CCCCFF" Offset="0.5" />
          <GradientStop Color="DarkGray" Offset="1" />

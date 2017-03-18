@@ -54,3 +54,19 @@ CREATE TABLE `jiujitsuassistant`.`setups` (
     ON UPDATE NO ACTION);
 
 SET foreign_key_checks = 0;
+
+ CREATE TABLE `jiujitsuassistant`.`positionpairs` (
+  `my_position_id` INT NOT NULL,
+  `opponent_position_id` INT NOT NULL,
+  INDEX `fk_my_position_idx` (`my_position_id` ASC),
+  INDEX `fk_opposite_position_idx` (`opponent_position_id` ASC),
+  CONSTRAINT `fk_my_position`
+    FOREIGN KEY (`my_position_id`)
+    REFERENCES `jiujitsuassistant`.`positions` (`position_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_opposite_position`
+    FOREIGN KEY (`opponent_position_id`)
+    REFERENCES `jiujitsuassistant`.`positions` (`position_id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);

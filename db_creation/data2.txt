@@ -1,0 +1,2 @@
+SET foreign_key_checks = 0;INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES (7,'Technical standup','2017-01-17','white', 4 , 5 )
+SET foreign_key_checks = 0;INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Technical standup'), 'defend with stretched arm, weight on opposite arm and leg, lift hips and bring second leg under my body')
