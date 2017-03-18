@@ -28,7 +28,7 @@
       <TextBlock Grid.Row="0" Grid.Column="1" Margin="0,34,0,224" Grid.RowSpan="2">
                  <Image Margin="0,0,5,5" Source="images/bjj-logo.png" />
       </TextBlock>
-      <Button  Grid.Column="1" Grid.Row="1" x:Name="button" Content="Roll !" HorizontalAlignment="Center" VerticalAlignment="Center"  RenderTransformOrigin="0.811,0.976" Height="44" Width="412" FontSize="20" Margin="10,107" FontWeight="Bold" Focusable="False">
+      <Button  Grid.Column="1" Grid.Row="1" x:Name="roll_Button" Content="Roll !" HorizontalAlignment="Center" VerticalAlignment="Center"  RenderTransformOrigin="0.811,0.976" Height="44" Width="412" FontSize="20" Margin="10,107" FontWeight="Bold" Focusable="False" Click="roll_Button_Click">
          <Button.Background>
             <ImageBrush ImageSource="/images/white-belt.jpg" />
          </Button.Background>

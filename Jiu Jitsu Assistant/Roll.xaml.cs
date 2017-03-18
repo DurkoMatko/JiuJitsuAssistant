@@ -4,56 +4,87 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Windows.Media;
+using System.Windows.Threading;
 
 namespace Jiu_Jitsu_Assistant
 {
    /// <summary>
    /// Interaction logic for MindMaps.xaml
    /// </summary>
-   public partial class MindMaps : Window
+   public partial class Roll : Window
    {
       MySqlConnection conn;
       private DataTable myTechniquesTable { get; set; }
       Dictionary<int, string> techniquesDict = new Dictionary<int, string>();
       private DataTable setupsTable { get; set; }
       Dictionary<int, List<string>> setupsDict = new Dictionary<int, List<string>>();
+      Dictionary<string, string> positionPairsDict = new Dictionary<string, string>();
 
-      private string currentPosition { get; set; }
+      string _currentPosition;
+      public string currentPosition
+      {
+         get { return _currentPosition; }
+         set
+         {
+            _currentPosition = value;
+            if (_currentPosition == "Submission")
+            {
+               submissionHappened();
+            }
+         }
+      }
       private string lastTechnique { get; set; }
 
+      
+      string _opponent_currentPosition;
+      public string opponent_currentPosition
+      {
+         get { return _opponent_currentPosition; }
+         set
+         {
+            _opponent_currentPosition = value;
+            if (_opponent_currentPosition == "Submission")
+            {
+               submissionHappened();
+            }
+         }
+      }
+      private string opponent_lastTechnique { get; set; }
+
       double difficultyTreshold { get; set; }
-      int sequenceCounter { get; set; }
 
+      DispatcherTimer fightTimer = new DispatcherTimer();
+      DispatcherTimer opponentMoveTimer = new DispatcherTimer();
 
-      public MindMaps()
+      public Roll()
       {
          InitializeComponent();
+         fightTimer.Interval = TimeSpan.FromSeconds(1);
+         fightTimer.Tick += dispatcherTimer_Tick;
 
          if (ConnectToDatabase())
          {
             LoadTechniques();
             LoadSetups();
+            LoadPositionPairs();
             setDictionaries();
          }
       }
 
       private void CreateButtons()
       {
-         int availableTechniquesCount = 0;
-         foreach (DataRow techniqueRow in myTechniquesTable.Rows)
-         {
-            if (techniqueRow.Field<string>("position_from") == currentPosition &&
-                  techniqueRow.Field<string>("name") != lastTechnique){
-                  availableTechniquesCount++;
-            }
-         }
+         buttonsGrid.Children.Clear();
+
+         int availableTechniquesCount = getAvailableTechniquesCount(currentPosition, lastTechnique);
 
          //if there are some buttons to be created (if there are some techniques known from current position)
          if (availableTechniquesCount != 0)
@@ -106,20 +137,23 @@ namespace Jiu_Jitsu_Assistant
 
          currentPositionLabel.Content = currentPosition;
          lastTechniqueLabel.Content = lastTechnique;
+         opponent_currentPosition = positionPairsDict[currentPosition];
+         opponentCurrentPositionLabel.Content = opponent_currentPosition;
+         opponentLastTechniqueLabel.Content = "-";
+
+         //restart opponent thinking time
+         opponentMoveTimer.Stop();
+         opponentMoveTimer.Start();
 
          this.buttonsGrid.Children.Clear();
          CreateButtons();
 
          if (currentPosition == "Submission")
             newRoundButton.IsEnabled = true;
-
-         if (string.IsNullOrEmpty(sequence_textblock.Text))
-            sequence_textblock.Text = sequence_textblock.Text + sequenceCounter++ + ". " + lastTechnique + "    [" + currentPosition + "]";
-         else
-            sequence_textblock.Text = sequence_textblock.Text + "\n" + sequenceCounter++ + ". " + lastTechnique + "   [" + currentPosition + "]";
       }
 
-      public MindMaps(double left, double top, double height, double width):this() {
+      public Roll(double left, double top, double height, double width) : this()
+      {
          this.Left = left;
          this.Top = top;
          this.Height = height;
@@ -189,6 +223,28 @@ namespace Jiu_Jitsu_Assistant
          }
       }
 
+      private void LoadPositionPairs()
+      {
+         StringBuilder sb = new StringBuilder(); 
+         sb.Append("select p.name as my_position, p2.name as opponent_position from positionpairs as pp ");
+         sb.Append("left join positions as p ");
+         sb.Append("on pp.my_position_id = p.position_id ");
+         sb.Append("left join positions as p2 ");
+         sb.Append("on pp.opponent_position_id = p2.position_id");
+
+         MySqlCommand cmd;
+         cmd = this.conn.CreateCommand();
+         cmd.CommandText = sb.ToString();
+         MySqlDataAdapter da = new MySqlDataAdapter(cmd);
+         DataSet ds = new DataSet();
+         da.Fill(ds);
+
+         foreach (DataRow pairRow in ds.Tables[0].Rows)
+         {
+            positionPairsDict.Add(pairRow.Field<string>("my_position"), pairRow.Field<string>("opponent_position"));
+         }
+      }
+
       private void setDictionaries()
       {
          foreach (DataRow techniqueRow in myTechniquesTable.Rows)
@@ -200,13 +256,14 @@ namespace Jiu_Jitsu_Assistant
          {
             if (setupsDict.ContainsKey(setupRow.Field<int>("technique_id")))
                setupsDict[setupRow.Field<int>("technique_id")].Add(setupRow.Field<string>("description"));
-            else { //if new technique, create new list and dict entry
+            else
+            { //if new technique, create new list and dict entry
                List<string> newSetupList = new List<string>();
                newSetupList.Add(setupRow.Field<string>("description"));
                setupsDict.Add(setupRow.Field<int>("technique_id"), newSetupList);
             }
          }
-      } 
+      }
 
       private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
       {
@@ -255,29 +312,180 @@ namespace Jiu_Jitsu_Assistant
 
       private void newRoundClicked(object sender, RoutedEventArgs e)
       {
-         sequenceCounter = 1;
-         sequence_textblock.Text="";
-
+         //reset player
          currentPosition = "Both standing";
          currentPositionLabel.Content = currentPosition;
-         lastTechniqueLabel.Content = "none";
-         lastTechnique = "none";
+         lastTechniqueLabel.Content = "-";
+         lastTechnique = "-";
+
+         //reset opponent
+         opponent_currentPosition = "Both standing";
+         opponentCurrentPositionLabel.Content = opponent_currentPosition;
+         opponentLastTechniqueLabel.Content = "-"; 
+         opponent_lastTechnique = "-";
+
+         //set timer label
+         selectedTime_textbox.IsEnabled = false;
+         setTimerLabel(selectedTime_textbox.Text);
+
          var selectedDifficulty = difficultyCombobox.SelectedItem as ComboBoxItem;
          difficultyTreshold = Double.Parse(selectedDifficulty.Tag.ToString());
          difficultyCombobox.IsEnabled = false;
          newRoundButton.IsEnabled = false;
+
+         fightTimer.Start();
+
+         //set opponent timer
+         opponentMoveTimer.Interval = TimeSpan.FromSeconds(getOpponentsSetupTime());
+         opponentMoveTimer.Tick += opponentMove;
+         opponentMoveTimer.Start();
+         opponentSetupTime_textBox.IsEnabled = false;
+
          CreateButtons();
       }
 
-      private void resetClicked(object sender, RoutedEventArgs e) {
-         sequence_textblock.Text = "";
-
+      private void resetClicked(object sender, RoutedEventArgs e)
+      {
          buttonsGrid.Children.Clear();
          difficultyCombobox.IsEnabled = true;
          newRoundButton.IsEnabled = true;
-         currentPositionLabel.Content = "none";
-         lastTechniqueLabel.Content = "none";
+         currentPositionLabel.Content = "-";
+         lastTechniqueLabel.Content = "-";
+         opponentCurrentPositionLabel.Content = "-";
+         opponentLastTechniqueLabel.Content = "-";
+
+         //reset timer
+         setTimerLabel(selectedTime_textbox.Text);
+         fightTimer.Stop();
+         selectedTime_textbox.IsEnabled = true;
+
+         //stop opponent
+         opponentMoveTimer.Stop();
+         opponentSetupTime_textBox.IsEnabled = true;
       }
-      
+
+      private void setTimerLabel(string time)
+      {
+         string minutes;
+         string seconds;
+         DateTime ignored = DateTime.ParseExact(time, "m:s", null);
+         if (ignored.Minute < 10)
+         {
+            minutes = "0" + ignored.Minute.ToString();
+         }
+         else
+         {
+            minutes = ignored.Minute.ToString();
+         }
+
+         if (ignored.Second < 10)
+         {
+            seconds = "0" + ignored.Second.ToString();
+         }
+         else
+         {
+            seconds = ignored.Second.ToString();
+         }
+
+         timer_label.Content = minutes + ":" + seconds;
+      }
+
+
+      private void timeTextBoxChanged(object sender, TextChangedEventArgs e)
+      {
+         DateTime ignored;
+         var textbox = sender as TextBox;
+         if (DateTime.TryParseExact(selectedTime_textbox.Text, "m:s", CultureInfo.InvariantCulture, DateTimeStyles.None, out ignored))
+         {
+            newRoundButton.IsEnabled = true;
+            textbox.ClearValue(TextBox.BorderBrushProperty);
+            textbox.ClearValue(TextBox.BackgroundProperty);
+         }
+         else {
+            newRoundButton.IsEnabled = false;
+            textbox.BorderBrush = new SolidColorBrush(Colors.LightCoral);
+            textbox.Background = new SolidColorBrush(Colors.LightCoral);
+         }
+      }
+
+      private void dispatcherTimer_Tick(object sender, EventArgs e)
+      {
+         DateTime time = DateTime.ParseExact(timer_label.Content.ToString(), "m:s", null);
+         var remaining = time.AddSeconds(-1);
+         //not checking for 00:00 to allow it appear on timerLabel during gameplay
+         if (remaining.ToString("mm:ss") != "59:59")
+         {
+            setTimerLabel(remaining.ToString("mm:ss"));
+         }
+         else {
+            //if time is 59:59, raise reset button click event (end round)
+            resetButton.RaiseEvent(new RoutedEventArgs(Button.ClickEvent));
+         }
+      }
+
+      private void opponentMove(object sender, EventArgs e)
+      {
+         int opponentAvailableTechniquesCount = getAvailableTechniquesCount(opponent_currentPosition, opponent_lastTechnique);
+
+         if (opponentAvailableTechniquesCount != 0)
+         {
+            //randomly chose from available techniques
+            Random rnd = new Random(DateTime.Now.Second);
+            int chosen = rnd.Next(1, opponentAvailableTechniquesCount+1);
+
+            int counter = 0;
+            foreach (DataRow techniqueRow in myTechniquesTable.Rows)
+            {
+               if (techniqueRow.Field<string>("position_from") == opponent_currentPosition &&
+                     techniqueRow.Field<string>("name") != opponent_lastTechnique)
+               {
+                  if (++counter == chosen)
+                  {
+                     //set background variables for positions
+                     opponent_currentPosition = techniqueRow.Field<string>("position_to");
+                     currentPosition = positionPairsDict[opponent_currentPosition];
+                     opponent_lastTechnique = techniqueRow.Field<string>("name");
+                     lastTechnique = "-";
+
+                     //set labels in UI
+                     opponentCurrentPositionLabel.Content = opponent_currentPosition;
+                     currentPositionLabel.Content = currentPosition;
+                     opponentLastTechniqueLabel.Content = opponent_lastTechnique;
+                     lastTechniqueLabel.Content = lastTechnique;
+
+                     //create buttons and break
+                     CreateButtons();
+                     break;
+                  }
+               }
+            }
+         }
+      }
+
+      private void submissionHappened()
+      {
+         newRoundButton.IsEnabled = true;
+         opponentMoveTimer.Stop();
+         fightTimer.Stop();
+         setTimerLabel(selectedTime_textbox.Text);
+      }
+
+      private int getAvailableTechniquesCount(string curr_pos,string last_tech) {
+         int availableTechniques = 0;
+         foreach (DataRow techniqueRow in myTechniquesTable.Rows)
+         {
+            if (techniqueRow.Field<string>("position_from") == curr_pos &&
+                  techniqueRow.Field<string>("name") != last_tech)
+            {
+               availableTechniques++;
+            }
+         }
+         return availableTechniques;
+      }
+
+      private int getOpponentsSetupTime() {
+         DateTime ignored = DateTime.ParseExact(opponentSetupTime_textBox.Text, "m:s", null);
+         return ignored.Minute * 60 + ignored.Second;
+      }
    }
 }

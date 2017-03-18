@@ -113,7 +113,7 @@ namespace Jiu_Jitsu_Assistant
          {
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();
-            cmd.CommandText = "SELECT * FROM techniquegroups";
+            cmd.CommandText = "SELECT * FROM techniquegroups where name != 'Natural Human Movements'";
             MySqlDataAdapter da = new MySqlDataAdapter(cmd);
             DataSet ds = new DataSet();
             da.Fill(ds);

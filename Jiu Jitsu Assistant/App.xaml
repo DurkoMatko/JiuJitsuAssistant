@@ -21,9 +21,9 @@
          <GradientStop Color="#ffff00" Offset="1" />
       </LinearGradientBrush>
       <LinearGradientBrush x:Key="techniqueGroupGrad_1_disabled" StartPoint="0,0" EndPoint="1,1">
-         <GradientStop Color="#ffffb3" Offset="0" />
+         <GradientStop Color="#FFFF7A" Offset="0" />
          <GradientStop Color="#CCCCFF" Offset="0.5" />
-         <GradientStop Color="#ffffb3" Offset="1" />
+         <GradientStop Color="#FFFF7A" Offset="1" />
       </LinearGradientBrush>
 
       <LinearGradientBrush x:Key="techniqueGroupGrad_2" StartPoint="0,0" EndPoint="1,1">
@@ -32,9 +32,9 @@
          <GradientStop Color="Blue" Offset="1" />
       </LinearGradientBrush>
       <LinearGradientBrush x:Key="techniqueGroupGrad_2_disabled" StartPoint="0,0" EndPoint="1,1">
-         <GradientStop Color="#cce0ff" Offset="0" />
+         <GradientStop Color="#8BBAFF" Offset="0" />
          <GradientStop Color="#CCCCFF" Offset="0.5" />
-         <GradientStop Color="#cce0ff" Offset="1" />
+         <GradientStop Color="#8BBAFF" Offset="1" />
       </LinearGradientBrush>
 
       <LinearGradientBrush x:Key="techniqueGroupGrad_3" StartPoint="0,0" EndPoint="1,1">
@@ -54,9 +54,9 @@
          <GradientStop Color="Purple" Offset="1" />
       </LinearGradientBrush>
       <LinearGradientBrush x:Key="techniqueGroupGrad_4_disabled" StartPoint="0,0" EndPoint="1,1">
-         <GradientStop Color="#ffcce6" Offset="0" />
+         <GradientStop Color="#FF91CA" Offset="0" />
          <GradientStop Color="#CCCCFF" Offset="0.5" />
-         <GradientStop Color="#ffcce6" Offset="1" />
+         <GradientStop Color="#FF91CA" Offset="1" />
       </LinearGradientBrush>
 
       <LinearGradientBrush x:Key="techniqueGroupGrad_5" StartPoint="0,0" EndPoint="1,1">
@@ -65,9 +65,9 @@
          <GradientStop Color="Red" Offset="1" />
       </LinearGradientBrush>
       <LinearGradientBrush x:Key="techniqueGroupGrad_5_disabled" StartPoint="0,0" EndPoint="1,1">
-         <GradientStop Color="#ffcccc" Offset="0" />
+         <GradientStop Color="#FF9898" Offset="0" />
          <GradientStop Color="#CCCCFF" Offset="0.5" />
-         <GradientStop Color="#ffcccc" Offset="1" />
+         <GradientStop Color="#FF9898" Offset="1" />
       </LinearGradientBrush>
 
       <LinearGradientBrush x:Key="techniqueGroupGrad_6" StartPoint="0,0" EndPoint="1,1">
@@ -76,9 +76,9 @@
          <GradientStop Color="Green" Offset="1" />
       </LinearGradientBrush>
       <LinearGradientBrush x:Key="techniqueGroupGrad_6_disabled" StartPoint="0,0" EndPoint="1,1">
-         <GradientStop Color="#ccffcc" Offset="0" />
+         <GradientStop Color="#96FF96" Offset="0" />
          <GradientStop Color="#CCCCFF" Offset="0.5" />
-         <GradientStop Color="#ccffcc" Offset="1" />
+         <GradientStop Color="#96FF96" Offset="1" />
       </LinearGradientBrush>
 
       <LinearGradientBrush x:Key="techniqueGroupGrad_7" StartPoint="0,0" EndPoint="1,1">
@@ -87,9 +87,9 @@
          <GradientStop Color="#00ffff" Offset="1" />
       </LinearGradientBrush>
       <LinearGradientBrush x:Key="techniqueGroupGrad_7_disabled" StartPoint="0,0" EndPoint="1,1">
-         <GradientStop Color="#e6ffff" Offset="0" />
+         <GradientStop Color="#A2FDFD" Offset="0" />
          <GradientStop Color="#CCCCFF" Offset="0.5" />
-         <GradientStop Color="#e6ffff" Offset="1" />
+         <GradientStop Color="#A2FDFD" Offset="1" />
       </LinearGradientBrush>
 
       <LinearGradientBrush x:Key="techniqueGroupGrad_8" StartPoint="0,0" EndPoint="1,1">

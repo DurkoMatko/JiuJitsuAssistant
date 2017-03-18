@@ -67,5 +67,11 @@ namespace Jiu_Jitsu_Assistant
          MindMaps win2 = new MindMaps(this.Left, this.Top, this.Height, this.Width);
          win2.ShowDialog();
       }
+
+      private void roll_Button_Click(object sender, RoutedEventArgs e)
+      {
+         Roll win2 = new Roll(this.Left, this.Top, this.Height, this.Width);
+         win2.ShowDialog();
+      }
    }
 }

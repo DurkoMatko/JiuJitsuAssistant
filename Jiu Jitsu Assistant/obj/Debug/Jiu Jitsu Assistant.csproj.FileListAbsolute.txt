@@ -32,3 +32,5 @@ C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jits
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\MindMaps.g.cs
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\MindMaps.baml
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\App.baml
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Roll.g.cs
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Roll.baml

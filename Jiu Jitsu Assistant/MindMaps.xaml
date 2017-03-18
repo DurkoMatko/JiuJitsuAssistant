@@ -44,11 +44,11 @@
          </Canvas>
       </Border>
 
-      <TextBox x:Name="setup_textBox" HorizontalAlignment="Left" Height="133" Margin="42,580,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0" TextChanged="enableTechniques"/>
-      <Label x:Name="label" Content="Current position:" HorizontalAlignment="Left" Margin="42,498,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
-      <Label x:Name="currentPositionLabel" Content="none" HorizontalAlignment="Left" Margin="155,494,0,0" VerticalAlignment="Top" FontSize="18" Foreground="#FFD40E0E" RenderTransformOrigin="0.28,-0.235"/>
-      <Label x:Name="label_Copy" Content="Last technique:" HorizontalAlignment="Left" Margin="42,533,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
-      <Label x:Name="lastTechniqueLabel" Content="none" HorizontalAlignment="Left" Margin="150,529,0,0" VerticalAlignment="Top" FontSize="18" Foreground="#FFD40E0E"/>
+      <TextBox x:Name="setup_textBox" HorizontalAlignment="Left" Height="91" Margin="42,622,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0" TextChanged="enableTechniques"/>
+      <Label x:Name="label" Content="Current position:" HorizontalAlignment="Left" Margin="42,533,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
+      <Label x:Name="currentPositionLabel" Content="none" HorizontalAlignment="Left" Margin="155,529,0,0" VerticalAlignment="Top" FontSize="18" Foreground="Green" RenderTransformOrigin="0.28,-0.235"/>
+      <Label x:Name="label_Copy" Content="Last technique:" HorizontalAlignment="Left" Margin="42,568,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
+      <Label x:Name="lastTechniqueLabel" Content="none" HorizontalAlignment="Left" Margin="150,564,0,0" VerticalAlignment="Top" FontSize="18" Foreground="Green"/>
 
 
       <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="8">

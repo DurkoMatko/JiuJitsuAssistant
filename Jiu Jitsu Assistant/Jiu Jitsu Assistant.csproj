@@ -78,6 +78,9 @@
     <Compile Include="MindMaps.xaml.cs">
       <DependentUpon>MindMaps.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Roll.xaml.cs">
+      <DependentUpon>Roll.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Statistics.xaml.cs">
       <DependentUpon>Statistics.xaml</DependentUpon>
     </Compile>
@@ -105,6 +108,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="MyTechniques.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Roll.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
