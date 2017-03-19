@@ -136,3 +136,5 @@ INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,posi
 INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Triangle armbar'), 'if his elbow is on my chest, pin his forearm to the chest, extend the hips, lean backwards');
 INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to,nogi_flag) VALUES (4,'Kimura transition','2017-01-25','white', 2 , 6 , True);
 INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Kimura transition'), 'my lower arm grabs his wrist, upper arm finishes kimura grab,half roll forwards, stop rolling and shift body behind his head, finish kimura');
+INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to,nogi_flag) VALUES (1,'Collar choke','2017-03-19','white', 1 , 6, False )
+INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Collar choke'), 'grab collar with overgrip, fake second arm movement under first arm, trap his arm with knee, grab collar with undergrip, put weight on him and widen elbows')

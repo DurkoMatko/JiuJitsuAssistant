@@ -85,7 +85,7 @@ namespace Jiu_Jitsu_Assistant
       {
          buttonsGrid.Children.Clear();
 
-         int availableTechniquesCount = getAvailableTechniquesCount(currentPosition, lastTechnique);
+         int availableTechniquesCount = getAvailableTechniques(currentPosition, lastTechnique).Count;
 
          //if there are some buttons to be created (if there are some techniques known from current position)
          if (availableTechniquesCount != 0)
@@ -458,38 +458,34 @@ namespace Jiu_Jitsu_Assistant
 
       private void opponentMove(object sender, EventArgs e)
       {
-         int opponentAvailableTechniquesCount = getAvailableTechniquesCount(opponent_currentPosition, opponent_lastTechnique);
+         List<int> opponentAvailableTechniquesId = getAvailableTechniques(opponent_currentPosition, opponent_lastTechnique);
 
-         if (opponentAvailableTechniquesCount != 0)
+ 
+         if (opponentAvailableTechniquesId.Count != 0)
          {
-            //randomly chose from available techniques
+            //randomly choose from available techniques
             Random rnd = new Random(DateTime.Now.Second);
-            int chosen = rnd.Next(1, opponentAvailableTechniquesCount+1);
+            int chosen = rnd.Next(1, opponentAvailableTechniquesId.Count + 1);
 
-            int counter = 0;
             foreach (DataRow techniqueRow in myTechniquesTable.Rows)
             {
-               if (techniqueRow.Field<string>("position_from") == opponent_currentPosition &&
-                     techniqueRow.Field<string>("name") != opponent_lastTechnique)
+               if (techniqueRow.Field<int>("technique_id") == opponentAvailableTechniquesId[chosen])
                {
-                  if (++counter == chosen)
-                  {
-                     //set background variables for positions
-                     opponent_currentPosition = techniqueRow.Field<string>("position_to");
-                     currentPosition = positionPairsDict[opponent_currentPosition];
-                     opponent_lastTechnique = techniqueRow.Field<string>("name");
-                     lastTechnique = "-";
+                  //set background variables for positions
+                  opponent_currentPosition = techniqueRow.Field<string>("position_to");
+                  currentPosition = positionPairsDict[opponent_currentPosition];
+                  opponent_lastTechnique = techniqueRow.Field<string>("name");
+                  lastTechnique = "-";
 
-                     //set labels in UI
-                     opponentCurrentPositionLabel.Content = opponent_currentPosition;
-                     currentPositionLabel.Content = currentPosition;
-                     opponentLastTechniqueLabel.Content = opponent_lastTechnique;
-                     lastTechniqueLabel.Content = lastTechnique;
+                  //set labels in UI
+                  opponentCurrentPositionLabel.Content = opponent_currentPosition;
+                  currentPositionLabel.Content = currentPosition;
+                  opponentLastTechniqueLabel.Content = opponent_lastTechnique;
+                  lastTechniqueLabel.Content = lastTechnique;
 
-                     //create buttons and break
-                     CreateButtons();
-                     break;
-                  }
+                  //create buttons and break
+                  CreateButtons();
+                  break;
                }
             }
          }
@@ -503,8 +499,8 @@ namespace Jiu_Jitsu_Assistant
          setTimerLabel(selectedTime_textbox.Text);
       }
 
-      private int getAvailableTechniquesCount(string curr_pos,string last_tech) {
-         int availableTechniquesCount = 0;
+      private List<int> getAvailableTechniques(string curr_pos,string last_tech) {
+         List<int> availableTechniqueIds = new List<int>();
          foreach (DataRow techniqueRow in myTechniquesTable.Rows)
          {
             //starting in current position and can't repeat the technique
@@ -515,13 +511,13 @@ namespace Jiu_Jitsu_Assistant
                if (nogi_flag)
                {
                   if (techniqueRow.Field<bool>("nogi_flag") == true)
-                     availableTechniquesCount++;
+                     availableTechniqueIds.Add((techniqueRow.Field<int>("technique_id")));
                }
                else
-                  availableTechniquesCount++;
+                  availableTechniqueIds.Add((techniqueRow.Field<int>("technique_id")));
             }
          }
-         return availableTechniquesCount;
+         return availableTechniqueIds;
       }
 
       private int getOpponentsSetupTime() {
