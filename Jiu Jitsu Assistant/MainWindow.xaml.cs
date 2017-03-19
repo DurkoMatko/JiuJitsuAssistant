@@ -2,6 +2,9 @@
 using System.Windows;
 using MySql.Data.MySqlClient;
 using System.Windows.Media;
+using System.Windows.Threading;
+using System.Diagnostics;
+using System.Windows.Input;
 
 namespace Jiu_Jitsu_Assistant
 {
@@ -10,6 +13,9 @@ namespace Jiu_Jitsu_Assistant
    /// </summary>
    public partial class MainWindow : Window
    {
+      DispatcherTimer settingsTimer = new DispatcherTimer();
+      int secondsCounter { get; set; }
+
       public MainWindow()
       {
          InitializeComponent();
@@ -21,6 +27,10 @@ namespace Jiu_Jitsu_Assistant
          }
          
          window.Background = new SolidColorBrush(Colors.Black);
+
+         settingsTimer.Interval = TimeSpan.FromSeconds(0.5);
+         settingsTimer.Tick += settingsTimer_Tick;
+         settingsTimer.Start();
       }
 
       private Boolean ConnectToDatabase()
@@ -72,6 +82,24 @@ namespace Jiu_Jitsu_Assistant
       {
          Roll win2 = new Roll(this.Left, this.Top, this.Height, this.Width);
          win2.ShowDialog();
+      }
+
+      private void settingsTimer_Tick(object sender, EventArgs e) {
+         secondsCounter++;
+         if (secondsCounter % 2 == 0) 
+            settingsLabel.Foreground = new SolidColorBrush(Colors.Gray);
+         else
+            settingsLabel.Foreground = new SolidColorBrush(Colors.White);
+      }
+
+      private void KeyPressed(object sender, KeyEventArgs e)
+      {
+         if (e.Key == Key.S)
+         {
+            Settings settingsWindow = new Settings();
+            settingsWindow.ShowDialog();
+            return;
+         }
       }
    }
 }

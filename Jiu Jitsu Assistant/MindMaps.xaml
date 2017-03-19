@@ -24,7 +24,7 @@
          <Canvas HorizontalAlignment="Left" Margin="24,5,0,0" Width="270" Grid.Column="0" Height="198" VerticalAlignment="Top">
             <Button x:Name="newRoundButton" Content="New round" Canvas.Left="158" Canvas.Top="130" Width="102" Height="40" FontSize="14" Click="newRoundClicked" />
             <Button x:Name="resetButton" Content="Reset settings" Canvas.Left="10" Canvas.Top="130" Width="102" Height="40" FontSize="14"  Click="resetClicked"/>
-            <ComboBox x:Name="difficultyCombobox" Canvas.Left="10" Canvas.Top="45"  VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Width="250" Height="36">
+            <ComboBox x:Name="difficultyCombobox" Canvas.Left="10" Canvas.Top="21"  VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Width="250" Height="36">
                <ComboBoxItem Content="Easy" IsSelected="true">
                   <ComboBoxItem.Tag>
                      <sys:Double>0.40</sys:Double>
@@ -41,6 +41,8 @@
                   </ComboBoxItem.Tag>
                </ComboBoxItem>
             </ComboBox>
+            <RadioButton x:Name="gi_radioButton" Content="Gi" Canvas.Left="10" Canvas.Top="84"/>
+            <RadioButton x:Name="nogi_radioButton" Content="NoGi" Canvas.Left="69" Canvas.Top="84"/>
          </Canvas>
       </Border>
 

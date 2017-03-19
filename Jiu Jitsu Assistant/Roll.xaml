@@ -46,8 +46,8 @@
             <extToolkit:WatermarkTextBox Name="selectedTime_textbox" Height="26" TextWrapping="Wrap"  Width="54" Watermark="mm:ss" Text="05:00" TextAlignment="Center" VerticalAlignment="Center" Canvas.Left="95" Canvas.Top="75" TextChanged="timeTextBoxChanged" />
             <Label x:Name="label4_Copy" Content="Opponent's setup time:" Canvas.Left="10" Canvas.Top="112" Foreground="Black"/>
             <extToolkit:WatermarkTextBox x:Name="opponentSetupTime_textBox" Height="26" TextWrapping="Wrap"  Width="54" Watermark="mm:ss" Text="00:30" TextAlignment="Center" VerticalAlignment="Center" Canvas.Left="147" Canvas.Top="112" TextChanged="timeTextBoxChanged" />
-            <RadioButton x:Name="gi_radioButton" Content="Gi" Canvas.Left="16" Canvas.Top="153"/>
-            <RadioButton x:Name="nogi_radioButton" Content="NoGi" Canvas.Left="68" Canvas.Top="153"/>
+            <RadioButton x:Name="gi_radioButton" Content="Gi" Canvas.Left="16" Canvas.Top="153" Checked="gi_radioButton_Checked" IsChecked="True"/>
+            <RadioButton x:Name="nogi_radioButton" Content="NoGi" Canvas.Left="68" Canvas.Top="153" Checked="nogi_radioButton_Checked"/>
          </Canvas>
       </Border>
 
@@ -63,9 +63,9 @@
       <Label x:Name="lbl" Content="Opponent's last technique:" HorizontalAlignment="Left" Margin="42,516,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
       <Label x:Name="opponentLastTechniqueLabel" Content="-" HorizontalAlignment="Left" Margin="217,512,0,0" VerticalAlignment="Top" FontSize="18" Foreground="#FFD40E0E"/>
 
-      <extToolkit:WatermarkTextBox x:Name="setup_textBox" Watermark="Setup" HorizontalAlignment="Left" Height="80" Margin="42,551,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0" TextChanged="enableTechniques"/>
-      <extToolkit:WatermarkTextBox x:Name="helper_textBox" Watermark="Helper setup" HorizontalAlignment="Left" Height="40" Margin="42,641,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0"/>
-      <extToolkit:WatermarkTextBox x:Name="helper_textBox2" Watermark="Helper setup" HorizontalAlignment="Left" Height="43" Margin="42,691,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0"/>
+      <extToolkit:WatermarkTextBox x:Name="setup_textBox" Watermark="Setup" IsEnabled="False" HorizontalAlignment="Left" Height="80" Margin="42,551,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0" TextChanged="enableTechniques"/>
+      <extToolkit:WatermarkTextBox x:Name="helper_textBox" Watermark="Helper setup" IsEnabled="False" HorizontalAlignment="Left" Height="40" Margin="42,641,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0"/>
+      <extToolkit:WatermarkTextBox x:Name="helper_textBox2" Watermark="Helper setup" IsEnabled="False" HorizontalAlignment="Left" Height="43" Margin="42,691,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0"/>
 
       <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="8">
          <GridSplitter.Template>

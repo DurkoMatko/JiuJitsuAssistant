@@ -208,7 +208,7 @@ namespace Jiu_Jitsu_Assistant
          try{
             StringBuilder sb = new StringBuilder();
             sb.Append("SET foreign_key_checks = 0;");
-            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to) VALUES ({0},'{1}','{2}','{3}', {4} , {5} )", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Name, from_Position_comboBox.SelectedValue.ToString(), to_Position_comboBox.SelectedValue.ToString());
+            sb.AppendFormat("INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to,nogi_flag) VALUES ({0},'{1}','{2}','{3}', {4} , {5}, {6} )", techniqueGroup_comboBox.SelectedValue.ToString(), techniqueName_textbox.Text, dateLearned_datepicker.SelectedDate.Value.Date.ToString("yyyy-MM-dd"), ((ComboBoxItem)belt_comboBox.SelectedItem).Name, from_Position_comboBox.SelectedValue.ToString(), to_Position_comboBox.SelectedValue.ToString(), nogi_checkBox.IsChecked);
             MySqlCommand cmd;
             cmd = this.conn.CreateCommand();
             cmd.CommandText = sb.ToString();

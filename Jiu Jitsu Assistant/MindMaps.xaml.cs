@@ -30,6 +30,7 @@ namespace Jiu_Jitsu_Assistant
 
       double difficultyTreshold { get; set; }
       int sequenceCounter { get; set; }
+      bool nogi_flag { get; set; }
 
 
       public MindMaps()
@@ -51,7 +52,14 @@ namespace Jiu_Jitsu_Assistant
          {
             if (techniqueRow.Field<string>("position_from") == currentPosition &&
                   techniqueRow.Field<string>("name") != lastTechnique){
-                  availableTechniquesCount++;
+                     //if no_gi gameplay, check if technique is nogi allowed
+                     if (nogi_flag)
+                     {
+                        if (techniqueRow.Field<bool>("nogi_flag") == true)
+                           availableTechniquesCount++;
+                     }
+                     else
+                        availableTechniquesCount++;
             }
          }
 
@@ -67,6 +75,11 @@ namespace Jiu_Jitsu_Assistant
                if (techniqueRow.Field<string>("position_from") == currentPosition &&
                      techniqueRow.Field<string>("name") != lastTechnique)
                {
+                  //if nogi is chosen, skip techniques which are not nogi allowed
+                  if (nogi_flag && techniqueRow.Field<bool>("nogi_flag") != true)
+                  {
+                     continue;
+                  }
 
                   string resourceBrushKey = "techniqueGroupGrad_" + techniqueRow.Field<int>("group_id").ToString() + "_disabled";
 

@@ -10,8 +10,6 @@ c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jits
 c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\MainWindow.baml
 c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\MyTechniques.baml
 c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.g.resources
-c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu_Jitsu_Assistant.Properties.Resources.resources
-c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.csproj.GenerateResource.Cache
 c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.exe
 c:\users\t420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.pdb
 C:\Users\T420\Documents\Visual Studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\MySql.Data.dll
@@ -34,3 +32,13 @@ C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jits
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\App.baml
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Roll.g.cs
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Roll.baml
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Settings.g.cs
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Settings.baml
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\de\Jiu Jitsu Assistant.resources.dll
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\bin\Debug\en\Jiu Jitsu Assistant.resources.dll
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu_Jitsu_Assistant.Properties.Resources.resources
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu_Jitsu_Assistant.Properties.Resources.de.resources
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu_Jitsu_Assistant.Properties.Resources.en.resources
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.csproj.GenerateResource.Cache
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\de\Jiu Jitsu Assistant.resources.dll
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\en\Jiu Jitsu Assistant.resources.dll

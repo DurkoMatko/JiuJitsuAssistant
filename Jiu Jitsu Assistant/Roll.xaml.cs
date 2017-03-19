@@ -61,6 +61,7 @@ namespace Jiu_Jitsu_Assistant
       private string opponent_lastTechnique { get; set; }
 
       double difficultyTreshold { get; set; }
+      bool nogi_flag { get; set; }
 
       DispatcherTimer fightTimer = new DispatcherTimer();
       DispatcherTimer opponentMoveTimer = new DispatcherTimer();
@@ -95,9 +96,14 @@ namespace Jiu_Jitsu_Assistant
 
             foreach (DataRow techniqueRow in myTechniquesTable.Rows)
             {
+               //position from must be current position and cant repeat same technique
                if (techniqueRow.Field<string>("position_from") == currentPosition &&
                      techniqueRow.Field<string>("name") != lastTechnique)
                {
+                  //if nogi is chosen, skip techniques which are not nogi allowed
+                  if (nogi_flag && techniqueRow.Field<bool>("nogi_flag") != true) {
+                     continue;
+                  }
 
                   string resourceBrushKey = "techniqueGroupGrad_" + techniqueRow.Field<int>("group_id").ToString() + "_disabled";
 
@@ -185,7 +191,7 @@ namespace Jiu_Jitsu_Assistant
          try
          {
             StringBuilder sb = new StringBuilder();
-            sb.Append("SELECT t.technique_id, t.group_id, t.name, t.date_learned, t.belt_level, pFrom.name as position_from, pTo.name as position_to FROM techniques as t ");
+            sb.Append("SELECT t.technique_id, t.group_id, t.name, t.date_learned, t.belt_level, pFrom.name as position_from, pTo.name as position_to, t.nogi_flag FROM techniques as t ");
             sb.Append("LEFT JOIN positions as pFrom ");
             sb.Append("ON pFrom.position_id = t.position_from ");
             sb.Append("LEFT JOIN positions as pTo ");
@@ -328,11 +334,20 @@ namespace Jiu_Jitsu_Assistant
          selectedTime_textbox.IsEnabled = false;
          setTimerLabel(selectedTime_textbox.Text);
 
+         //settings controls
          var selectedDifficulty = difficultyCombobox.SelectedItem as ComboBoxItem;
          difficultyTreshold = Double.Parse(selectedDifficulty.Tag.ToString());
          difficultyCombobox.IsEnabled = false;
          newRoundButton.IsEnabled = false;
+         nogi_radioButton.IsEnabled = false;
+         gi_radioButton.IsEnabled = false;
 
+         //enable setup textboxes
+         setup_textBox.IsEnabled = true;
+         helper_textBox.IsEnabled = true;
+         helper_textBox.IsEnabled = true;
+
+         //start timer
          fightTimer.Start();
 
          //set opponent timer
@@ -353,6 +368,18 @@ namespace Jiu_Jitsu_Assistant
          lastTechniqueLabel.Content = "-";
          opponentCurrentPositionLabel.Content = "-";
          opponentLastTechniqueLabel.Content = "-";
+
+         //clear setup textboxes and disable them - so user can't prepare texts
+         setup_textBox.Clear();
+         setup_textBox.IsEnabled = false;
+         helper_textBox.Clear();
+         helper_textBox.IsEnabled = false;
+         helper_textBox2.Clear();
+         helper_textBox.IsEnabled = false;
+
+         //radio buttons
+         nogi_radioButton.IsEnabled = true;
+         gi_radioButton.IsEnabled = true;
 
          //reset timer
          setTimerLabel(selectedTime_textbox.Text);
@@ -387,7 +414,12 @@ namespace Jiu_Jitsu_Assistant
             seconds = ignored.Second.ToString();
          }
 
-         timer_label.Content = minutes + ":" + seconds;
+         //timer_label is null during InitializeComponents()
+         try
+         {
+            timer_label.Content = minutes + ":" + seconds;
+         }
+         catch (NullReferenceException nullEx) { }
       }
 
 
@@ -400,6 +432,7 @@ namespace Jiu_Jitsu_Assistant
             newRoundButton.IsEnabled = true;
             textbox.ClearValue(TextBox.BorderBrushProperty);
             textbox.ClearValue(TextBox.BackgroundProperty);
+            //setTimerLabel(ignored.ToString("mm:ss"));
          }
          else {
             newRoundButton.IsEnabled = false;
@@ -471,21 +504,39 @@ namespace Jiu_Jitsu_Assistant
       }
 
       private int getAvailableTechniquesCount(string curr_pos,string last_tech) {
-         int availableTechniques = 0;
+         int availableTechniquesCount = 0;
          foreach (DataRow techniqueRow in myTechniquesTable.Rows)
          {
+            //starting in current position and can't repeat the technique
             if (techniqueRow.Field<string>("position_from") == curr_pos &&
                   techniqueRow.Field<string>("name") != last_tech)
             {
-               availableTechniques++;
+               //if no_gi gameplay, check if technique is nogi allowed
+               if (nogi_flag)
+               {
+                  if (techniqueRow.Field<bool>("nogi_flag") == true)
+                     availableTechniquesCount++;
+               }
+               else
+                  availableTechniquesCount++;
             }
          }
-         return availableTechniques;
+         return availableTechniquesCount;
       }
 
       private int getOpponentsSetupTime() {
          DateTime ignored = DateTime.ParseExact(opponentSetupTime_textBox.Text, "m:s", null);
          return ignored.Minute * 60 + ignored.Second;
+      }
+
+      private void gi_radioButton_Checked(object sender, RoutedEventArgs e)
+      {
+         nogi_flag = false;
+      }
+
+      private void nogi_radioButton_Checked(object sender, RoutedEventArgs e)
+      {
+         nogi_flag = true;
       }
    }
 }

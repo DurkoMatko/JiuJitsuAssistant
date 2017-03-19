@@ -22,7 +22,7 @@ namespace Jiu_Jitsu_Assistant.Properties {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Jiu_Jitsu_Assistant.Properties {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Jiu_Jitsu_Assistant.Properties.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Jiu_Jitsu_Assistant.Properties {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -63,7 +63,7 @@ namespace Jiu_Jitsu_Assistant.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap bjj_logo {
+        public static System.Drawing.Bitmap bjj_logo {
             get {
                 object obj = ResourceManager.GetObject("bjj_logo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -73,7 +73,7 @@ namespace Jiu_Jitsu_Assistant.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap black_belt {
+        public static System.Drawing.Bitmap black_belt {
             get {
                 object obj = ResourceManager.GetObject("black_belt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -83,7 +83,7 @@ namespace Jiu_Jitsu_Assistant.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap blue_belt {
+        public static System.Drawing.Bitmap blue_belt {
             get {
                 object obj = ResourceManager.GetObject("blue_belt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -93,7 +93,7 @@ namespace Jiu_Jitsu_Assistant.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap brown_belt {
+        public static System.Drawing.Bitmap brown_belt {
             get {
                 object obj = ResourceManager.GetObject("brown_belt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -101,9 +101,18 @@ namespace Jiu_Jitsu_Assistant.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Jiu jitsu assistant.
+        /// </summary>
+        public static string Main_Title {
+            get {
+                return ResourceManager.GetString("Main_Title", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap purple_belt {
+        public static System.Drawing.Bitmap purple_belt {
             get {
                 object obj = ResourceManager.GetObject("purple_belt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
@@ -113,7 +122,7 @@ namespace Jiu_Jitsu_Assistant.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap white_belt {
+        public static System.Drawing.Bitmap white_belt {
             get {
                 object obj = ResourceManager.GetObject("white_belt", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));

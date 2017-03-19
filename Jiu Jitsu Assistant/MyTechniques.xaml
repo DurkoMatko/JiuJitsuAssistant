@@ -25,12 +25,12 @@
       <Image Margin="523,33,514,481" Source="images/bjj-logo.png" Grid.ColumnSpan="3" />
 
       <DataGrid x:Name="techniquesGrid" HorizontalAlignment="Left" Margin="68,287,0,0" VerticalAlignment="Top" AutoGenerateColumns="False"
-                ItemsSource="{Binding}" Height="256" VerticalScrollBarVisibility="Visible" Grid.Column="0" CanUserAddRows="False" Width="490" CellEditEnding="updateTechniqueFromDataGrid"
+                ItemsSource="{Binding}" Height="256" VerticalScrollBarVisibility="Visible" Grid.Column="0" CanUserAddRows="False" Width="520" CellEditEnding="updateTechniqueFromDataGrid"
                 PreviewKeyDown="deletingRowFromDatagrid" SelectionMode="Single" SelectionChanged="lookupSetupsForTechnique">
          <DataGrid.Columns>
             <DataGridTextColumn Header="Name" Binding="{Binding name}" Width="200" />
-            <DataGridTextColumn Header="Learned" Binding="{Binding date_learned, StringFormat=\{0:dd.MM.yyyy\}}" Width="80"/>
-            <DataGridTextColumn Header="From" Binding="{Binding position_from}" Width="77" />
+            <DataGridTextColumn Header="Learned" Binding="{Binding date_learned, StringFormat=\{0:dd.MM.yyyy\}}" Width="70"/>
+            <DataGridTextColumn Header="From" Binding="{Binding position_from}" Width="125" />
             <DataGridTextColumn Header="To" Binding="{Binding position_to}" Width="*" />
             <DataGridTextColumn Header="Belt" MaxWidth="0" Binding="{Binding belt_level}" Width="*"/>
             <DataGridTextColumn MaxWidth="0" Header="Id" Binding="{Binding technique_id}" Width="*"/>
@@ -52,7 +52,7 @@
 
       <Label x:Name="label" Content="Add new technique" Grid.Column="2" HorizontalAlignment="Left" Margin="216,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
       <Label Grid.Column="0" x:Name="label_Copy" Content="My techniques" HorizontalAlignment="Left" Margin="238,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
-      <Canvas HorizontalAlignment="Left" Height="370" VerticalAlignment="Top" Width="492" Grid.Column="2" Margin="107,57,0,0">
+      <Canvas HorizontalAlignment="Left" Height="403" VerticalAlignment="Top" Width="492" Grid.Column="2" Margin="107,57,0,0">
          <Label x:Name="lbl" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="30" FontSize="14"/>
          <extToolkit:WatermarkTextBox Name="techniqueName_textbox" Height="25" Canvas.Left="171" TextWrapping="Wrap" Canvas.Top="34" Width="235" Watermark="Technique name" TextChanged="emptyTechniqueNameCheck" />
          <Label x:Name="lbl_Copy" Content="Date learned:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="80" FontSize="14"/>
@@ -87,12 +87,13 @@
          </ComboBox>
          <Label x:Name="label1" Content="Technique group:" Canvas.Left="48" Canvas.Top="180" FontSize="14"/>
          <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="174" Canvas.Top="180" Width="235" Height="29" VerticalContentAlignment="Center" />
-         <Button x:Name="addTechnique_button" Content="Add technique" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.507,0.773" Canvas.Left="306" Canvas.Top="331"
+         <Button x:Name="addTechnique_button" Content="Add technique" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.507,0.773" Canvas.Left="306" Canvas.Top="368"
                  IsEnabled="False" Click="AddNewTechnique" PreviewMouseDown="addTechnique_button_MouseDown"/>
          <Label x:Name="Label_From" Content="From position:" Canvas.Left="48" Canvas.Top="230" RenderTransformOrigin="-0.079,-0.385" FontSize="14"/>
          <ComboBox x:Name="from_Position_comboBox" Canvas.Left="171" Canvas.Top="230" Width="235" Height="29" VerticalContentAlignment="Center"/>
          <Label x:Name="Label_To" Content="To position:" Canvas.Left="48" Canvas.Top="280" FontSize="14"/>
          <ComboBox x:Name="to_Position_comboBox" Canvas.Left="171" Canvas.Top="280" Width="235" Height="29" VerticalContentAlignment="Center"/>
+         <CheckBox x:Name="nogi_checkBox" Content="NoGi" Foreground="White" Canvas.Left="174" Canvas.Top="332" IsChecked="True"/>
       </Canvas>
       <TextBox x:Name="setup_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="71" Margin="279,521,0,0" TextWrapping="Wrap" 
                VerticalAlignment="Top" Width="240" AcceptsReturn="True" IsEnabled="False"/>

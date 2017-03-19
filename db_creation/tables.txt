@@ -21,7 +21,7 @@ CREATE TABLE `jiujitsuassistant`.`techniques` (
   `date_learned` DATE NULL,
   `belt_level` VARCHAR(45) NULL,
   `position_from` INT NULL,
-  `position_to` INT NULL,
+  `position_to` INT NULL, `nogi_flag` BOOLEAN NULL,
   PRIMARY KEY (`technique_id`),
   INDEX `fk_position_from_idx` (`position_from` ASC),
   INDEX `fk_position_to_idx` (`position_to` ASC),
