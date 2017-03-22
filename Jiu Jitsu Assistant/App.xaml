@@ -5,11 +5,143 @@
              StartupUri="MainWindow.xaml">
     <Application.Resources>
 
+       <!-- Datagrid styling -->
+      <Style TargetType="{x:Type DataGridColumnHeader}">
+         <Setter Property="VerticalContentAlignment" Value="Center" />
+         <Setter Property="Height" Value="35" />
+         <Setter Property="SeparatorBrush" Value="DarkRed" />
+         <Setter Property="FontWeight" Value="Black" />
+         <Setter Property="Template">
+            <Setter.Value>
+               <ControlTemplate TargetType="{x:Type DataGridColumnHeader}">
+                  <Grid>
+                     <Border x:Name="columnHeaderBorder" BorderThickness="1" Padding="3,0,3,0">
+                        <Border.BorderBrush>
+                           <LinearGradientBrush StartPoint="0.5,0" EndPoint="0.5,1">
+                              <GradientStop Offset="0" Color="#A5A5A5" />
+                              <GradientStop Offset="1" Color="#4B4B4B" />
+                           </LinearGradientBrush>
+                        </Border.BorderBrush>
+                        <Border.Background>
+                           <LinearGradientBrush StartPoint="0.6,0" EndPoint="0.6,1">
+                              <GradientStop Offset="0" Color="#FFC7C7C7" />
+                              <GradientStop Offset="0.3" Color="#FF727272" />
+                              <GradientStop Offset="1" Color="#FF0094CB" />
+                           </LinearGradientBrush>
+                        </Border.Background>
+                        <ContentPresenter HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+			     VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
+				SnapsToDevicePixels="{TemplateBinding SnapsToDevicePixels}" />
+                     </Border>
+                  </Grid>
+               </ControlTemplate>
+            </Setter.Value>
+         </Setter>
+      </Style>
+
+      
+      <Style x:Key="RowStyleWithAlternation" TargetType="DataGridRow">
+         <Setter Property="SnapsToDevicePixels" Value="True" />
+         <Setter Property="Background" Value="GhostWhite"/>
+         <Setter Property="FontWeight" Value="Normal"/>
+         <Setter Property="ContextMenu" Value="{x:Null}"/>
+         <Style.Triggers>
+            <Trigger Property="AlternationIndex" Value="1">
+               <Setter Property="Background" Value="#FFD0D0E0"/>
+            </Trigger>
+            <Trigger Property="IsMouseOver" Value="True">
+               <Setter Property="Background" Value="#F9F99F"/>
+            </Trigger>
+            <Trigger Property="IsSelected" Value="True">
+               <Setter Property="Background" Value="#F9F99F" />
+            </Trigger>
+            <Trigger Property="Validation.HasError" Value="True" >
+               <Setter Property="Effect">
+                  <Setter.Value>
+                     <DropShadowEffect Color="Red" ShadowDepth="0" BlurRadius="20" />
+                  </Setter.Value>
+               </Setter>
+               <Setter Property="BorderThickness" Value="2" />
+               <Setter Property="BorderBrush" Value="Red" />
+               <Setter Property="Foreground" Value="Blue" />
+               <Setter Property="FontSize" Value="12" />
+            </Trigger>
+         </Style.Triggers>
+      </Style>
+
+       <!-- button styling -->
+      <LinearGradientBrush x:Key="BackBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+         <GradientStop Offset="0">
+            <GradientStop.Color>
+               <Color A="255" R="250" G="250" B="250"/>
+            </GradientStop.Color>
+         </GradientStop>
+         <GradientStop Offset="1">
+               <GradientStop.Color>
+                  <Color A="255" R="70" G="70" B="70"/>
+               </GradientStop.Color>
+         </GradientStop>
+      </LinearGradientBrush>
+       
+      <Style x:Key="StyleButton" TargetType="Button">
+         <Setter Property="Foreground" Value="White"/>
+         <Setter Property="Template">
+            <Setter.Value>
+               <ControlTemplate TargetType="Button">
+                  <Border Name="ButtonBorder" CornerRadius="3" BorderThickness="1" BorderBrush="Gray"
+                          Background="{StaticResource BackBrush}">
+                     <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                  </Border>
+                  <ControlTemplate.Triggers>
+                     <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="RenderTransform">
+                           <Setter.Value>
+                              <ScaleTransform ScaleX="1.05" ScaleY="1.05" />
+                           </Setter.Value>
+                        </Setter>
+                     </Trigger>
+                     <Trigger Property="IsPressed" Value="True">
+                        <Setter Property="RenderTransform">
+                           <Setter.Value>
+                              <ScaleTransform ScaleX="1.0" ScaleY="1.0" />
+                           </Setter.Value>
+                        </Setter>
+                     </Trigger>
+                  </ControlTemplate.Triggers>
+               </ControlTemplate>
+            </Setter.Value>
+         </Setter>
+         <Setter Property="RenderTransformOrigin" Value="0.1,0.1"/>
+      </Style>
+
+      <!--disabled button -->
+      <Style x:Key="StyleButton_Disabled" TargetType="Button">
+         <Setter Property="Foreground" Value="Black"/>
+         <Setter Property="Template">
+            <Setter.Value>
+               <ControlTemplate TargetType="Button">
+                  <Border Name="ButtonBorder" CornerRadius="3" BorderThickness="1" BorderBrush="Gray"
+                          Background="Gray">
+                     <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                  </Border>
+               </ControlTemplate>
+            </Setter.Value>
+         </Setter>
+         <Setter Property="RenderTransformOrigin" Value="0.1,0.1"/>
+      </Style>
+
+      <!-- While labels-->
       <Style TargetType="{x:Type Label}">
          <Setter Property="Foreground" Value="White" />
       </Style>
 
-         <LinearGradientBrush x:Key="GrayBlueGradientBrush"  StartPoint="0,0" EndPoint="1,1">
+
+      <LinearGradientBrush x:Key="clickedTechnique" StartPoint="0,0" EndPoint="1,1">
+         <GradientStop Color="Green" Offset="0" />
+         <GradientStop Color="Green" Offset="1" />
+      </LinearGradientBrush>
+
+      <LinearGradientBrush x:Key="GrayBlueGradientBrush"  StartPoint="0,0" EndPoint="1,1">
          <GradientStop Color="DarkGray" Offset="0" />
          <GradientStop Color="#CCCCFF" Offset="0.5" />
          <GradientStop Color="DarkGray" Offset="1" />
@@ -172,6 +304,15 @@
                         <ContentPresenter x:Name="myContentPresenter" Margin="20" Content="{TemplateBinding  Content}" TextBlock.Foreground="Black" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                      </DockPanel>
                   </Grid>
+                  <ControlTemplate.Triggers>
+                     <Trigger Property="IsMouseOver" Value="True">
+                        <Setter Property="RenderTransform">
+                           <Setter.Value>
+                              <ScaleTransform ScaleX="1.05" ScaleY="1.05" />
+                           </Setter.Value>
+                        </Setter>
+                     </Trigger>
+                  </ControlTemplate.Triggers>
                </ControlTemplate>
             </Setter.Value>
          </Setter>
@@ -187,7 +328,7 @@
             <Setter.Value>
                <ControlTemplate TargetType="{x:Type Button}">
                   <Grid Width="{TemplateBinding Width}" Height="{TemplateBinding Height}" ClipToBounds="True">
-                     
+
                      <!-- Inner Rectangle with rounded corners. -->
                      <Rectangle x:Name="innerRectangle" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Stroke="Transparent" StrokeThickness="20"   
                               Fill="{TemplateBinding Background}" RadiusX="20" RadiusY="20" />
@@ -224,7 +365,6 @@
             </Setter.Value>
          </Setter>
       </Style>
-
 
    </Application.Resources>
 </Application>

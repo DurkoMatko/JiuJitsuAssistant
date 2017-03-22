@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 
 namespace Jiu_Jitsu_Assistant
@@ -47,21 +48,8 @@ namespace Jiu_Jitsu_Assistant
 
       private void CreateButtons()
       {
-         int availableTechniquesCount = 0;
-         foreach (DataRow techniqueRow in myTechniquesTable.Rows)
-         {
-            if (techniqueRow.Field<string>("position_from") == currentPosition &&
-                  techniqueRow.Field<string>("name") != lastTechnique){
-                     //if no_gi gameplay, check if technique is nogi allowed
-                     if (nogi_flag)
-                     {
-                        if (techniqueRow.Field<bool>("nogi_flag") == true)
-                           availableTechniquesCount++;
-                     }
-                     else
-                        availableTechniquesCount++;
-            }
-         }
+         List<int> availableTechniques = getAvailableTechniques(currentPosition, lastTechnique);
+         int availableTechniquesCount = availableTechniques.Count;
 
          //if there are some buttons to be created (if there are some techniques known from current position)
          if (availableTechniquesCount != 0)
@@ -72,15 +60,7 @@ namespace Jiu_Jitsu_Assistant
 
             foreach (DataRow techniqueRow in myTechniquesTable.Rows)
             {
-               if (techniqueRow.Field<string>("position_from") == currentPosition &&
-                     techniqueRow.Field<string>("name") != lastTechnique)
-               {
-                  //if nogi is chosen, skip techniques which are not nogi allowed
-                  if (nogi_flag && techniqueRow.Field<bool>("nogi_flag") != true)
-                  {
-                     continue;
-                  }
-
+               if (availableTechniques.Contains(techniqueRow.Field<int>("technique_id"))) { 
                   string resourceBrushKey = "techniqueGroupGrad_" + techniqueRow.Field<int>("group_id").ToString() + "_disabled";
 
                   Button button = new Button()
@@ -103,6 +83,7 @@ namespace Jiu_Jitsu_Assistant
 
                   ToolTipService.SetShowOnDisabled(button, true);
                   button.Click += new RoutedEventHandler(techniqueClicked);
+                  button.PreviewMouseDown += new MouseButtonEventHandler(mouseDownOnTechnique);
                   this.buttonsGrid.Children.Add(button);
                }
             }
@@ -131,6 +112,13 @@ namespace Jiu_Jitsu_Assistant
          else
             sequence_textblock.Text = sequence_textblock.Text + "\n" + sequenceCounter++ + ". " + lastTechnique + "   [" + currentPosition + "]";
       }
+
+      void mouseDownOnTechnique(object sender, MouseButtonEventArgs args)
+      {
+         var techButton = sender as Button;
+         techButton.Background = (System.Windows.Media.Brush)FindResource("clickedTechnique");
+      }
+
 
       public MindMaps(double left, double top, double height, double width):this() {
          this.Left = left;
@@ -164,7 +152,7 @@ namespace Jiu_Jitsu_Assistant
          try
          {
             StringBuilder sb = new StringBuilder();
-            sb.Append("SELECT t.technique_id, t.group_id, t.name, t.date_learned, t.belt_level, pFrom.name as position_from, pTo.name as position_to FROM techniques as t ");
+            sb.Append("SELECT t.technique_id, t.group_id, t.name, t.date_learned, t.belt_level, pFrom.name as position_from, pTo.name as position_to, t.nogi_flag FROM techniques as t ");
             sb.Append("LEFT JOIN positions as pFrom ");
             sb.Append("ON pFrom.position_id = t.position_from ");
             sb.Append("LEFT JOIN positions as pTo ");
@@ -291,6 +279,47 @@ namespace Jiu_Jitsu_Assistant
          currentPositionLabel.Content = "none";
          lastTechniqueLabel.Content = "none";
       }
-      
+
+      private List<int> getAvailableTechniques(string curr_pos, string last_tech)
+      {
+         List<int> availableTechniqueIds = new List<int>();
+         foreach (DataRow techniqueRow in myTechniquesTable.Rows)
+         {
+            //starting in current position and can't repeat the technique
+            if (techniqueRow.Field<string>("position_from") == curr_pos &&
+                  techniqueRow.Field<string>("name") != last_tech)
+            {
+               //if no_gi gameplay, check if technique is nogi allowed
+               if (nogi_flag)
+               {
+                  if (techniqueRow.Field<bool>("nogi_flag") == true)
+                     availableTechniqueIds.Add((techniqueRow.Field<int>("technique_id")));
+               }
+               else
+                  availableTechniqueIds.Add((techniqueRow.Field<int>("technique_id")));
+            }
+         }
+         return availableTechniqueIds;
+      }
+
+      private void gi_radioButton_Checked(object sender, RoutedEventArgs e)
+      {
+         nogi_flag = false;
+      }
+
+      private void nogi_radioButton_Checked(object sender, RoutedEventArgs e)
+      {
+         nogi_flag = true;
+      }
+
+
+      private void newRoundButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+      {
+         var button = sender as Button;
+         if (button.IsEnabled)
+            button.Style = (Style)FindResource("StyleButton");
+         else
+            button.Style = (Style)FindResource("StyleButton_Disabled");
+      }
    }
 }

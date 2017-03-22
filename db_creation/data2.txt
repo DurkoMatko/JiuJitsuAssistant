@@ -1,2 +1,2 @@
-SET foreign_key_checks = 0;INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to,nogi_flag) VALUES (1,'Arm triangle choke roll','2017-04-24','white', 17 , 6, True )
-SET foreign_key_checks = 0;INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Arm triangle choke roll'), 'slide arm deep under his armpit almost to his opposite shoulder, roll, grab belt/hips, pull him over, sqeeze, slowly move up, bit of rotation towards shoulder')
+SET foreign_key_checks = 0;INSERT INTO techniques (group_id,name,date_learned,belt_level,position_from,position_to,nogi_flag) VALUES (7,'Guard pull','2017-03-20','white', 5 , 10, True )
+SET foreign_key_checks = 0;INSERT INTO setups (technique_id, description) VALUES ((SELECT technique_id from techniques where name='Guard pull'), 'Grab his lapel and sleeve/ head elbow, step on his feet and fall down, pull him down with you')

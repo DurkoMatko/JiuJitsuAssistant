@@ -24,11 +24,11 @@
 
       <Image Margin="523,33,514,481" Source="images/bjj-logo.png" Grid.ColumnSpan="3" />
 
-      <DataGrid x:Name="techniquesGrid" HorizontalAlignment="Left" Margin="68,287,0,0" VerticalAlignment="Top" AutoGenerateColumns="False"
-                ItemsSource="{Binding}" Height="256" VerticalScrollBarVisibility="Visible" Grid.Column="0" CanUserAddRows="False" Width="520" CellEditEnding="updateTechniqueFromDataGrid"
-                PreviewKeyDown="deletingRowFromDatagrid" SelectionMode="Single" SelectionChanged="lookupSetupsForTechnique">
+      <DataGrid x:Name="techniquesGrid" RowStyle="{StaticResource RowStyleWithAlternation}" AlternationCount="2" HorizontalAlignment="Left" Margin="68,306,0,0" VerticalAlignment="Top" AutoGenerateColumns="False"
+                ItemsSource="{Binding}" Height="256" VerticalScrollBarVisibility="Visible" Grid.Column="0" CanUserAddRows="False" Width="643" CellEditEnding="updateTechniqueFromDataGrid"
+                PreviewKeyDown="deletingRowFromDatagrid" SelectionMode="Single" SelectionChanged="lookupSetupsForTechnique" Grid.ColumnSpan="3">
          <DataGrid.Columns>
-            <DataGridTextColumn Header="Name" Binding="{Binding name}" Width="200" />
+            <DataGridTextColumn Header="Technique name" Binding="{Binding name}" Width="200" />
             <DataGridTextColumn Header="Learned" Binding="{Binding date_learned, StringFormat=\{0:dd.MM.yyyy\}}" Width="70"/>
             <DataGridTextColumn Header="From" Binding="{Binding position_from}" Width="125" />
             <DataGridTextColumn Header="To" Binding="{Binding position_to}" Width="*" />
@@ -36,22 +36,22 @@
             <DataGridTextColumn MaxWidth="0" Header="Id" Binding="{Binding technique_id}" Width="*"/>
          </DataGrid.Columns>
       </DataGrid>
-      <DataGrid x:Name="techniqueGroupsGrid" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" 
+      <DataGrid x:Name="techniqueGroupsGrid" RowStyle="{StaticResource RowStyleWithAlternation}" AlternationCount="2" HorizontalAlignment="Left" VerticalAlignment="Top" AutoGenerateColumns="False" 
                 SelectedCellsChanged="techniqueGroupsGrid_SelectedCellsChanged" ItemsSource="{Binding}" 
                 RenderTransformOrigin="2.386,4.962" Margin="68,89,0,0" CanUserAddRows="False">
          <DataGrid.Columns>
-            <DataGridTextColumn Header="Name" Binding="{Binding name}" />
+            <DataGridTextColumn Header="Group" Binding="{Binding name}" />
          </DataGrid.Columns>
       </DataGrid>
 
-      <TextBlock x:Name="setups_textblock" Foreground="White" HorizontalAlignment="Left" Margin="129,572,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="138" Width="462"/>
-      <Label x:Name="setups_label" Content="Setups:" HorizontalAlignment="Left" Margin="64,567,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.684,-0.385"/>
+      <TextBlock x:Name="setups_textblock" Foreground="White" HorizontalAlignment="Left" Margin="129,591,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="138" Width="582" Grid.ColumnSpan="3"/>
+      <Label x:Name="setups_label" Content="Setups:" HorizontalAlignment="Left" Margin="64,586,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.684,-0.385"/>
 
 
 
 
       <Label x:Name="label" Content="Add new technique" Grid.Column="2" HorizontalAlignment="Left" Margin="216,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
-      <Label Grid.Column="0" x:Name="label_Copy" Content="My techniques" HorizontalAlignment="Left" Margin="238,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
+      <Label Grid.Column="0" x:Name="label_Copy" Content="My techniques" HorizontalAlignment="Left" Margin="293,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
       <Canvas HorizontalAlignment="Left" Height="403" VerticalAlignment="Top" Width="492" Grid.Column="2" Margin="107,57,0,0">
          <Label x:Name="lbl" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="30" FontSize="14"/>
          <extToolkit:WatermarkTextBox Name="techniqueName_textbox" Height="25" Canvas.Left="171" TextWrapping="Wrap" Canvas.Top="34" Width="235" Watermark="Technique name" TextChanged="emptyTechniqueNameCheck" />
@@ -86,7 +86,7 @@
             </ComboBoxItem>
          </ComboBox>
          <Label x:Name="label1" Content="Technique group:" Canvas.Left="48" Canvas.Top="180" FontSize="14"/>
-         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="174" Canvas.Top="180" Width="235" Height="29" VerticalContentAlignment="Center" />
+         <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="171" Canvas.Top="180" Width="235" Height="29" VerticalContentAlignment="Center" />
          <Button x:Name="addTechnique_button" Content="Add technique" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.507,0.773" Canvas.Left="306" Canvas.Top="368"
                  IsEnabled="False" Click="AddNewTechnique" PreviewMouseDown="addTechnique_button_MouseDown"/>
          <Label x:Name="Label_From" Content="From position:" Canvas.Left="48" Canvas.Top="230" RenderTransformOrigin="-0.079,-0.385" FontSize="14"/>

@@ -12,6 +12,7 @@ using System.Windows;
 using System.Windows.Automation.Peers;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Threading;
 
@@ -44,7 +45,7 @@ namespace Jiu_Jitsu_Assistant
       }
       private string lastTechnique { get; set; }
 
-      
+
       string _opponent_currentPosition;
       public string opponent_currentPosition
       {
@@ -85,8 +86,8 @@ namespace Jiu_Jitsu_Assistant
       {
          buttonsGrid.Children.Clear();
 
-         int availableTechniquesCount = getAvailableTechniques(currentPosition, lastTechnique).Count;
-
+         List<int> availableTechniques = getAvailableTechniques(currentPosition, lastTechnique);
+         int availableTechniquesCount = availableTechniques.Count;
          //if there are some buttons to be created (if there are some techniques known from current position)
          if (availableTechniquesCount != 0)
          {
@@ -96,15 +97,7 @@ namespace Jiu_Jitsu_Assistant
 
             foreach (DataRow techniqueRow in myTechniquesTable.Rows)
             {
-               //position from must be current position and cant repeat same technique
-               if (techniqueRow.Field<string>("position_from") == currentPosition &&
-                     techniqueRow.Field<string>("name") != lastTechnique)
-               {
-                  //if nogi is chosen, skip techniques which are not nogi allowed
-                  if (nogi_flag && techniqueRow.Field<bool>("nogi_flag") != true) {
-                     continue;
-                  }
-
+               if (availableTechniques.Contains(techniqueRow.Field<int>("technique_id"))) {
                   string resourceBrushKey = "techniqueGroupGrad_" + techniqueRow.Field<int>("group_id").ToString() + "_disabled";
 
                   Button button = new Button()
@@ -127,6 +120,7 @@ namespace Jiu_Jitsu_Assistant
 
                   ToolTipService.SetShowOnDisabled(button, true);
                   button.Click += new RoutedEventHandler(techniqueClicked);
+                  button.PreviewMouseDown += new MouseButtonEventHandler(mouseDownOnTechnique);
                   this.buttonsGrid.Children.Add(button);
                }
             }
@@ -156,6 +150,11 @@ namespace Jiu_Jitsu_Assistant
 
          if (currentPosition == "Submission")
             newRoundButton.IsEnabled = true;
+      }
+
+      void mouseDownOnTechnique(object sender, MouseButtonEventArgs args) {
+         var techButton = sender as Button;
+         techButton.Background = (System.Windows.Media.Brush)FindResource("clickedTechnique");
       }
 
       public Roll(double left, double top, double height, double width) : this()
@@ -301,6 +300,7 @@ namespace Jiu_Jitsu_Assistant
                      //if matching one setup, immediately break - it's enough to allow technique
                      break;
                   }
+                  //needed to disable buttons again if user decides to go for another technique
                   else
                   {
                      button.IsEnabled = false;
@@ -331,22 +331,12 @@ namespace Jiu_Jitsu_Assistant
          opponent_lastTechnique = "-";
 
          //set timer label
-         selectedTime_textbox.IsEnabled = false;
          setTimerLabel(selectedTime_textbox.Text);
 
          //settings controls
          var selectedDifficulty = difficultyCombobox.SelectedItem as ComboBoxItem;
          difficultyTreshold = Double.Parse(selectedDifficulty.Tag.ToString());
-         difficultyCombobox.IsEnabled = false;
-         newRoundButton.IsEnabled = false;
-         nogi_radioButton.IsEnabled = false;
-         gi_radioButton.IsEnabled = false;
-
-         //enable setup textboxes
-         setup_textBox.IsEnabled = true;
-         helper_textBox.IsEnabled = true;
-         helper_textBox.IsEnabled = true;
-
+            
          //start timer
          fightTimer.Start();
 
@@ -354,16 +344,14 @@ namespace Jiu_Jitsu_Assistant
          opponentMoveTimer.Interval = TimeSpan.FromSeconds(getOpponentsSetupTime());
          opponentMoveTimer.Tick += opponentMove;
          opponentMoveTimer.Start();
-         opponentSetupTime_textBox.IsEnabled = false;
 
+         settingsControlsEnabled(false);
          CreateButtons();
       }
 
       private void resetClicked(object sender, RoutedEventArgs e)
       {
          buttonsGrid.Children.Clear();
-         difficultyCombobox.IsEnabled = true;
-         newRoundButton.IsEnabled = true;
          currentPositionLabel.Content = "-";
          lastTechniqueLabel.Content = "-";
          opponentCurrentPositionLabel.Content = "-";
@@ -371,25 +359,18 @@ namespace Jiu_Jitsu_Assistant
 
          //clear setup textboxes and disable them - so user can't prepare texts
          setup_textBox.Clear();
-         setup_textBox.IsEnabled = false;
          helper_textBox.Clear();
-         helper_textBox.IsEnabled = false;
          helper_textBox2.Clear();
-         helper_textBox.IsEnabled = false;
-
-         //radio buttons
-         nogi_radioButton.IsEnabled = true;
-         gi_radioButton.IsEnabled = true;
 
          //reset timer
          setTimerLabel(selectedTime_textbox.Text);
          fightTimer.Stop();
-         selectedTime_textbox.IsEnabled = true;
 
          //stop opponent
          opponentMoveTimer.Stop();
-         opponentSetupTime_textBox.IsEnabled = true;
-      }
+
+         settingsControlsEnabled(true);
+        }
 
       private void setTimerLabel(string time)
       {
@@ -427,7 +408,7 @@ namespace Jiu_Jitsu_Assistant
       {
          DateTime ignored;
          var textbox = sender as TextBox;
-         if (DateTime.TryParseExact(selectedTime_textbox.Text, "m:s", CultureInfo.InvariantCulture, DateTimeStyles.None, out ignored))
+         if (DateTime.TryParseExact(textbox.Text, "m:s", CultureInfo.InvariantCulture, DateTimeStyles.None, out ignored))
          {
             newRoundButton.IsEnabled = true;
             textbox.ClearValue(TextBox.BorderBrushProperty);
@@ -459,14 +440,17 @@ namespace Jiu_Jitsu_Assistant
       private void opponentMove(object sender, EventArgs e)
       {
          List<int> opponentAvailableTechniquesId = getAvailableTechniques(opponent_currentPosition, opponent_lastTechnique);
+         foreach (int combo in opponentAvailableTechniquesId)
+         {
+            Console.WriteLine(combo);
+         }
 
- 
          if (opponentAvailableTechniquesId.Count != 0)
          {
             //randomly choose from available techniques
             Random rnd = new Random(DateTime.Now.Second);
-            int chosen = rnd.Next(1, opponentAvailableTechniquesId.Count + 1);
-
+            int chosen = rnd.Next(1, opponentAvailableTechniquesId.Count + 1) - 1;
+            Console.WriteLine("chosen: "+opponentAvailableTechniquesId[chosen]);
             foreach (DataRow techniqueRow in myTechniquesTable.Rows)
             {
                if (techniqueRow.Field<int>("technique_id") == opponentAvailableTechniquesId[chosen])
@@ -521,8 +505,10 @@ namespace Jiu_Jitsu_Assistant
       }
 
       private int getOpponentsSetupTime() {
-         DateTime ignored = DateTime.ParseExact(opponentSetupTime_textBox.Text, "m:s", null);
-         return ignored.Minute * 60 + ignored.Second;
+         DateTime ignored_from = DateTime.ParseExact(opponentSetupTimeMin_textBox.Text, "m:s", null);
+         DateTime ignored_to = DateTime.ParseExact(opponentSetupTimeMax_textBox.Text, "m:s", null);
+         Random rnd = new Random(DateTime.Now.Second);
+         return rnd.Next(ignored_from.Minute * 60 + ignored_from.Second, ignored_to.Minute * 60 + ignored_to.Second);
       }
 
       private void gi_radioButton_Checked(object sender, RoutedEventArgs e)
@@ -534,5 +520,29 @@ namespace Jiu_Jitsu_Assistant
       {
          nogi_flag = true;
       }
+
+      private void settingsControlsEnabled(bool flag) {
+         selectedTime_textbox.IsEnabled = flag;
+         difficultyCombobox.IsEnabled = flag;
+         newRoundButton.IsEnabled = flag;
+         nogi_radioButton.IsEnabled = flag;
+         gi_radioButton.IsEnabled = flag;
+         opponentSetupTimeMin_textBox.IsEnabled = flag;
+         opponentSetupTimeMax_textBox.IsEnabled = flag;
+
+         setup_textBox.IsEnabled = !flag;
+         helper_textBox.IsEnabled = !flag;
+         helper_textBox2.IsEnabled = !flag;
+      }
+
+      private void newRoundButton_IsEnabledChanged(object sender, DependencyPropertyChangedEventArgs e)
+      {
+         var button = sender as Button;
+         if (button.IsEnabled)
+            button.Style = (Style)FindResource("StyleButton");
+         else
+            button.Style = (Style)FindResource("StyleButton_Disabled");
+      }
+
    }
 }

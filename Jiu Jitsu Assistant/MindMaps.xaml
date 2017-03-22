@@ -22,8 +22,8 @@
       <Label x:Name="label1" Content="Settings" HorizontalAlignment="Left" Margin="42,20,0,0" VerticalAlignment="Top" Grid.Column="0" Width="69" Foreground="Black" FontSize="16"/>
       <Border x:Name="CanvasBorder" BorderBrush="Black" BorderThickness="3" Margin="38,45,36,507">
          <Canvas HorizontalAlignment="Left" Margin="24,5,0,0" Width="270" Grid.Column="0" Height="198" VerticalAlignment="Top">
-            <Button x:Name="newRoundButton" Content="New round" Canvas.Left="158" Canvas.Top="130" Width="102" Height="40" FontSize="14" Click="newRoundClicked" />
-            <Button x:Name="resetButton" Content="Reset settings" Canvas.Left="10" Canvas.Top="130" Width="102" Height="40" FontSize="14"  Click="resetClicked"/>
+            <Button x:Name="newRoundButton" Content="New round" Style="{StaticResource StyleButton}" Canvas.Left="158" Canvas.Top="130" Width="102" Height="40" FontSize="14" Click="newRoundClicked" IsEnabledChanged="newRoundButton_IsEnabledChanged"/>
+            <Button x:Name="resetButton" Content="Reset settings" Style="{StaticResource StyleButton}" Canvas.Left="10" Canvas.Top="130" Width="102" Height="40" FontSize="14"  Click="resetClicked" IsEnabledChanged="newRoundButton_IsEnabledChanged"/>
             <ComboBox x:Name="difficultyCombobox" Canvas.Left="10" Canvas.Top="21"  VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Width="250" Height="36">
                <ComboBoxItem Content="Easy" IsSelected="true">
                   <ComboBoxItem.Tag>
@@ -41,8 +41,8 @@
                   </ComboBoxItem.Tag>
                </ComboBoxItem>
             </ComboBox>
-            <RadioButton x:Name="gi_radioButton" Content="Gi" Canvas.Left="10" Canvas.Top="84"/>
-            <RadioButton x:Name="nogi_radioButton" Content="NoGi" Canvas.Left="69" Canvas.Top="84"/>
+            <RadioButton x:Name="gi_radioButton" Content="Gi" Canvas.Left="10" Canvas.Top="84" Checked="gi_radioButton_Checked"/>
+            <RadioButton x:Name="nogi_radioButton" Content="NoGi" Canvas.Left="69" Canvas.Top="84" Checked="nogi_radioButton_Checked"/>
          </Canvas>
       </Border>
 
