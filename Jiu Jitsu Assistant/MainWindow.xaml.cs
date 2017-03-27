@@ -5,6 +5,7 @@ using System.Windows.Media;
 using System.Windows.Threading;
 using System.Diagnostics;
 using System.Windows.Input;
+using System.Globalization;
 
 namespace Jiu_Jitsu_Assistant
 {
@@ -18,6 +19,7 @@ namespace Jiu_Jitsu_Assistant
 
       public MainWindow()
       {
+         Properties.Resources.Culture = new CultureInfo("en");
          InitializeComponent();
          WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
          if (!ConnectToDatabase())
@@ -84,6 +86,19 @@ namespace Jiu_Jitsu_Assistant
          win2.ShowDialog();
       }
 
+      private void server_Click(object sender, RoutedEventArgs e)
+      {
+         ServerGameplay win2 = new ServerGameplay(this.Left, this.Top, this.Height, this.Width);
+         win2.ShowDialog();
+      }
+
+      private void client_Click(object sender, RoutedEventArgs e)
+      {
+         ClientGameplay win2 = new ClientGameplay(this.Left, this.Top, this.Height, this.Width);
+         win2.ShowDialog();
+      }
+      
+
       private void settingsTimer_Tick(object sender, EventArgs e) {
          secondsCounter++;
          if (secondsCounter % 2 == 0) 
@@ -100,6 +115,12 @@ namespace Jiu_Jitsu_Assistant
             settingsWindow.ShowDialog();
             return;
          }
+      }
+
+      private void comboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+      {
+         Properties.Resources.Culture = new CultureInfo("de");
+         InitializeComponent();
       }
    }
 }

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -99,7 +100,7 @@ namespace Jiu_Jitsu_Assistant
          lastTechnique = buttonTextBlock.Text;
 
          currentPositionLabel.Content = currentPosition;
-         lastTechniqueLabel.Content = lastTechnique;
+         lastTechniqueLabel.Text = lastTechnique;
 
          this.buttonsGrid.Children.Clear();
          CreateButtons();
@@ -261,7 +262,7 @@ namespace Jiu_Jitsu_Assistant
 
          currentPosition = "Both standing";
          currentPositionLabel.Content = currentPosition;
-         lastTechniqueLabel.Content = "none";
+         lastTechniqueLabel.Text = "none";
          lastTechnique = "none";
          var selectedDifficulty = difficultyCombobox.SelectedItem as ComboBoxItem;
          difficultyTreshold = Double.Parse(selectedDifficulty.Tag.ToString());
@@ -277,7 +278,7 @@ namespace Jiu_Jitsu_Assistant
          difficultyCombobox.IsEnabled = true;
          newRoundButton.IsEnabled = true;
          currentPositionLabel.Content = "none";
-         lastTechniqueLabel.Content = "none";
+         lastTechniqueLabel.Text = "none";
       }
 
       private List<int> getAvailableTechniques(string curr_pos, string last_tech)

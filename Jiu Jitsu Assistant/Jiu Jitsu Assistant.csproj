@@ -74,6 +74,11 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="AsynchronousClient.cs" />
+    <Compile Include="AsynchronousSocketListener.cs" />
+    <Compile Include="ClientGameplay.xaml.cs">
+      <DependentUpon>ClientGameplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="LevenshteinDistance.cs" />
     <Compile Include="MindMaps.xaml.cs">
       <DependentUpon>MindMaps.xaml</DependentUpon>
@@ -91,6 +96,9 @@
     <Compile Include="Roll.xaml.cs">
       <DependentUpon>Roll.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ServerGameplay.xaml.cs">
+      <DependentUpon>ServerGameplay.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Settings.xaml.cs">
       <DependentUpon>Settings.xaml</DependentUpon>
     </Compile>
@@ -98,6 +106,10 @@
       <DependentUpon>Statistics.xaml</DependentUpon>
     </Compile>
     <Page Include="AddTechniqueDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ClientGameplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -125,6 +137,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Roll.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="ServerGameplay.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

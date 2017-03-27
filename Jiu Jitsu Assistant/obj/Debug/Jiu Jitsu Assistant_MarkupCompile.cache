@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\App.xaml
-7-1635187705
+9-1221036067
 
-14934166099
+18-1922571148
 212042891912
-AddTechniqueDialog.xaml;MainWindow.xaml;MindMaps.xaml;MyTechniques.xaml;Roll.xaml;Settings.xaml;Statistics.xaml;
+AddTechniqueDialog.xaml;ClientGameplay.xaml;MainWindow.xaml;MindMaps.xaml;MyTechniques.xaml;Roll.xaml;ServerGameplay.xaml;Settings.xaml;Statistics.xaml;
 
 False
 

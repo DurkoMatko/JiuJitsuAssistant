@@ -42,3 +42,7 @@ C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jits
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\Jiu Jitsu Assistant.csproj.GenerateResource.Cache
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\de\Jiu Jitsu Assistant.resources.dll
 C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\en\Jiu Jitsu Assistant.resources.dll
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\ServerGameplay.g.cs
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\ServerGameplay.baml
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\ClientGameplay.g.cs
+C:\Users\T420\documents\visual studio 2015\Projects\Jiu Jitsu Assistant\Jiu Jitsu Assistant\obj\Debug\ClientGameplay.baml
