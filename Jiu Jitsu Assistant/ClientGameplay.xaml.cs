@@ -46,7 +46,7 @@ namespace Jiu_Jitsu_Assistant
       // The response from the remote device.  
       private static String response = String.Empty;
 
-      public ClientGameplay()
+      public ClientGameplay(string ipAddress)
       {
          InitializeComponent();
 
@@ -57,7 +57,7 @@ namespace Jiu_Jitsu_Assistant
             LoadPositionPairs();
             setDictionaries();
          }
-         StartClient();
+         StartClient(ipAddress);
          newGameplay();
          fightTimer.Interval = TimeSpan.FromSeconds(1);
          fightTimer.Tick += dispatcherTimer_Tick;
@@ -119,24 +119,27 @@ namespace Jiu_Jitsu_Assistant
          currentPositionLabel.Content = currentPosition;
          lastTechniqueLabel.Text = lastTechnique;
 
-         sendChangeToOpponent(buttonTextBlock.Text);
+         sendChangeToOpponent(buttonTextBlock.Text + "$" + currentPosition);
 
          this.buttonsGrid.Children.Clear();
          CreateButtons();
       }
 
-      void techniqueClicked_opponent(string hisTechnique)
+      void techniqueClicked_opponent(string hisTechnique, string hisPosition)
       {
-         currentPosition = positionPairsDict[hisTechnique];
-         lastTechnique = "-";
-         currentPositionLabel.Content = currentPosition;
-         lastTechniqueLabel.Text = lastTechnique;
+         this.Dispatcher.Invoke(() =>
+         {
+            currentPosition = positionPairsDict[hisPosition];
+            lastTechnique = "-";
+            currentPositionLabel.Content = currentPosition;
+            lastTechniqueLabel.Text = lastTechnique;
 
-         opponentCurrentPositionLabel.Content = "So far unknown";
-         opponentLastTechniqueLabel.Text = hisTechnique;
+            opponentCurrentPositionLabel.Content = hisPosition;
+            opponentLastTechniqueLabel.Text = hisTechnique;
 
-         this.buttonsGrid.Children.Clear();
-         CreateButtons();
+            this.buttonsGrid.Children.Clear();
+            CreateButtons();
+         });
       }
 
       void mouseDownOnTechnique(object sender, MouseButtonEventArgs args)
@@ -146,7 +149,7 @@ namespace Jiu_Jitsu_Assistant
       }
 
 
-      public ClientGameplay(double left, double top, double height, double width) : this()
+      public ClientGameplay(double left, double top, double height, double width, string ipAddress) : this(ipAddress)
       {
          this.Left = left;
          this.Top = top;
@@ -318,7 +321,7 @@ namespace Jiu_Jitsu_Assistant
          currentPositionLabel.Content = currentPosition;
          lastTechniqueLabel.Text = "none";
          lastTechnique = "none";
-         difficultyTreshold = 0.6;
+         difficultyTreshold = 0.4;
          CreateButtons();
       }
 
@@ -393,15 +396,15 @@ namespace Jiu_Jitsu_Assistant
 
 
       //COMMUNICATION SOCKETS PARt ///////////////////////////////////////////////////////////////////////////////////////////////////
-      public void StartClient()
+      public void StartClient(string ipAddressString)
       {
          // Connect to a remote device.  
          // Establish the remote endpoint for the socket.  
          // The name of the   
          // remote device is "host.contoso.com".  
          IPHostEntry ipHostInfo = Dns.Resolve(Dns.GetHostName());
-         IPAddress ipAddress = ipHostInfo.AddressList[0];
-         //IPAddress ipAddress = IPAddress.Parse("192.168.0.54");
+         IPAddress ipAddress2 = ipHostInfo.AddressList[0];
+         IPAddress ipAddress = IPAddress.Parse(ipAddressString);
          IPEndPoint remoteEP = new IPEndPoint(ipAddress, port);
 
          // Create a TCP/IP socket.  
@@ -435,7 +438,7 @@ namespace Jiu_Jitsu_Assistant
             content = Encoding.ASCII.GetString(state.buffer, 0, bytesRead);
             // All the data has been read from the client. Display it on the console.  
             Console.WriteLine("Opponent has usd technique: {0}", content);
-            techniqueClicked_opponent(content);
+            techniqueClicked_opponent(content.Split('$')[0], content.Split('$')[1]);
             connectionSocket_ref.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
          }
       }

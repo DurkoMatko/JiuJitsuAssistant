@@ -6,6 +6,9 @@ using System.Windows.Threading;
 using System.Diagnostics;
 using System.Windows.Input;
 using System.Globalization;
+using System.Net;
+using System.Net.Sockets;
+using Microsoft.VisualBasic;
 
 namespace Jiu_Jitsu_Assistant
 {
@@ -19,7 +22,6 @@ namespace Jiu_Jitsu_Assistant
 
       public MainWindow()
       {
-         Properties.Resources.Culture = new CultureInfo("en");
          InitializeComponent();
          WindowStartupLocation = System.Windows.WindowStartupLocation.CenterScreen;
          if (!ConnectToDatabase())
@@ -88,16 +90,19 @@ namespace Jiu_Jitsu_Assistant
 
       private void server_Click(object sender, RoutedEventArgs e)
       {
+         //System.Windows.Forms.MessageBox.Show(GetLocalIPAddress());
+         System.Windows.Forms.Clipboard.SetDataObject(Dns.Resolve(Dns.GetHostName()).AddressList[0].ToString(), true);
          ServerGameplay win2 = new ServerGameplay(this.Left, this.Top, this.Height, this.Width);
          win2.ShowDialog();
       }
 
       private void client_Click(object sender, RoutedEventArgs e)
       {
-         ClientGameplay win2 = new ClientGameplay(this.Left, this.Top, this.Height, this.Width);
+         //Microsoft.VisualBasic.Interaction.InputBox("Question?", "Title", "Default Text");
+         string ipAdress = Prompt.ShowDialog("Test", "123");
+         ClientGameplay win2 = new ClientGameplay(this.Left, this.Top, this.Height, this.Width, ipAdress);
          win2.ShowDialog();
       }
-      
 
       private void settingsTimer_Tick(object sender, EventArgs e) {
          secondsCounter++;
@@ -117,10 +122,17 @@ namespace Jiu_Jitsu_Assistant
          }
       }
 
-      private void comboBox_SelectionChanged(object sender, System.Windows.Controls.SelectionChangedEventArgs e)
+      private string GetLocalIPAddress()
       {
-         Properties.Resources.Culture = new CultureInfo("de");
-         InitializeComponent();
+         var host = Dns.GetHostEntry(Dns.GetHostName());
+         foreach (var ip in host.AddressList)
+         {
+            if (ip.AddressFamily == AddressFamily.InterNetwork)
+            {
+               return ip.ToString();
+            }
+         }
+         throw new Exception("Local IP Address Not Found!");
       }
    }
 }

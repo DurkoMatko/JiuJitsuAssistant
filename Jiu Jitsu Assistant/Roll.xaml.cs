@@ -348,10 +348,15 @@ namespace Jiu_Jitsu_Assistant
          //start timer
          fightTimer.Start();
 
-         //set opponent timer
-         opponentMoveTimer.Interval = TimeSpan.FromSeconds(getOpponentsSetupTime());
-         opponentMoveTimer.Tick += opponentMove;
+         //set opponent timer if it's zero (it's not zero if newRound clicked immediately after submission - without reset)
+         if (opponentMoveTimer.Interval == TimeSpan.Zero)
+         {
+            opponentMoveTimer.Interval = TimeSpan.FromSeconds(getOpponentsSetupTime());
+            opponentMoveTimer.Tick += opponentMove;
+         }
          opponentMoveTimer.Start();
+
+         Console.WriteLine("New game clicked");
 
          settingsControlsEnabled(false);
          CreateButtons();
@@ -374,7 +379,8 @@ namespace Jiu_Jitsu_Assistant
          setTimerLabel(selectedTime_textbox.Text);
          fightTimer.Stop();
 
-         //stop opponent
+         //stop opponent and set timer to zero - so it get's new interval value in newButton click
+         opponentMoveTimer.Interval = TimeSpan.Zero;
          opponentMoveTimer.Stop();
 
          settingsControlsEnabled(true);
@@ -447,6 +453,7 @@ namespace Jiu_Jitsu_Assistant
 
       private void opponentMove(object sender, EventArgs e)
       {
+         opponentMoveTimer.Stop();
          List<int> opponentAvailableTechniquesId = getAvailableTechniques(opponent_currentPosition, opponent_lastTechnique);
          foreach (int combo in opponentAvailableTechniquesId)
          {
@@ -481,6 +488,7 @@ namespace Jiu_Jitsu_Assistant
                }
             }
          }
+         opponentMoveTimer.Start();
       }
 
       private void submissionHappened()

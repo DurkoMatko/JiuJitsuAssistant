@@ -65,6 +65,7 @@ namespace Jiu_Jitsu_Assistant
          {
             LoadTechniques();
             LoadSetups();
+            LoadPositionPairs();
             setDictionaries();
          }
          StartListening();
@@ -136,24 +137,28 @@ namespace Jiu_Jitsu_Assistant
          currentPositionLabel.Content = currentPosition;
          lastTechniqueLabel.Text = lastTechnique;
 
-         sendChangeToOpponent(buttonTextBlock.Text);
+         sendChangeToOpponent(buttonTextBlock.Text + "$" + currentPosition);
 
          this.buttonsGrid.Children.Clear();
          CreateButtons();
       }
 
-      void techniqueClicked_opponent(string hisTechnique)
+      void techniqueClicked_opponent(string hisTechnique, string hisPosition)
       {
-         currentPosition = positionPairsDict[hisTechnique];
-         lastTechnique = "-";
-         currentPositionLabel.Content = currentPosition;
-         lastTechniqueLabel.Text = lastTechnique;
+         this.Dispatcher.Invoke(() =>
+         {
+            currentPosition = positionPairsDict[hisPosition];
+            lastTechnique = "-";
+            currentPositionLabel.Content = currentPosition;
+            lastTechniqueLabel.Text = lastTechnique;
 
-         opponentCurrentPositionLabel.Content = "So far unknown";
-         opponentLastTechniqueLabel.Text = hisTechnique;
+            opponentCurrentPositionLabel.Content = hisPosition;
+            opponentLastTechniqueLabel.Text = hisTechnique;
 
-         this.buttonsGrid.Children.Clear();
-         CreateButtons();
+            this.buttonsGrid.Children.Clear();
+            CreateButtons();
+         });
+         
       }
 
       void mouseDownOnTechnique(object sender, MouseButtonEventArgs args)
@@ -325,7 +330,7 @@ namespace Jiu_Jitsu_Assistant
          currentPositionLabel.Content = currentPosition;
          lastTechniqueLabel.Text = "none";
          lastTechnique = "none";
-         difficultyTreshold = 0.6;
+         difficultyTreshold = 0.4;
          CreateButtons();
       }
 
@@ -464,8 +469,8 @@ namespace Jiu_Jitsu_Assistant
             // Check for end-of-file tag. If it is not there, read more data.  
             content = Encoding.ASCII.GetString(state.buffer, 0, bytesRead);
             // All the data has been read from the client. Display it on the console.  
-            Console.WriteLine("Opponent has usd technique: {0}", content);
-            techniqueClicked_opponent(content);
+            Console.WriteLine("Opponent has used technique: {0}", content);
+            techniqueClicked_opponent(content.Split('$')[0], content.Split('$')[1]);
             connectionSocket_ref.BeginReceive(state.buffer, 0, StateObject.BufferSize, 0, new AsyncCallback(ReadCallback), state);
          }
       }
