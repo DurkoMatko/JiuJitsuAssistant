@@ -1,0 +1,66 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+   <!-- Main Page -->
+   <system:String x:Key="MainWindow_Title">Jiu jitsu assistent</system:String>
+   <system:String x:Key="MyTechniques_Button">Moje techniky</system:String>
+   <system:String x:Key="Statistics_Button">Štatistiky</system:String>
+   <system:String x:Key="MindMaps_Button">Pamaťové mapy</system:String>
+   <system:String x:Key="Roll_Button">Sparing !</system:String>
+   <system:String x:Key="Server_Button">Server</system:String>
+   <system:String x:Key="Client_Button">Client</system:String>
+   <system:String x:Key="press_S">Stlač "s" pre nastavenia</system:String>
+
+   <!-- My techniques -->
+   <system:String x:Key="MyTechniques_Title">Moje techniky</system:String>
+   <system:String x:Key="MyTechniques_Header_tech">Moje techniky</system:String>
+   <system:String x:Key="AddTechnique_Header_tech">Pridaj novu techniku</system:String>
+   <system:String x:Key="NameLabel_tech">Meno:</system:String>
+   <system:String x:Key="TechniqueName_tech">Názov techniky:</system:String>
+   <system:String x:Key="DateLearned_tech">Dátum:</system:String>
+   <system:String x:Key="Belt_tech">Opasok:</system:String>
+   <system:String x:Key="TechniqueGroup_tech">Skupina techník:</system:String>
+   <system:String x:Key="FromPosition_tech">Do pozície:</system:String>
+   <system:String x:Key="ToPosition_tech">Z pozície"</system:String>
+   <system:String x:Key="AddTechniqueButton_tech">Pridaj techniku</system:String>
+   <system:String x:Key="SetupLabel_tech">Prevedenie</system:String>
+   <system:String x:Key="DescriptionLabel_tech">Detaily</system:String>
+   <system:String x:Key="AddSetupButton_tech">Pridaj prevedenie</system:String>
+   <system:String x:Key="FinishButton_tech">Hotovo</system:String>
+
+   <!-- Statistics -->
+   <system:String x:Key="CumulativeCountLabel_stats">Kumulovaná suma zvládnutých techník</system:String>
+   <system:String x:Key="NumberOfTechsLabel_stats">Počet techník naučených za mesiac</system:String>
+
+   <!-- Playboard -->
+   <system:String x:Key="Settings_Label_Playboard">Nastavenia</system:String>
+   <system:String x:Key="ResetButton_Playboard">Reset nastavenia</system:String>
+   <system:String x:Key="NewRoundButton_Playboard">Nové kolo</system:String>
+   <system:String x:Key="SequenceLabel_Playboard">Sekvencia:</system:String>
+   <system:String x:Key="CurrPosLabel_Playboard">Aktuálna pozícia:</system:String>
+   <system:String x:Key="LastTechLabel_Playboard">Posledná technika:</system:String>
+   <system:String x:Key="SetupWatermark_Playboard">Prevedenie techniky</system:String>
+
+   <!-- Mindmaps-->
+   <system:String x:Key="MindMaps_Title">Pamäťové mapy</system:String>
+
+   <!-- Roll -->
+   <system:String x:Key="OpponentPosition_roll">Súperova pozícia:</system:String>
+   <system:String x:Key="OpponentLastTechnique_roll">Súperova posledná technika:</system:String>
+   <system:String x:Key="HelperSetupWatermark_roll">Pomocné prevedenie techniky</system:String>
+   <system:String x:Key="Roll_Title">Sparing</system:String>
+   <system:String x:Key="RoundTimerLabel_roll">Čas kola:</system:String>
+   <system:String x:Key="OpponentSetupTimeLabel_roll">Súpr čas rozmýšlania:</system:String>
+
+   <!-- Client -->
+   <system:String x:Key="Client_Title">Client gameplay</system:String>
+
+   <!-- Server -->
+   <system:String x:Key="Server_Title">Server gameplay</system:String>
+
+   <!-- Settings -->
+   <system:String x:Key="Settings_Title">Nastavenia</system:String>
+   <system:String x:Key="LanguageLabel_settings">Jazyk</system:String>
+
+</ResourceDictionary>

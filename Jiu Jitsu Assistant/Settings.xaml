@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jiu_Jitsu_Assistant"
         mc:Ignorable="d"
-        Title="Settings" Height="300" Width="300">
+        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+        Title="{DynamicResource Settings_Title}" Height="300" Width="300">
    <Grid>
       <Grid.ColumnDefinitions>
          <ColumnDefinition Width="33*"/>
          <ColumnDefinition Width="40*"/>
       </Grid.ColumnDefinitions>
-      <Label x:Name="lang_label" Content="Language: " Foreground="Black" HorizontalAlignment="Left" Margin="56,73,0,0" VerticalAlignment="Top" Grid.Column="0" Height="26" Width="66"/>
-      <ComboBox x:Name="lang_comboBox" ItemsSource="{Binding MyCollection}" DisplayMemberPath="Name"  Grid.Column="1" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="87" Height="22"/>
+      <Label x:Name="lang_label" Content="{DynamicResource LanguageLabel_settings}" Foreground="Black" HorizontalAlignment="Left" Margin="56,73,0,0" VerticalAlignment="Top" Grid.Column="0" Height="26" Width="66"/>
+      <ComboBox x:Name="lang_comboBox" ItemsSource="{Binding languageFiles}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,77,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Width="87" Height="22" SelectionChanged="changedLanguageSelection"/>
 
    </Grid>
 </Window>

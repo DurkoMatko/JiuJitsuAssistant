@@ -20,14 +20,30 @@ namespace Jiu_Jitsu_Assistant
    /// </summary>
    public partial class Settings : Window
    {
-      public FileInfo[] MyCollection { get; set; }
+      public List<String> languageFilesList = new List<String>();
+      public String[] languageFiles { get; set; }
 
       public Settings()
       {
-         var di = new DirectoryInfo(System.IO.Path.GetDirectoryName(System.Diagnostics.Process.GetCurrentProcess().MainModule.FileName));
-         MyCollection = di.GetFiles();
+         foreach(ResourceDictionary rd in Application.Current.Resources.MergedDictionaries)
+         {
+            if (rd.Source.ToString() != "StringResources.xaml")
+            {
+               int start = rd.Source.ToString().IndexOf(".") + 1;
+               int end = rd.Source.ToString().LastIndexOf(".");
+               string languageAbbreviation = rd.Source.ToString().Substring(start, end - start);
+               //show user just the culture part of filename
+               languageFilesList.Add(languageAbbreviation);
+            }
+         }
+         languageFiles = languageFilesList.ToArray();
          InitializeComponent();
          DataContext = this;
+      }
+
+      private void changedLanguageSelection(object sender, SelectionChangedEventArgs e)
+      {
+         LanguageSetter.SelectCulture((sender as ComboBox).SelectedItem.ToString());
       }
    }
 }

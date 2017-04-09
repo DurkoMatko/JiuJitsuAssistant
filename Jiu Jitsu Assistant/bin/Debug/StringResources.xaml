@@ -1,0 +1,62 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+   <!-- Main Page -->
+   <system:String x:Key="MainWindow_Title">Jiu jitsu assistant</system:String>
+   <system:String x:Key="MyTechniques_Button">My techniques</system:String>
+   <system:String x:Key="Statistics_Button">Statistics</system:String>
+   <system:String x:Key="MindMaps_Button">Mind Maps</system:String>
+   <system:String x:Key="Roll_Button">Roll !</system:String>
+   <system:String x:Key="Server_Button">Server</system:String>
+   <system:String x:Key="Client_Button">Client</system:String>
+   <system:String x:Key="press_S">Press "s" for settings</system:String>
+   
+   <!-- My techniques -->
+   <system:String x:Key="MyTechniques_Title">MyTechniques</system:String>
+   <system:String x:Key="MyTechniques_Header_tech">My Techniques</system:String>
+   <system:String x:Key="AddTechnique_Header_tech">Add new technique</system:String>
+   <system:String x:Key="NameLabel_tech">Name:</system:String>
+   <system:String x:Key="TechniqueName_tech">Technique name:</system:String>
+   <system:String x:Key="DateLearned_tech">Date learned:</system:String>
+   <system:String x:Key="Belt_tech">Belt:</system:String>
+   <system:String x:Key="TechniqueGroup_tech">Technique group:</system:String>
+   <system:String x:Key="FromPosition_tech">From position:</system:String>
+   <system:String x:Key="ToPosition_tech">To position</system:String>
+   <system:String x:Key="AddTechniqueButton_tech">Add technique</system:String>
+   <system:String x:Key="SetupLabel_tech">Setup</system:String>
+   <system:String x:Key="DescriptionLabel_tech">Description</system:String>
+   <system:String x:Key="AddSetupButton_tech">Add setup</system:String>
+   <system:String x:Key="FinishButton_tech">Finish</system:String>
+
+   <!-- Statistics -->
+   <system:String x:Key="CumulativeCountLabel_stats">Cumulative count of learned techniques</system:String>
+   <system:String x:Key="NumberOfTechsLabel_stats">Number of techniques learned per month</system:String>
+
+   <!-- Playboard -->
+   <system:String x:Key="Settings_Label_Playboard">Settings</system:String>
+   <system:String x:Key="ResetButton_Playboard">Reset settings</system:String>
+   <system:String x:Key="NewRoundButton_Playboard">New round</system:String>
+   <system:String x:Key="SequenceLabel_Playboard">Sequence:</system:String>
+   <system:String x:Key="CurrPosLabel_Playboard">Current position:</system:String>
+   <system:String x:Key="LastTechLabel_Playboard">Last technique:</system:String>
+   <system:String x:Key="SetupWatermark_Playboard">Setup</system:String>
+   
+   <!-- Mindmaps-->
+   <system:String x:Key="MindMaps_Title">Mind Maps</system:String>
+
+   <!-- Roll -->
+   <system:String x:Key="OpponentPosition_roll">Opponent's position:</system:String>
+   <system:String x:Key="OpponentLastTechnique_roll">Opponent's last technique:</system:String>
+   <system:String x:Key="HelperSetupWatermark_roll">Helper setup</system:String>
+   <system:String x:Key="Roll_Title">Roll</system:String>
+   <system:String x:Key="RoundTimerLabel_roll">Round time:</system:String>
+   <system:String x:Key="OpponentSetupTimeLabel_roll">Opponent's setup time:</system:String>
+
+   <!-- Client -->
+   <system:String x:Key="Client_Title">Client gameplay</system:String>
+
+   <!-- Server -->
+   <system:String x:Key="Server_Title">Server gameplay</system:String>
+
+</ResourceDictionary>

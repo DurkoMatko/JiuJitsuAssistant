@@ -3,9 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Jiu_Jitsu_Assistant"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-
-       <!-- Datagrid styling -->
+   <Application.Resources>
+      <ResourceDictionary>
+         <ResourceDictionary.MergedDictionaries>
+            <ResourceDictionary Source="StringResources.sk-SK.xaml" />
+            <ResourceDictionary Source="StringResources.en-EN.xaml" />
+            <ResourceDictionary Source="StringResources.de-DE.xaml" />
+            <ResourceDictionary Source="StringResources.xaml" />
+         </ResourceDictionary.MergedDictionaries>
+      
+      <!-- Datagrid styling -->
       <Style TargetType="{x:Type DataGridColumnHeader}">
          <Setter Property="VerticalContentAlignment" Value="Center" />
          <Setter Property="Height" Value="35" />
@@ -366,6 +373,6 @@
             </Setter.Value>
          </Setter>
       </Style>
-
+      </ResourceDictionary>
    </Application.Resources>
 </Application>

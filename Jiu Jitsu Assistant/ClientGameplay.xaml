@@ -7,7 +7,7 @@
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         xmlns:local="clr-namespace:Jiu_Jitsu_Assistant"
         mc:Ignorable="d"
-        Title="ClientGameplay"       
+        Title="{DynamicResource Client_Title}"       
         ResizeMode="NoResize"         
         Icon="/images/bjj-logo.png"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
@@ -23,8 +23,8 @@
       <Label x:Name="label1" Content="Settings" HorizontalAlignment="Left" Margin="42,11,0,0" VerticalAlignment="Top" Grid.Column="0" Width="69" Foreground="Black" FontSize="16"/>
       <Border x:Name="CanvasBorder" BorderBrush="Black" BorderThickness="3" Margin="38,40,36,467">
          <Canvas HorizontalAlignment="Left" Margin="24,5,0,0" Width="270" Grid.Column="0" Height="235" VerticalAlignment="Top">
-            <Button x:Name="newRoundButton" Style="{StaticResource StyleButton}" Content="New round" Canvas.Left="158" Canvas.Top="188" Width="102" Height="40" FontSize="14" Click="startNewGameplay" IsEnabledChanged="newRoundButton_IsEnabledChanged" />
-            <Button x:Name="resetButton" Style="{StaticResource StyleButton_Disabled}" Content="Reset settings" Canvas.Left="10" Canvas.Top="188" Width="102" Height="40" FontSize="14" IsEnabledChanged="newRoundButton_IsEnabledChanged"/>
+            <Button x:Name="newRoundButton" Style="{StaticResource StyleButton}" Content="{DynamicResource NewRoundButton_Playboard}" Canvas.Left="158" Canvas.Top="188" Width="102" Height="40" FontSize="14" Click="startNewGameplay" IsEnabledChanged="newRoundButton_IsEnabledChanged" />
+            <Button x:Name="resetButton" Style="{StaticResource StyleButton_Disabled}" Content="{DynamicResource ResetButton_Playboard}" Canvas.Left="10" Canvas.Top="188" Width="102" Height="40" FontSize="14" IsEnabledChanged="newRoundButton_IsEnabledChanged"/>
             <ComboBox x:Name="difficultyCombobox" Canvas.Left="10" Canvas.Top="22"  VerticalContentAlignment="Center" HorizontalContentAlignment ="Center"  Width="250" Height="36" IsEnabled="False">
                <ComboBoxItem Content="Easy" IsSelected="true">
                   <ComboBoxItem.Tag>
@@ -42,9 +42,9 @@
                   </ComboBoxItem.Tag>
                </ComboBoxItem>
             </ComboBox>
-            <Label x:Name="label4" Content="Round time:" Canvas.Left="10" Canvas.Top="75" Foreground="Black"/>
+            <Label x:Name="label4" Content="{DynamicResource RoundTimerLabel_roll}" Canvas.Left="10" Canvas.Top="75" Foreground="Black"/>
             <extToolkit:WatermarkTextBox Name="selectedTime_textbox" Height="26" TextWrapping="Wrap"  Width="54" Watermark="mm:ss" Text="05:00" TextAlignment="Center" VerticalAlignment="Center" Canvas.Left="95" Canvas.Top="75" TextChanged="timeTextBoxChanged" IsEnabled="False"/>
-            <Label x:Name="label4_Copy" Content="Opponent's setup time:" Canvas.Left="10" Canvas.Top="112" Foreground="Black"/>
+            <Label x:Name="label4_Copy" Content="{DynamicResource OpponentSetupTimeLabel_roll}" Canvas.Left="10" Canvas.Top="112" Foreground="Black"/>
             <extToolkit:WatermarkTextBox x:Name="opponentSetupTimeMin_textBox" Height="26" TextWrapping="Wrap"  Width="48" Watermark="mm:ss" Text="00:25" TextAlignment="Center" VerticalAlignment="Center" Canvas.Left="147" Canvas.Top="112" TextChanged="timeTextBoxChanged" IsEnabled="False"/>
             <RadioButton x:Name="gi_radioButton" Content="Gi" Canvas.Left="16" Canvas.Top="153" Checked="gi_radioButton_Checked" IsChecked="True" IsEnabled="False"/>
             <RadioButton x:Name="nogi_radioButton" Content="NoGi" Canvas.Left="68" Canvas.Top="153" Checked="nogi_radioButton_Checked" IsEnabled="False"/>
@@ -53,25 +53,25 @@
          </Canvas>
       </Border>
 
-      <Label x:Name="label" Content="Current position:" HorizontalAlignment="Left" Margin="42,340,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
+      <Label x:Name="label" Content="{DynamicResource CurrPosLabel_Playboard}" HorizontalAlignment="Left" Margin="42,340,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
       <Label x:Name="currentPositionLabel" Content="-" HorizontalAlignment="Left" Margin="155,336,0,0" VerticalAlignment="Top" FontSize="18" Foreground="Green" RenderTransformOrigin="0.28,-0.235"/>
 
-      <Label x:Name="label_Copy" Content="Last technique:" HorizontalAlignment="Left" Margin="42,375,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
+      <Label x:Name="label_Copy" Content="{DynamicResource LastTechLabel_Playboard}" HorizontalAlignment="Left" Margin="42,375,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
       <Label Width="219" HorizontalAlignment="Left" Foreground="Green" FontSize="18" Target="{Binding ElementName=lastTechniqueLabel}" Margin="145,371,0,327" >
          <AccessText Name="lastTechniqueLabel" Text="-" TextWrapping="WrapWithOverflow" Width="209" Height="64"/>
       </Label>
 
-      <Label x:Name="label_Copy2" Content="Opponent's position:" HorizontalAlignment="Left" Margin="42,440,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
+      <Label x:Name="label_Copy2" Content="{DynamicResource OpponentPosition_roll}" HorizontalAlignment="Left" Margin="42,440,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
       <Label x:Name="opponentCurrentPositionLabel" Content="-" HorizontalAlignment="Left" Margin="180,436,0,0" VerticalAlignment="Top" FontSize="18" Foreground="Red"/>
 
-      <Label x:Name="lbl" Content="Opponent's last technique:" HorizontalAlignment="Left" Margin="42,475,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
+      <Label x:Name="lbl" Content="{DynamicResource OpponentLastTechnique_roll}" HorizontalAlignment="Left" Margin="42,475,0,0" VerticalAlignment="Top" FontSize="14" Foreground="Black" Grid.Column="0"/>
       <Label Width="147" HorizontalAlignment="Left" Foreground="Red" FontSize="18" Target="{Binding ElementName=opponentLastTechniqueLabel}" Margin="217,471,0,227">
          <AccessText Name="opponentLastTechniqueLabel" Text="-" TextWrapping="WrapWithOverflow" Width="147" Height="64"/>
       </Label>
 
-      <extToolkit:WatermarkTextBox x:Name="setup_textBox" Watermark="Setup" HorizontalAlignment="Left" Height="80" Margin="42,550,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0" TextChanged="enableTechniques"/>
-      <extToolkit:WatermarkTextBox x:Name="helper_textBox" Watermark="Helper setup" HorizontalAlignment="Left" Height="40" Margin="42,640,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0"/>
-      <extToolkit:WatermarkTextBox x:Name="helper_textBox2" Watermark="Helper setup" HorizontalAlignment="Left" Height="43" Margin="42,690,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0"/>
+      <extToolkit:WatermarkTextBox x:Name="setup_textBox" Watermark="{DynamicResource SetupWatermark_Playboard}" HorizontalAlignment="Left" Height="80" Margin="42,550,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0" TextChanged="enableTechniques"/>
+      <extToolkit:WatermarkTextBox x:Name="helper_textBox" Watermark="{DynamicResource HelperSetupWatermark_roll}" HorizontalAlignment="Left" Height="40" Margin="42,640,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0"/>
+      <extToolkit:WatermarkTextBox x:Name="helper_textBox2" Watermark="{DynamicResource HelperSetupWatermark_roll}" HorizontalAlignment="Left" Height="43" Margin="42,690,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="322" Grid.Column="0"/>
 
       <GridSplitter Grid.Column="1" VerticalAlignment="Stretch" HorizontalAlignment="Center" Width="8">
          <GridSplitter.Template>

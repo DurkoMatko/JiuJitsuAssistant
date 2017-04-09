@@ -1,0 +1,65 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+xmlns:system="clr-namespace:System;assembly=mscorlib">
+
+   <!-- Main Page -->
+   <system:String x:Key="MainWindow_Title">Jiu jitsu Assistant</system:String>
+   <system:String x:Key="MyTechniques_Button">Meine Techniken</system:String>
+   <system:String x:Key="Statistics_Button">Statistiken</system:String>
+   <system:String x:Key="MindMaps_Button">Gehirn Mappen</system:String>
+   <system:String x:Key="Roll_Button">Roll !</system:String>
+   <system:String x:Key="Server_Button">Server</system:String>
+   <system:String x:Key="Client_Button">Client</system:String>
+   <system:String x:Key="press_S">Drück "s" für Einstellungen</system:String>
+
+   <!-- My techniques -->
+   <system:String x:Key="MyTechniques_Title">Meine Techniken</system:String>
+   <system:String x:Key="MyTechniques_Header_tech">Meine Techniken</system:String>
+   <system:String x:Key="AddTechnique_Header_tech">Neue Technik hinzufügen</system:String>
+   <system:String x:Key="NameLabel_tech">Name:</system:String>
+   <system:String x:Key="TechniqueName_tech">Technik Name:</system:String>
+   <system:String x:Key="DateLearned_tech">Datum:</system:String>
+   <system:String x:Key="Belt_tech">Gürtel:</system:String>
+   <system:String x:Key="TechniqueGroup_tech">Technik Gruppe:</system:String>
+   <system:String x:Key="FromPosition_tech">Von Position:</system:String>
+   <system:String x:Key="ToPosition_tech">Zu Position</system:String>
+   <system:String x:Key="AddTechniqueButton_tech">Technik hinzufügen</system:String>
+   <system:String x:Key="SetupLabel_tech">Setup</system:String>
+   <system:String x:Key="DescriptionLabel_tech">Bechreibung</system:String>
+   <system:String x:Key="AddSetupButton_tech">Setup hinzufügen</system:String>
+   <system:String x:Key="FinishButton_tech">Fertig</system:String>
+
+   <!-- Statistics -->
+   <system:String x:Key="CumulativeCountLabel_stats">Kumulierte Anzahl der erlernten Techniken</system:String>
+   <system:String x:Key="NumberOfTechsLabel_stats">Anzahl der erlernten Techniken pro Monat</system:String>
+
+   <!-- Playboard -->
+   <system:String x:Key="Settings_Label_Playboard">Einstellungen</system:String>
+   <system:String x:Key="ResetButton_Playboard">Reset Einstellungen</system:String>
+   <system:String x:Key="NewRoundButton_Playboard">Neue Runde</system:String>
+   <system:String x:Key="SequenceLabel_Playboard">Sequenz:</system:String>
+   <system:String x:Key="CurrPosLabel_Playboard">Aktuelle Position:</system:String>
+   <system:String x:Key="LastTechLabel_Playboard">Letzte Technik:</system:String>
+   <system:String x:Key="SetupWatermark_Playboard">Setup</system:String>
+
+   <!-- Mindmaps-->
+   <system:String x:Key="MindMaps_Title">Gehirn Mappen</system:String>
+
+   <!-- Roll -->
+   <system:String x:Key="OpponentPosition_roll">Gegner Position:</system:String>
+   <system:String x:Key="OpponentLastTechnique_roll">Gegner letzte Technik:</system:String>
+   <system:String x:Key="HelperSetupWatermark_roll">Hilf Setup</system:String>
+   <system:String x:Key="Roll_Title">Roll</system:String>
+   <system:String x:Key="RoundTimerLabel_roll">Runde Zeit:</system:String>
+   <system:String x:Key="OpponentSetupTimeLabel_roll">Gegner Setup Zeit:</system:String>
+
+   <!-- Client -->
+   <system:String x:Key="Client_Title">Client gameplay</system:String>
+
+   <!-- Server -->
+   <system:String x:Key="Server_Title">Server gameplay</system:String>
+   
+   <!-- Settings -->
+   <system:String x:Key="Settings_Title">Einstellungen</system:String>
+   <system:String x:Key="LanguageLabel_settings">Sprache</system:String>
+</ResourceDictionary>

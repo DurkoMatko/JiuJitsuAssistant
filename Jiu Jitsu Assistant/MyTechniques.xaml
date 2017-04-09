@@ -7,7 +7,7 @@
         xmlns:extToolkit="http://schemas.xceed.com/wpf/xaml/toolkit"
         xmlns:sys="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MyTechniques"
+        Title="{DynamicResource MyTechniques_Title}"
         Height="800px" Width="1300px" 
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"  
         ResizeMode="NoResize" 
@@ -50,14 +50,14 @@
 
 
 
-      <Label x:Name="label" Content="Add new technique" Grid.Column="2" HorizontalAlignment="Left" Margin="216,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
-      <Label Grid.Column="0" x:Name="label_Copy" Content="My techniques" HorizontalAlignment="Left" Margin="293,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
+      <Label x:Name="label" Content="{DynamicResource AddTechnique_Header_tech}" Grid.Column="2" HorizontalAlignment="Left" Margin="216,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
+      <Label Grid.Column="0" x:Name="label_Copy" Content="{DynamicResource MyTechniques_Header_tech}" HorizontalAlignment="Left" Margin="293,14,0,0" VerticalAlignment="Top" FontSize="24" RenderTransformOrigin="0.545,0.19"/>
       <Canvas HorizontalAlignment="Left" Height="403" VerticalAlignment="Top" Width="492" Grid.Column="2" Margin="107,57,0,0">
-         <Label x:Name="lbl" Content="Name:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="30" FontSize="14"/>
+         <Label x:Name="lbl" Content="{DynamicResource NameLabel_tech}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="30" FontSize="14"/>
          <extToolkit:WatermarkTextBox Name="techniqueName_textbox" Height="25" Canvas.Left="171" TextWrapping="Wrap" Canvas.Top="34" Width="235" Watermark="Technique name" TextChanged="emptyTechniqueNameCheck" />
-         <Label x:Name="lbl_Copy" Content="Date learned:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="80" FontSize="14"/>
+         <Label x:Name="lbl_Copy" Content="{DynamicResource DateLearned_tech}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="80" FontSize="14"/>
          <DatePicker Name="dateLearned_datepicker" Canvas.Left="171" Canvas.Top="83" Width="235" SelectedDate="{x:Static sys:DateTime.Now}"/>
-         <Label x:Name="lbl_Copy1" Content="Belt:" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="130" FontSize="14"/>
+         <Label x:Name="lbl_Copy1" Content="{DynamicResource Belt_tech}" HorizontalAlignment="Left" VerticalAlignment="Top" RenderTransformOrigin="0.211,-0.154" Canvas.Left="48" Canvas.Top="130" FontSize="14"/>
          <ComboBox x:Name="belt_comboBox" VerticalContentAlignment="Center" Canvas.Left="171" Canvas.Top="130" Width="235" Height="29">
             <ComboBoxItem Name="white" Background="White" IsSelected="True">
                <StackPanel Orientation="Horizontal">
@@ -85,22 +85,22 @@
                </StackPanel>
             </ComboBoxItem>
          </ComboBox>
-         <Label x:Name="label1" Content="Technique group:" Canvas.Left="48" Canvas.Top="180" FontSize="14"/>
+         <Label x:Name="label1" Content="{DynamicResource TechniqueGroup_tech}" Canvas.Left="48" Canvas.Top="180" FontSize="14"/>
          <ComboBox x:Name="techniqueGroup_comboBox" VerticalAlignment="Center" Canvas.Left="171" Canvas.Top="180" Width="235" Height="29" VerticalContentAlignment="Center" />
-         <Button x:Name="addTechnique_button" Content="Add technique" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.507,0.773" Canvas.Left="306" Canvas.Top="368"
+         <Button x:Name="addTechnique_button" Content="{DynamicResource AddTechniqueButton_tech}" HorizontalAlignment="Left" VerticalAlignment="Top" Width="100" RenderTransformOrigin="0.507,0.773" Canvas.Left="306" Canvas.Top="368"
                  IsEnabled="False" Click="AddNewTechnique" PreviewMouseDown="addTechnique_button_MouseDown"/>
-         <Label x:Name="Label_From" Content="From position:" Canvas.Left="48" Canvas.Top="230" RenderTransformOrigin="-0.079,-0.385" FontSize="14"/>
+         <Label x:Name="Label_From" Content="{DynamicResource FromPosition_tech}" Canvas.Left="48" Canvas.Top="230" RenderTransformOrigin="-0.079,-0.385" FontSize="14"/>
          <ComboBox x:Name="from_Position_comboBox" Canvas.Left="171" Canvas.Top="230" Width="235" Height="29" VerticalContentAlignment="Center"/>
-         <Label x:Name="Label_To" Content="To position:" Canvas.Left="48" Canvas.Top="280" FontSize="14"/>
+         <Label x:Name="Label_To" Content="{DynamicResource ToPosition_tech}" Canvas.Left="48" Canvas.Top="280" FontSize="14"/>
          <ComboBox x:Name="to_Position_comboBox" Canvas.Left="171" Canvas.Top="280" Width="235" Height="29" VerticalContentAlignment="Center"/>
          <CheckBox x:Name="nogi_checkBox" Content="NoGi" Foreground="White" Canvas.Left="174" Canvas.Top="332" IsChecked="True"/>
       </Canvas>
       <TextBox x:Name="setup_textBox" Grid.Column="2" HorizontalAlignment="Left" Height="71" Margin="279,521,0,0" TextWrapping="Wrap" 
                VerticalAlignment="Top" Width="240" AcceptsReturn="True" IsEnabled="False"/>
-      <Label x:Name="description_label" Content="Description:" Grid.Column="2" HorizontalAlignment="Left" Margin="158,517,0,0" VerticalAlignment="Top" FontSize="14"/>
-      <Button x:Name="add_setup_button" Content="Add setup" Grid.Column="2" HorizontalAlignment="Left" Margin="419,609,0,0" VerticalAlignment="Top" Width="100" Click="addSetup" IsEnabled="False"/>
-      <Button x:Name="finish_technique_button" Content="Finish" Grid.Column="2" HorizontalAlignment="Left" Margin="158,688,0,0" VerticalAlignment="Top" Width="361" Click="finishAddingTechniqueAndSetups"/>
-      <Label x:Name="setup_label" Content="Setup" Grid.Column="2" HorizontalAlignment="Left" Margin="158,465,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.184,1.615" FontSize="18"/>
+      <Label x:Name="description_label" Content="{DynamicResource DescriptionLabel_tech}" Grid.Column="2" HorizontalAlignment="Left" Margin="158,517,0,0" VerticalAlignment="Top" FontSize="14"/>
+      <Button x:Name="add_setup_button" Content="{DynamicResource AddSetupButton_tech}" Grid.Column="2" HorizontalAlignment="Left" Margin="419,609,0,0" VerticalAlignment="Top" Width="100" Click="addSetup" IsEnabled="False"/>
+      <Button x:Name="finish_technique_button" Content="{DynamicResource FinishButton_tech}" Grid.Column="2" HorizontalAlignment="Left" Margin="158,688,0,0" VerticalAlignment="Top" Width="361" Click="finishAddingTechniqueAndSetups"/>
+      <Label x:Name="setup_label" Content="{DynamicResource SetupLabel_tech}" Grid.Column="2" HorizontalAlignment="Left" Margin="158,465,0,0" VerticalAlignment="Top" RenderTransformOrigin="1.184,1.615" FontSize="18"/>
 
 
 

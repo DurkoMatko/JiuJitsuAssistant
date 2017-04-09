@@ -8,6 +8,6 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("images/bjj-logo.jpg")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("stringresources.nl-nl.xml")]
 
 

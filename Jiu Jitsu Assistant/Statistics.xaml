@@ -48,8 +48,8 @@
             <lvc:Axis Title="Count"></lvc:Axis>
          </lvc:CartesianChart.AxisY>
       </lvc:CartesianChart>
-      <Label x:Name="Cumulative_count_label" Grid.Row="1" Grid.Column="0" Content="Cumulative count of learned techniques" HorizontalAlignment="Left" Margin="43,40,0,0"  VerticalAlignment="Top" Height="34" Width="380" FontSize="18"/>
-      <Label x:Name="Number_of_techniques_label" Grid.Row="0" Grid.Column="0" Content="Number of techniques learned per month" HorizontalAlignment="Left" Margin="43,40,0,0" VerticalAlignment="Top" Height="38" Width="380" RenderTransformOrigin="0.322,0.166" FontSize="18"/>
+      <Label x:Name="Cumulative_count_label" Grid.Row="1" Grid.Column="0" Content="{DynamicResource CumulativeCountLabel_stats}" HorizontalAlignment="Left" Margin="43,40,0,0"  VerticalAlignment="Top" Height="34" Width="380" FontSize="18"/>
+      <Label x:Name="Number_of_techniques_label" Grid.Row="0" Grid.Column="0" Content="{DynamicResource NumberOfTechsLabel_stats}" HorizontalAlignment="Left" Margin="43,40,0,0" VerticalAlignment="Top" Height="38" Width="380" RenderTransformOrigin="0.322,0.166" FontSize="18"/>
 
    </Grid>
 </Window>

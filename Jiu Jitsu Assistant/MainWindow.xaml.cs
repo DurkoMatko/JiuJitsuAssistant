@@ -99,7 +99,7 @@ namespace Jiu_Jitsu_Assistant
       private void client_Click(object sender, RoutedEventArgs e)
       {
          //Microsoft.VisualBasic.Interaction.InputBox("Question?", "Title", "Default Text");
-         string ipAdress = Prompt.ShowDialog("Test", "123");
+         string ipAdress = Prompt.ShowDialog("Opponent address:", "123");
          ClientGameplay win2 = new ClientGameplay(this.Left, this.Top, this.Height, this.Width, ipAdress);
          win2.ShowDialog();
       }

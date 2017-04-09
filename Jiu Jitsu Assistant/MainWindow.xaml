@@ -6,7 +6,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Jiu_Jitsu_Assistant"
         mc:Ignorable="d"
-        Title="{x:Static resx:Resources.Main_Title}" 
+        Title="{DynamicResource MainWindow_Title}" 
         TextBlock.TextAlignment="Center" 
         KeyDown="KeyPressed"
         ResizeMode="NoResize" 
@@ -30,33 +30,33 @@
       <TextBlock Grid.Row="0" Grid.Column="1" Margin="0,34,0,224" Grid.RowSpan="2">
                  <Image Margin="0,0,5,5" Source="images/bjj-logo.png" />
       </TextBlock>
-      <Button Grid.Column="1" Grid.Row="2" x:Name="roll_Button" Content="Roll !" HorizontalAlignment="Center" VerticalAlignment="Center"  RenderTransformOrigin="0.811,0.976" Height="44" Width="412" FontSize="20" Margin="10,11,10,202" FontWeight="Bold" Focusable="False" Click="roll_Button_Click">
+      <Button Grid.Column="1" Grid.Row="2" x:Name="roll_Button" Content="{DynamicResource Roll_Button}" HorizontalAlignment="Center" VerticalAlignment="Center"  RenderTransformOrigin="0.811,0.976" Height="44" Width="412" FontSize="20" Margin="10,11,10,202" FontWeight="Bold" Focusable="False" Click="roll_Button_Click">
          <Button.Background>
             <ImageBrush ImageSource="/images/brown-belt.jpg" />
          </Button.Background>
       </Button>
-      <Button Grid.Column="1"  Grid.Row="1"  x:Name="My_Techniques_button" Content="My techniques" Margin="10,75,10,137" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.811,0.976" Click="button_Copy_Click" Height="46" Width="412" FontSize="20" FontWeight="Bold" Focusable="False">
+      <Button Grid.Column="1"  Grid.Row="1"  x:Name="My_Techniques_button" Content="{DynamicResource MyTechniques_Button}" Margin="10,75,10,137" HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.811,0.976" Click="button_Copy_Click" Height="46" Width="412" FontSize="20" FontWeight="Bold" Focusable="False">
          <Button.Background>
             <ImageBrush ImageSource="/images/white-belt.jpg" />
          </Button.Background>
       </Button>
-      <Button Grid.Column="1"  Grid.Row="1" x:Name="Settings" Content="Statistics" HorizontalAlignment="Center" Margin="10,140,10,69" VerticalAlignment="Center"  RenderTransformOrigin="0.811,0.976" Height="44" Width="412" FontSize="20" Click="Settings_Click" FontWeight="Bold" Focusable="False">
+      <Button Grid.Column="1"  Grid.Row="1" x:Name="Settings" Content="{DynamicResource Statistics_Button}" HorizontalAlignment="Center" Margin="10,140,10,69" VerticalAlignment="Center"  RenderTransformOrigin="0.811,0.976" Height="44" Width="412" FontSize="20" Click="Settings_Click" FontWeight="Bold" Focusable="False">
          <Button.Background>
             <ImageBrush ImageSource="/images/blue-belt.jpg" />
          </Button.Background>
       </Button>
-      <Button x:Name="mindMapsButton" Content="Mind Maps" Grid.Column="1" HorizontalAlignment="Left" Margin="10,205,0,0" Grid.Row="1" VerticalAlignment="Top" Width="412" Height="44" FontSize="20" FontWeight="Bold" Click="mindMaps_Click" Focusable="False">
+      <Button x:Name="mindMapsButton" Content="{DynamicResource MindMaps_Button}" Grid.Column="1" HorizontalAlignment="Left" Margin="10,205,0,0" Grid.Row="1" VerticalAlignment="Top" Width="412" Height="44" FontSize="20" FontWeight="Bold" Click="mindMaps_Click" Focusable="False">
          <Button.Background>
             <ImageBrush ImageSource="/images/purple-belt.jpg" />
          </Button.Background>
       </Button>
-      <Button x:Name="ServerButton" Content="Server" Foreground="White" Grid.Column="1" HorizontalAlignment="Left" Margin="10,120,0,0" Grid.Row="2" VerticalAlignment="Top" Width="412" Height="44" FontSize="20" FontWeight="Bold" Click="server_Click" Focusable="False">
+      <Button x:Name="ServerButton" Content="{DynamicResource Server_Button}" Foreground="White" Grid.Column="1" HorizontalAlignment="Left" Margin="10,120,0,0" Grid.Row="2" VerticalAlignment="Top" Width="412" Height="44" FontSize="20" FontWeight="Bold" Click="server_Click" Focusable="False">
          <Button.Background>
             <ImageBrush ImageSource="/images/black-belt.jpg" />
          </Button.Background>
       </Button>
-      <Label x:Name="settingsLabel" Content="Press 's' for settings" Grid.Column="2" Foreground="Black" FontSize="14" HorizontalAlignment="Left" Margin="242,200,0,0" Grid.Row="2" VerticalAlignment="Top"/>
-      <Button x:Name="ClientButton" Content="Client" Foreground="White" Grid.Column="1" HorizontalAlignment="Left" Margin="10,174,0,0" Grid.Row="2" VerticalAlignment="Top" Width="412" Height="44" FontSize="20" FontWeight="Bold" Click="client_Click" Focusable="False">
+      <Label x:Name="settingsLabel" Content="{DynamicResource press_S}" Grid.Column="2" Foreground="Black" FontSize="14" HorizontalAlignment="Left" Margin="242,200,0,0" Grid.Row="2" VerticalAlignment="Top"/>
+      <Button x:Name="ClientButton" Content="{DynamicResource Client_Button}" Foreground="White" Grid.Column="1" HorizontalAlignment="Left" Margin="10,174,0,0" Grid.Row="2" VerticalAlignment="Top" Width="412" Height="44" FontSize="20" FontWeight="Bold" Click="client_Click" Focusable="False">
          <Button.Background>
             <ImageBrush ImageSource="images/black-belt.JPG" />
          </Button.Background>
